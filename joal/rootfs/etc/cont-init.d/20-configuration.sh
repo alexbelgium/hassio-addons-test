@@ -8,6 +8,13 @@ declare simultaneousseed
 declare client
 declare keeptorrent
 
+if ! bashio::fs.directory_exists '/data/clients'; then
+  mkdir '/data/clients'
+fi
+if ! bashio::fs.directory_exists '/data/torrents'; then
+  mkdir '/data/torrents'
+fi
+
 # Create dirs
 if ! bashio::fs.directory_exists '/share/joal-conf'; then
   mkdir '/share/joal-conf'
