@@ -25,13 +25,13 @@
   "environment": {
   },
   "options": {
-  "joal-conf"= "/data/joal-conf",
-  "spring.main.web-environment"= true,
-  "server.port"= 8081
+  "joal-conf": "/data/joal-conf",
+  "spring.main.web-environment": true,
+  "server.port": 8081
 	},
   "schema": {
-  "joal-conf"= "str",
-  "spring.main.web-environment"= "bool",
-  "server.port"= "int"
+  "joal-conf": "str",
+  "spring.main.web-environment": "bool",
+  "server.port": "int"
   }
 }
