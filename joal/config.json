@@ -15,7 +15,7 @@
       "1234/tcp": 1234
     },
    "ports_description": {
-      "1234/tcp": "Web UI port (required),
+      "1234/tcp": "Web UI port (required)"
     },
   "map": [
     "share:rw"
