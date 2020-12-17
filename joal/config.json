@@ -40,7 +40,7 @@
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?",
-    "download_dir": "str",
+    "download_dir": "str"
     "incomplete_dir": "str",
     "localdisks": ["str?"],
     "networkdisks": "str?",

@@ -5,7 +5,6 @@ FROM $BUILD_FROM
 COPY rootfs /
 
 # MOFIFY DATA PATH
-RUN sed -i "s|config|share/transmission|g" /etc/services.d/transmission/run \
-    && sed -i "s|config|share/transmission|g" /etc/cont-init.d/20-config
+RUN java -jar ./jack-of-all-trades-X.X.X.jar --joal-conf="/share/joal-conf/config.json" --spring.main.web-environment=true --server.port=8081 --joal.ui.path.prefix="aze" --joal.ui.secret-token="aze"
 
 VOLUME [ "/data" ]
