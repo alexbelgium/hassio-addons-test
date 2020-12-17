@@ -12,15 +12,17 @@
     "armhf"
   ],
    "ports": {
-      "1234/tcp": 1234
+      "1234/tcp": 1234, 
+      "8081/tcp": 8081
     },
    "ports_description": {
-      "1234/tcp": "Web UI port (required)"
+      "1234/tcp": "Torrent port",
+      "8081/tcp": "Web UI port"
     },
   "map": [
     "share:rw"
   ],
-  "webui": "http://[HOST]:[PORT:1234]",
+  "webui": "http://[HOST]:[PORT:8081]/ui",
   "boot": "auto", 
   "environment": {
   },
