@@ -2,8 +2,7 @@ ARG BUILD_FROM
 FROM $BUILD_FROM
 
 VOLUME [ "/data" ]
-VOLUME [ "/share" ]
 
-COPY rootfs /share/joal
-RUN mv /share/joal/default.json /share/joal/config.json
-RUN chown -R $(id -u):$(id -g) /share/joal
+COPY rootfs /data
+RUN mv /data/default.json /data/config.json
+RUN chown -R $(id -u):$(id -g) /data
