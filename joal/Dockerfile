@@ -2,6 +2,7 @@ ARG BUILD_FROM
 FROM $BUILD_FROM
 
 VOLUME [ "/data" ]
+VOLUME [ "/share" ]
 
 COPY rootfs /share/joal
 RUN mv /share/joal/default.json /share/joal/config.json
