@@ -30,6 +30,7 @@
   "spring.main.web-environment": true,
   "joal.ui.secret-token": "lrMY24Byhx",
   "joal.ui.path.prefix": "joal",
+  "server.port": 8081
   },
   "options": {
   "joal-conf": "/joal/options.json",
