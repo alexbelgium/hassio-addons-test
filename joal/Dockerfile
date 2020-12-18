@@ -1,5 +1,6 @@
 COPY rootfs /
 COPY rootfs /data/
+COPY rootfs /joal/
 
 ARG BUILD_FROM
 FROM $BUILD_FROM
