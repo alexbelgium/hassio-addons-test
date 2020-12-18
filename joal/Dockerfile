@@ -1,6 +1,6 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-COPY rootfs /share/joal
+COPY rootfs /data
 
 RUN chmod abc:abc /share/joal
