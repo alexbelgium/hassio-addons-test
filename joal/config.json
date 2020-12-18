@@ -25,8 +25,8 @@
   "webui": "http://[HOST]:[PORT:8081]/joal/ui",
   "boot": "auto", 
   "environment": {
-  "PATH_TO_CONF": "/share/joal",
-  "joal-conf": "/share/joal",
+  "PATH_TO_CONF": "/data",
+  "joal-conf": "/data",
   "spring.main.web-environment": true,
   "joal.ui.secret-token": "lrMY24Byhx",
   "joal.ui.path.prefix": "joal",
@@ -34,7 +34,9 @@
   "joal.iframe.enabled":false
   },
   "options": {
-	},
+  "PATH_TO_CONF": "/data",
+  "joal-conf": "/data"
+  },
   "schema": {
   }
 }
