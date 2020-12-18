@@ -1,7 +1,0 @@
-{
-  "minUploadRate" : 60,
-  "maxUploadRate" : 280,
-  "simultaneousSeed" : 20,
-  "client" : "qbittorrent-3.3.16.client",
-  "keepTorrentWithZeroLeechers" : false
-}
