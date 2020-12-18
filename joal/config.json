@@ -1,6 +1,6 @@
 {
     "name": "Joal Desktop test",
-    "version": "2.1.24_6",
+    "version": "2.1.24_7",
     "slug": "joal",
     "description": "Joal Desktop docker",
     "url": "https://github.com/alexbelgium/hassio-addons/tree/master/joal",
@@ -25,8 +25,7 @@
   "webui": "http://[HOST]:[PORT:8081]/joal/ui",
   "boot": "auto", 
   "environment": {
-  "joal-conf": "/share/joal",
-  "joal.ui.path.prefix": "/share/joal", 
+  "joal-conf": "/share/joal-conf",
   "spring.main.web-environment": true,
   "joal.ui.secret-token": "lrMY24Byhx",
   "joal.ui.path.prefix": "joal",
