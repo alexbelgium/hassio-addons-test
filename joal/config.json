@@ -1,6 +1,6 @@
 {
     "name": "Joal Desktop test",
-    "version": "2.1.24_4",
+    "version": "2.1.24_5",
     "slug": "joal",
     "description": "Joal Desktop docker",
     "url": "https://github.com/alexbelgium/hassio-addons/tree/master/joal",
@@ -33,13 +33,7 @@
   "server.port": 8081
   },
   "options": {
-  "joal-conf": "/joal/options.json",
-  "spring.main.web-environment": true,
-  "server.port": 8081
 	},
   "schema": {
-  "joal-conf": "str",
-  "spring.main.web-environment": "bool",
-  "server.port": "int"
   }
 }
