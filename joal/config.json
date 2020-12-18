@@ -1,6 +1,6 @@
 {
     "name": "Joal Desktop test",
-    "version": "2.1.24_8",
+    "version": "2.1.24_9
     "slug": "joal",
     "description": "Joal Desktop docker",
     "url": "https://github.com/alexbelgium/hassio-addons/tree/master/joal",
