@@ -16,8 +16,8 @@
       "8081/tcp": 8081
     },
    "ports_description": {
-      "49152/tcp": "torrent port",
-      "8081/tcp": "Web UI port"
+      "49152/tcp": "torrent port - can't change for the moment",
+      "8081/tcp": "Web UI port - can't change for the moment"
     },
   "map": [
     "share:rw"
@@ -30,7 +30,7 @@
   "joal.iframe.enabled":false,
   "joal.ui.path.prefix": "joal",
   "joal.ui.secret-token": "lrMY24Byhx",
-  "server.port": "[PORT:8081]"
+  "server.port": 8081
   },
   "options": {
   },
