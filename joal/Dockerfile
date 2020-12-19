@@ -4,7 +4,6 @@ ENV PG_VERSION=2.1.24
 
 RUN curl -J -L -o /download.tar.gz \
         "https://github.com/anthonyraymond/joal/releases/download/$PG_VERSION/joal.tar.gz" \
-    &&  mkdir p /tmp \
     &&  mkdir p /data/joal \
     && tar zxvf \
         /download.tar.gz \
