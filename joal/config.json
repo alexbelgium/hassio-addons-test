@@ -16,7 +16,7 @@
       "8081/tcp": 8081
     },
    "ports_description": {
-      "49152/tcp": 49152,
+      "49152/tcp": "torrent port",
       "8081/tcp": "Web UI port"
     },
   "map": [
