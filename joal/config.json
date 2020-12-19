@@ -28,15 +28,12 @@
   "environment": {
   "spring.main.web-environment": true,
   "joal.iframe.enabled":false,
-  "joal.ui.secret-token": "{secret_token}",
   "joal.ui.path.prefix": "joal",
   "joal.ui.secret-token": "lrMY24Byhx",
   "server.port": "[PORT:8081]"
   },
   "options": {
-  "secret_token": "lrMY24Byhx"
   },
   "schema": {
-  "secret_token": "str",
   }
 }
