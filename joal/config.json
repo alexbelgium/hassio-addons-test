@@ -27,7 +27,7 @@
   "host_network": true,
   "environment": {
   "spring.main.web-environment": true,
-  "joal.iframe.enabled":false
+  "joal.iframe.enabled":false,
   "joal.ui.secret-token": "{secret_token}",
   "joal.ui.path.prefix": "joal",
   "joal.ui.secret-token": "lrMY24Byhx",
