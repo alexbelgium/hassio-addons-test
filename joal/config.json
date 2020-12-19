@@ -16,8 +16,8 @@
       "8081/tcp": 8081
     },
    "ports_description": {
-      "49152/tcp": "torrent port - can't change for the moment",
-      "8081/tcp": "Web UI port - can't change for the moment"
+      "49152/tcp": "torrent port - hardcoded, can't change",
+      "8081/tcp": "Web UI port - hardcoded, can't change"
     },
   "map": [
     "share:rw"
