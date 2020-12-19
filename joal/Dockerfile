@@ -1,5 +1,6 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
+ENV PG_VERSION=2.1.24
 
 RUN curl -J -L -o /tmp/download.tar.gz \
         "https://github.com/anthonyraymond/joal/releases/download/$PG_VERSION/joal.tar.gz" \
