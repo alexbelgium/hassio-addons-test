@@ -22,7 +22,7 @@
   "map": [
     "share:rw"
   ],
-  "webui": "http://[HOST]:[PORT:8081]/{joal.ui.path.prefix}/ui",
+  "webui": "http://[HOST]:[PORT:8081]/joal/ui",
   "boot": "auto", 
   "host_network": true,
   "environment": {
