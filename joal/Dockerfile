@@ -9,7 +9,7 @@ RUN curl -J -L -o /download.tar.gz \
     && tar zxvf \
         /download.tar.gz \
         --strip 1 -C /data/joal \
-    && chown -R $(id -u):$(id -g) /data/joal
+    && chown -R $(id -u):$(id -g) /data/joal \
     && rm /download.tar.gz
       
 # COPY rootfs /data/joal
