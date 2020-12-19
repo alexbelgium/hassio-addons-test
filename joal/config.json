@@ -24,6 +24,7 @@
   ],
   "webui": "http://[HOST]:[PORT:8081]/joal/ui",
   "boot": "auto", 
+  "host_network": true,
   "environment": {
   "spring.main.web-environment": true,
   "joal.ui.secret-token": "lrMY24Byhx",
