@@ -27,8 +27,7 @@
   "joal.iframe.enabled":false,
   "joal.ui.path.prefix": "joal",
   "joal.ui.secret-token": "lrMY24Byhx",
-  "server.port": 8081,
-  "PG_VERSION": "2.1.24"
+  "server.port": 8081
   },
   "options": {
   },
