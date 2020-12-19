@@ -32,11 +32,11 @@
   "options": {
   "joal.ui.secret-token": "lrMY24Byhx",
   "joal.ui.path.prefix": "joal",
-  "server.port": 8081,
+  "server.port": 8081
   },
   "schema": {
   "joal.ui.secret-token": "str",
   "joal.ui.path.prefix": "str",
-  "server.port": "int",
+  "server.port": "int"
   }
 }
