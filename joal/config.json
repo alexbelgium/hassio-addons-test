@@ -1,6 +1,6 @@
 {
     "name": "Joal Desktop test",
-    "version": "2.1.24_11",
+    "version": "2.1.24_12
     "slug": "joal",
     "description": "An open source command line RatioMaster with WebUI",
     "url": "https://github.com/alexbelgium/hassio-addons/tree/master/joal",
@@ -30,7 +30,7 @@
   "spring.main.web-environment": true,
   "joal.ui.secret-token": "lrMY24Byhx",
   "joal.ui.path.prefix": "joal",
-  "server.port": "[PORT:8081]",
+  "server.port": 8081,
   "joal.iframe.enabled":false
   },
   "options": {
