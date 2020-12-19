@@ -37,8 +37,6 @@
   "secret_token": "lrMY24Byhx"
   },
   "schema": {
-  "joal.ui.secret-token": "str",
-  "joal.ui.path.prefix": "str",
-  "server.port": "int"
+  "secret_token": "str",
   }
 }
