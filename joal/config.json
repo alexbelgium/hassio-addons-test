@@ -30,7 +30,7 @@
   "joal.iframe.enabled":false,
   "joal.ui.path.prefix": "joal",
   "joal.ui.secret-token": "lrMY24Byhx",
-  "server.port": 8081
+  "server.port": [PORT:8081]
   },
   "options": {
   },
