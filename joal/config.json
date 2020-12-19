@@ -1,8 +1,8 @@
 {
     "name": "Joal Desktop test",
-    "version": "2.1.24_10",
+    "version": "2.1.24_11",
     "slug": "joal",
-    "description": "Joal Desktop docker",
+    "description": "An open source command line RatioMaster with WebUI",
     "url": "https://github.com/alexbelgium/hassio-addons/tree/master/joal",
     "startup": "services",
     "arch": [
@@ -12,7 +12,7 @@
     "armhf"
   ],
    "ports": {
-      "1234/tcp": 1234, 
+      "49152/tcp": 49152,
       "8081/tcp": 8081
     },
    "ports_description": {
@@ -30,12 +30,10 @@
   "spring.main.web-environment": true,
   "joal.ui.secret-token": "lrMY24Byhx",
   "joal.ui.path.prefix": "joal",
-  "server.port": 8081,
+  "server.port": [PORT:8081],
   "joal.iframe.enabled":false
   },
   "options": {
-  "PATH_TO_CONF": "/data",
-  "joal-conf": "/data"
   },
   "schema": {
   }
