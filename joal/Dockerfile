@@ -1,8 +1,6 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-# ENV PG_VERSION=2.1.24
-
 RUN mkdir p /data/joal \
     &&  curl -L -s \
         "https://github.com/anthonyraymond/joal/releases/download/2.1.24/joal.tar.gz" \
