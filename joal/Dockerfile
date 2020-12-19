@@ -6,3 +6,7 @@ RUN mv /share/joal/default.json /share/joal/config.json
 RUN chown -R $(id -u):$(id -g) /share/joal
 
 CMD --joal-conf=/share/joal
+
+
+VOLUME [\data]
+VOLUME [\share]
