@@ -30,7 +30,7 @@
   "spring.main.web-environment": true,
   "joal.ui.secret-token": "lrMY24Byhx",
   "joal.ui.path.prefix": "joal",
-  "server.port": [PORT:8081],
+  "server.port": "[PORT:8081]",
   "joal.iframe.enabled":false
   },
   "options": {
