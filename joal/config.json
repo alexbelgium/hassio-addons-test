@@ -1,6 +1,6 @@
 {
     "name": "Joal Desktop test",
-    "version": "2.1.24_18",
+    "version": "2.1.24_19",
     "slug": "joal",
     "description": "An open source command line RatioMaster with WebUI",
     "url": "https://github.com/alexbelgium/hassio-addons/tree/master/joal",
