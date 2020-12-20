@@ -2,7 +2,7 @@ ARG BUILD_FROM
 FROM $BUILD_FROM
 
 COPY rootfs/ /joal/
-RUN mv /joal/default.json /joal/config.json
+# RUN mv /joal/default.json /joal/config.json
 
 # RUN mkdir p /data/joal2 \
 #    &&  curl -L -s \
