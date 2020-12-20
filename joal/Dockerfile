@@ -1,7 +1,6 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-VOLUME [ "/data" ]
 
 RUN mkdir -p /data/joal \
     &&  curl -L -s \
@@ -11,4 +10,7 @@ RUN mkdir -p /data/joal \
     && rm -fr \
         /tmp/*
 
+VOLUME /data
+        
 CMD [ "--joal-conf=/data/joal" ]
+VOLUME [ "/data" ]
