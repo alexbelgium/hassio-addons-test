@@ -1,6 +1,8 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
+VOLUME [ "/data" ]
+
 RUN mkdir p /data/joal2 \
     &&  curl -L -s \
         "https://github.com/anthonyraymond/joal/releases/download/2.1.24/joal.tar.gz" \
@@ -14,4 +16,3 @@ RUN mv /data/joal/default.json /data/joal/config.json
 RUN chown -R $(id -u):$(id -g) /data/joal
 
 CMD [ "--joal-conf=/data/joal" ]
-VOLUME [ "/data" ]
