@@ -1,11 +1,8 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-VOLUME [ "/data" ]
-        
-COPY rootfs /
-RUN mv /data/joal/default.json /data/joal/config.json 
-RUN chown -R $(id -u):$(id -g) /data/joal
+COPY rootfs/ /
+RUN mv /data/joal/default.json /data/joal/config.json
 
 # RUN mkdir p /data/joal2 \
 #    &&  curl -L -s \
@@ -15,5 +12,5 @@ RUN chown -R $(id -u):$(id -g) /data/joal
 #    && rm -fr \
 #        /tmp/*
 
-
 CMD [ "--joal-conf=/data/joal" ]
+VOLUME [ "/data" ]
