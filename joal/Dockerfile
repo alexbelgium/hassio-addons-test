@@ -1,6 +1,7 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
+RUN mkdir /joal
 COPY rootfs/ /joal/
 # RUN mv /joal/default.json /joal/config.json
 
