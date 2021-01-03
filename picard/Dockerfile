@@ -77,8 +77,6 @@ RUN set -x && \
     KEPT_PACKAGES+=(flac) && \
     KEPT_PACKAGES+=(vorbisgain) && \
     KEPT_PACKAGES+=(wavpack) && \
-    add-apt-repository -y ppa:flexiondotorg/audio && \
-    KEPT_PACKAGES+=(mp3gain) && \
     # Install packages
     apt-get update && \
     apt-get install -y --no-install-recommends \
