@@ -1,0 +1,40 @@
+{
+    "name": "Adguard Home",
+    "version": "v0.104.3",
+    "slug": "adguard_home",
+    "description": "Free and open source, powerful network-wide ads & trackers blocking DNS server",
+    "url": "https://github.com/alexbelgium/hassio-addons/tree/master/adguard",
+    "startup": "services",
+    "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
+   "ports": {
+      "49152/tcp": 49152
+    },
+   "ports_description": {
+      "53/tcp": "DNS port",
+      "53/udp": "DNS port",
+      "80/tcp": "Web UI",
+      "3000/tcp": "Web UI",
+      "67/udp": "DHCP server port 1",
+      "68/tcp": "DHCP server port 2",
+      "68/udp": "DHCP server port 3",
+      "443/tcp": "HTTPS/DNS-over-HTTPS server",
+      "853/tcp": "NS-over-TLS server",
+      "784/tcp": "DNS-over-QUIC server",
+      "5443/tcp": "DNSCrypt server port 1",
+      "5443/udp": "DNSCrypt server port 2"
+    },
+  "webui": "http://[HOST]:[PORT:3000]",
+  "boot": "auto", 
+  "host_network": true,
+  "environment": {
+  },
+  "options": {
+  },
+  "schema": {
+  }
+}

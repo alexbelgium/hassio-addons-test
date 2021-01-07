@@ -1,0 +1,9 @@
+{
+  "build_from": {
+    "aarch64": "bitwardenrs/server:1.18.0-arm64",
+    "amd64": "bitwardenrs/server:1.18.0-amd64",
+    "armhf": "bitwardenrs/server:1.18.0-arm",
+    "armv7": "bitwardenrs/server:1.18.0-arm"
+  },
+  "args": {}
+}
