@@ -1,7 +1,7 @@
 {
     "name": "Adguard Home",
     "version": "v0.104.3",
-    "slug": "adguard_home",
+    "slug": "adguard_home_docker",
     "description": "Free and open source, powerful network-wide ads & trackers blocking DNS server",
     "url": "https://github.com/alexbelgium/hassio-addons/tree/master/adguard",
     "startup": "services",
@@ -9,7 +9,8 @@
     "aarch64",
     "amd64",
     "armv7",
-    "armhf"
+    "armhf",
+    "i386"
   ],
    "ports": {
       "49152/tcp": 49152
