@@ -1,17 +1,15 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-#RUN mkdir -p /joal \
-#    &&  curl -L -s \
-#        "https://github.com/anthonyraymond/joal/releases/download/2.1.24/joal.tar.gz" \
-#        | tar zxvf - -C /joal \
-#    && chown -R $(id -u):$(id -g) /joal \
-#    && rm -fr \
-#        /tmp/*
-#
-#COPY run.sh /
-#RUN chmod 777 /run.sh
-#ENTRYPOINT [ "/run.sh" ]
+RUN apk add --no-cache \
+        lua-resty-http=0.15-r0 \
+        nginx-mod-http-lua=1.18.0-r1 \
+        nginx=1.18.0-r1 \
+    && rm -fr \
+        /etc/nginx \
+        /tmp/*
 
-# CMD [ "--joal-conf=/joal" ]
+# Copy root filesystem
+COPY rootfs /
+
 VOLUME [ "/data" ]
