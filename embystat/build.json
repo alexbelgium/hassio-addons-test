@@ -1,0 +1,1 @@
+{ "build_from": { "armv7": "adguard/adguardhome:v0.104.3", "armhf": "adguard/adguardhome:v0.104.3", "aarch64": "adguard/adguardhome:v0.104.3", "i386": "adguard/adguardhome:v0.104.3", "amd64": "adguard/adguardhome:v0.104.3" }, "squash": false, "args": {}} 
