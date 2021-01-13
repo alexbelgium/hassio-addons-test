@@ -1,5 +1,5 @@
 ARG BUILD_FROM
-FROM $BUILD_FROM
+FROM ${BUILD_FROM}
 
 RUN apk add --no-cache \
     lua-resty-http=0.15-r0 \
@@ -14,4 +14,4 @@ COPY rootfs /
 
 RUN sed -i "s|config|data|g" /etc/services.d/adguard/run
 
-VOLUME [ "/data" ]
+VOLUME ["/ssl", "/data"]
