@@ -12,4 +12,6 @@ RUN apk add --no-cache \
 # Copy root filesystem
 COPY rootfs /
 
+RUN sed -i "s|config|data|g" /etc/services.d/adguard/run
+
 VOLUME [ "/data" ]
