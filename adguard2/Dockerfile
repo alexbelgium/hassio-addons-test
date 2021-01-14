@@ -12,4 +12,8 @@ RUN apk add --no-cache \
 # Copy root filesystem
 COPY rootfs /
 
+ENTRYPOINT [ "/etc/services.d/adguard/run" ]
+
+CMD [ "" ]
+
 VOLUME ["/ssl", "/data"]
