@@ -20,14 +20,14 @@
       "53/udp": 53,
       "80/tcp": 80,
       "3000/tcp": 3000,
-      "67/udp": 67,
-      "68/tcp": 68,
-      "68/udp": 68,
-      "443/tcp": 443,
-      "853/tcp": 853,
-      "784/tcp": 784,
-      "5443/tcp": 5443,
-      "5443/udp": 5443
+      "67/udp": null,
+      "68/tcp": null,
+      "68/udp": null,
+      "443/tcp": null,
+      "853/tcp": null,
+      "784/tcp": null,
+      "5443/tcp": null,
+      "5443/udp": null
     },
    "ports_description": {
       "53/tcp": "DNS port",
