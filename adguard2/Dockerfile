@@ -14,7 +14,7 @@ COPY rootfs/ /
 
 COPY run.sh /
 RUN chmod 777 /run.sh
-# CMD [ "" ]
-# ENTRYPOINT [ "/run.sh" ]
+CMD [ "" ]
+ENTRYPOINT [ "sh /run.sh" ]
 
 VOLUME ["/ssl", "/data"]
