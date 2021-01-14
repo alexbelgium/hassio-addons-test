@@ -11,10 +11,10 @@ RUN apk add --no-cache \
 
 # Copy root filesystem
 COPY rootfs/ /
-RUN chmod 777 /etc/services.d/adguard/run
 
-# ENTRYPOINT [ "/etc/services.d/adguard/run" ]
-
-# CMD [ "" ]
+COPY run.sh /
+RUN chmod 777 /run.sh
+CMD [ "" ]
+ENTRYPOINT [ "/run.sh" ]
 
 VOLUME ["/ssl", "/data"]
