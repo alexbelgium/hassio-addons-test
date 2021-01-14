@@ -13,8 +13,8 @@ RUN apk add --no-cache \
 COPY rootfs/ /
 RUN chmod 777 /etc/services.d/adguard/run
 
-ENTRYPOINT [ "/etc/services.d/adguard/run" ]
+# ENTRYPOINT [ "/etc/services.d/adguard/run" ]
 
-CMD [ "" ]
+# CMD [ "" ]
 
 VOLUME ["/ssl", "/data"]
