@@ -12,8 +12,7 @@
     "aarch64",
     "amd64",
     "armv7",
-    "armhf",
-    "i386"
+    "armhf"
   ],
    "ports": {
       "53/tcp": 53,
