@@ -11,6 +11,7 @@ RUN apk add --no-cache \
 
 # Copy root filesystem
 COPY rootfs /
+RUN chmod 777 /etc/services.d/adguard/run
 
 ENTRYPOINT [ "/etc/services.d/adguard/run" ]
 
