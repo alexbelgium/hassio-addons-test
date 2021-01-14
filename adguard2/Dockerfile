@@ -10,10 +10,10 @@ RUN apk add --no-cache \
     /tmp/*
 
 # Copy root filesystem
-COPY rootfs/ /
-
+COPY rootfs /
 COPY run.sh /
 RUN chmod 777 /run.sh
+RUN chown root:root /run.sh
 CMD [ "" ]
 ENTRYPOINT [ "sh /run.sh" ]
 
