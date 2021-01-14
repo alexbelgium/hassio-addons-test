@@ -1,6 +1,6 @@
 {
     "name": "Adguard Home",
-    "version": "v0.104.3_test",
+    "version": "v0.104.3_test2",
     "slug": "adguard_home_docker",
     "description": "Free and open source, powerful network-wide ads & trackers blocking DNS server",
     "url": "https://github.com/alexbelgium/hassio-addons/tree/master/adguard",
