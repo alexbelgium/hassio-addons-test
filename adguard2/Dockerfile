@@ -13,8 +13,7 @@ RUN apk add --no-cache \
 COPY rootfs /
 COPY run.sh /
 RUN chmod 777 /run.sh
-RUN chown root:root /run.sh
 CMD [ "" ]
-ENTRYPOINT [ "sh /run.sh" ]
+ENTRYPOINT [ "/run.sh" ]
 
 VOLUME ["/ssl", "/data"]
