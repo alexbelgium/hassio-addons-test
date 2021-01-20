@@ -21,8 +21,6 @@ RUN \
     && rm -fr /tmp/bashio.tar.gz
 
 # Copy root filesystem
-COPY rootfs /
-
 COPY run.sh /
 RUN chmod 777 /run.sh
 CMD [ "/run.sh" ]
