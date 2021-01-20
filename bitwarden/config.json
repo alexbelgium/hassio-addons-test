@@ -9,7 +9,7 @@
   "init": false,
   "arch": ["aarch64", "amd64", "armv7"],
   "ports": {
-    "8080/tcp": 8080,
+    "7277/tcp": 7277,
     "80/tcp": 80
   },
   "ports_description": {
