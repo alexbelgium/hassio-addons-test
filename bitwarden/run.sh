@@ -90,4 +90,4 @@ if [ -d /etc/bitwarden_rs.d ]; then
     done
 fi
 
-exec /bitwarden_rs "${@}"
+exec /bitwarden_rs
