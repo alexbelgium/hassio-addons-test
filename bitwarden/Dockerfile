@@ -23,6 +23,8 @@ RUN \
 # Copy root filesystem
 COPY rootfs /
 
-# ENTRYPOINT [ ".\etc\services.d\bitwarden\run" ]
+COPY run.sh /
+RUN chmod 777 /run.sh
+ENTRYPOINT [ "/run.sh" ]
 
 VOLUME [ "/ssl", "/data" ]
