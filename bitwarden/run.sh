@@ -13,6 +13,8 @@ export DATA_FOLDER=/data
 export ROCKET_PORT=7277
 export ROCKET_WORKERS=2
 
+export ROCKET_TLS="{certs="/$(bashio::config 'certfile')",key="/$(bashio::config 'keyfile')"}" \
+
 # Set a random secret, to remove confusing warning from logs.
 secret_key=$(openssl rand -base64 32)
 export ROCKET_SECRET_KEY="${secret_key}"
