@@ -2,6 +2,21 @@ ARG BUILD_VERSION
 
 FROM bitwardenrs/server:1.18.0
 
+# add Nginx
+RUN \
+    apt-get update \
+    \
+    && apt-get install -y --no-install-recommends \
+        libmariadb-dev-compat=1:10.3.27-0+deb10u1 \
+        libpq5=11.9-0+deb10u1 \
+        nginx=1.14.2-2+deb10u3 \
+    && apt-get clean \
+    && rm -f -r \
+        /etc/nginx \
+    \
+    && mkdir -p /var/log/nginx \
+    && touch /var/log/nginx/error.log
+
 # Add bashio
 RUN \
     apt-get update \
@@ -21,7 +36,7 @@ RUN \
     && rm -fr /tmp/bashio.tar.gz
 
 # Copy root filesystem
-COPY run.sh /
+COPY rootfs /
 RUN chmod 777 /run.sh
 CMD [ "/run.sh" ]
 
