@@ -7,12 +7,12 @@ RUN \
     apt-get update \
     \
     && apt-get install -y --no-install-recommends \
-        libmariadb-dev-compat=1:10.3.27-0+deb10u1 \
-        libpq5=11.9-0+deb10u1 \
-        nginx=1.14.2-2+deb10u3 \
+    libmariadb-dev-compat=1:10.3.27-0+deb10u1 \
+    libpq5=11.9-0+deb10u1 \
+    nginx=1.14.2-2+deb10u3 \
     && apt-get clean \
     && rm -f -r \
-        /etc/nginx \
+    /etc/nginx \
     \
     && mkdir -p /var/log/nginx \
     && touch /var/log/nginx/error.log
@@ -37,6 +37,8 @@ RUN \
 
 # Copy root filesystem
 COPY rootfs /
+
+# Launch bitwarden
 RUN chmod 777 /run.sh
 CMD [ "/run.sh" ]
 

@@ -9,7 +9,6 @@ declare request_size_limit
 declare secret_key
 
 # Set defaults
-export ROCKET_TLS="{certs="$(bashio::config 'certfile')",key="$(bashio::config 'keyfile')"}" \
 export DATA_FOLDER=/data
 export ROCKET_PORT=7277
 export ROCKET_WORKERS=2
