@@ -41,7 +41,6 @@ COPY rootfs /
 # Launch bitwarden
 RUN chmod 777 /run.sh
 # CMD [ "/run.sh" ]
-CMD [ "" ]
-ENTRYPOINT [ "/init" ]
+CMD [ "systemctl" ]
 
 VOLUME [ "/ssl", "/data" ]
