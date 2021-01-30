@@ -2,12 +2,12 @@
 
 bashio::log.info "Checking status of referenced addons..."
 
-for addon in $(bashio::config "addon|keys"); do
-    NAME=$(bashio::config "addons[${addon}].name")
-    REPOSITORY=$(bashio::config "addons[${addon}].repository")
-    UPSTREAM=$(bashio::config "addons[${addon}].upstream")
-    CURRENT=$(bashio::config "addons[${addon}].current")
-    BETA=$(bashio::config "addons[${addon}].beta")
+for addons in $(bashio::config "addon|keys"); do
+    NAME=$(bashio::config "addon[${addons}].name")
+    REPOSITORY=$(bashio::config "addon[${addons}].repository")
+    UPSTREAM=$(bashio::config "addon[${addons}].upstream")
+    CURRENT=$(bashio::config "addon[${addons}].current")
+    BETA=$(bashio::config "addon[${addons}].beta")
 
     LASTVERSION=$(lastversion --pre UPSTREAM)
     if [ $CURRENT != $LASTVERSION ]; then
