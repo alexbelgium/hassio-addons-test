@@ -17,8 +17,9 @@
   "environment": {
   },
   "options": {
-  "addons": ["github_user/repo_name"]
+  "repositories": [{ "Addon": "github_user/repo_name/addon", "Upstream": "github_user/repo_name", "beta": false }]
   },
   "schema": {
+  "repositories": [{ "Addon": "str", "Upstream": "str", "beta": "bool?" }]
   }
 }
