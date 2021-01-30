@@ -1,10 +1,9 @@
 {
-    "name": "Joal",
-    "version": "2.1.24",
-    "slug": "joal",
-    "description": "An open source command line RatioMaster with WebUI",
-    "url": "https://github.com/alexbelgium/hassio-addons/tree/master/joal",
-    "startup": "services",
+    "name": "Addons_Updater",
+    "version": "1.0",
+    "slug": "updater",
+    "description": "Automatic addons update upon upstream new release.",
+    "url": "https://github.com/alexbelgium/hassio-addons/tree/master/updater",
     "arch": [
     "aarch64",
     "amd64",
@@ -12,22 +11,14 @@
     "armhf"
   ],
    "ports": {
-      "49152/tcp": 49152,
-      "8081/tcp": 8081
     },
    "ports_description": {
-      "49152/tcp": "torrent port",
-      "8081/tcp": "Web UI port"
     },
-  "webui": "http://[HOST]:[PORT:8081]/joal/ui",
-  "boot": "auto", 
-  "host_network": true,
   "environment": {
   },
   "options": {
-  "secret_token": "lrMY24Byhx"
+  "addons": ["github_user/repo_name"]
   },
   "schema": {
-  "secret_token": "str"
   }
 }
