@@ -17,9 +17,11 @@
   "environment": {
   },
   "options": {
-  "repositories": [{ "Addon": "github_user/repo_name/addon", "Upstream": "github_user/repo_name", "beta": false }]
+  "repositories": [{ "Addon": "github_user/repo_name/addon", "Upstream": "github_user/repo_name", "beta": false }],
+  "frequency": 7
   },
   "schema": {
-  "repositories": [{ "Addon": "str", "Upstream": "str", "beta": "bool?" }]
+  "repositories": [{ "Addon": "str", "Upstream": "str", "beta": "bool?" }],
+  "frequency": [int]
   }
 }
