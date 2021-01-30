@@ -1,4 +1,21 @@
 #!/usr/bin/env bashio
-declare latestemby
 
-EMBY = "lastversion --pre linuxserver/docker-emby"
+bashio::log.info "Checking status of referenced addons..."
+
+for addon in $(bashio::config "addon|keys"); do
+    NAME=$(bashio::config "addons[${addon}].name")
+    REPOSITORY=$(bashio::config "addons[${addon}].repository")
+    UPSTREAM=$(bashio::config "addons[${addon}].upstream")
+    CURRENT=$(bashio::config "addons[${addon}].current")
+    BETA=$(bashio::config "addons[${addon}].beta")
+
+    LASTVERSION=$(lastversion --pre UPSTREAM)
+    if [ $CURRENT != $LASTVERSION ]; then
+        bashio::log.info "Addon &NAME will be updated from $CURRENT to $LASTVERSION"         
+    else
+        bashio::log.info "Addon &NAME is already up-to-date."
+    fi
+done
+
+#If different, update git
+#Update config.json
