@@ -7,5 +7,8 @@ VOLUME [ "/data" ]
 RUN pip install --upgrade pip \
     && pip install lastversion
 
+# Copy root filesystem
+COPY rootfs /
+
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
