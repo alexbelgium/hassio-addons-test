@@ -4,7 +4,9 @@ FROM $BUILD_FROM
 VOLUME [ "/data" ]
 
 #Install last version https://github.com/dvershinin/lastversion
-RUN pip install --upgrade pip \
+RUN \
+    apk add --no-cache git \
+    && pip install --upgrade pip \
     && pip install lastversion
 
 # Copy root filesystem
