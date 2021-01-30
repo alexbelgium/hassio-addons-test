@@ -9,7 +9,7 @@ for addons in $(bashio::config "addon|keys"); do
     CURRENT=$(bashio::config "addon[${addons}].current")
     BETA=$(bashio::config "addon[${addons}].beta")
 
-    LASTVERSION=$(lastversion --pre UPSTREAM)
+    LASTVERSION=$(lastversion --pre $UPSTREAM)
     if [ $CURRENT != $LASTVERSION ]; then
         bashio::log.info "Addon &NAME will be updated from $CURRENT to $LASTVERSION"         
     else
