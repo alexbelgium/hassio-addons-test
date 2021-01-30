@@ -23,7 +23,7 @@
   "frequency": 7
   },
   "schema": {
-  "addon": [{ "name": "str", "repository": "str", "upstream": "str", "current": "str", "beta": "bool" }],
+  "addon": [{ "slug": "str", "current": "str", "beta": "bool" , "repository": "str", "upstream": "str"}],
   "gituser": "str",
   "gitpass": "str",
   "frequency": "int"
