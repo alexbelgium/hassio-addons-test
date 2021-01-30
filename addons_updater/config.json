@@ -21,7 +21,7 @@
   "frequency": 7
   },
   "schema": {
-  "repositories": [{ "name": "str", "repository": "str", "upstream": "str", "current": "str", "beta": "bool" }],
+  "addon": [{ "name": "str", "repository": "str", "upstream": "str", "current": "str", "beta": "bool" }],
   "frequency": "int"
   }
 }
