@@ -1,21 +1,51 @@
 #!/usr/bin/env bashio
 
-bashio::log.info "Checking status of referenced addons..."
+bashio::log.info "Checking status of referenced repositoriess..."
 
-for addons in $(bashio::config "addon|keys"); do
-    NAME=$(bashio::config "addon[${addons}].name")
-    REPOSITORY=$(bashio::config "addon[${addons}].repository")
-    UPSTREAM=$(bashio::config "addon[${addons}].upstream")
-    CURRENT=$(bashio::config "addon[${addons}].current")
-    BETA=$(bashio::config "addon[${addons}].beta")
+#Defining github values
+GITUSER=$(bashio::config "gituser")
+GITPASS=$(bashio::config "gitpass")
+git config --global credential.helper cache
+git config --global user.name $GITUSER
+git config --global user.password $GITPASS
 
-    LASTVERSION=$(lastversion --pre $UPSTREAM)
+for addon in $(bashio::config "repositories|keys"); do
+    SLUG=$(bashio::config "repositories[${addon}].slug")
+    REPOSITORY=$(bashio::config "repositories[${addon}].repository")
+    UPSTREAM=$(bashio::config "repositories[${addon}].upstream")
+    CURRENT=$(bashio::config "repositories[${addon}].current")
+    BETA=$(bashio::config "repositories[${addon}].beta")
+	BASENAME=$(basename $REPOSITORY .git)
+
+	#If beta flag, select beta version
+	if [ $BETA = true ]; then
+		LASTVERSION=$(lastversion --pre $UPSTREAM)
+	else 
+		LASTVERSION=$(lastversion $UPSTREAM)
+	fi
+
     if [ $CURRENT != $LASTVERSION ]; then
-        bashio::log.info "Addon &NAME will be updated from $CURRENT to $LASTVERSION"         
-    else
-        bashio::log.info "Addon &NAME is already up-to-date."
-    fi
-done
+        bashio::log.info "Addon $SLUG will be updated from $CURRENT to $LASTVERSION"
 
-#If different, update git
-#Update config.json
+        #Update local version
+        git clone $REPOSITORY || cd /$BASENAME fetch --all && git reset --hard origin/master
+
+        #Define the folder addon
+		cd /$BASENAME/$SLUG || bashio::log.error "$SLUG addon not found in this repository. Exiting." exit
+
+        #Change all instances of version
+        find /$BASENAME/$SLUG -type f -print0 || xargs -0 sed -i 's/$CURRENT/$LASTVERSION/g' && xargs -0 git commit -m "Bot update $LASTVERSION" 
+		
+		#Git commit and push
+	    git push origin master
+
+		#Update the current flag
+        sed -i 's/$CURRENT/$LASTVERSION/g' /data/options.json                                                       
+                                                                     
+		#Log															 
+		bashio::log.info ".... updated and published"  
+		
+    else                                                                                
+        bashio::log.info "Addon &NAME is already up-to-date."                           
+    fi                                                               
+done                                                                 
