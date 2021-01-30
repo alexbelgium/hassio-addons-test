@@ -22,6 +22,6 @@
   },
   "schema": {
   "repositories": [{ "name": "str", "Addon": "str", "Upstream": "str", "beta": "bool" }],
-  "frequency": int
+  "frequency": "int"
   }
 }
