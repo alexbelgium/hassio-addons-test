@@ -11,6 +11,7 @@
     "armhf"
   ],
    "ports": {
+    "8000TCP": "8000"
     },
    "ports_description": {
     },
