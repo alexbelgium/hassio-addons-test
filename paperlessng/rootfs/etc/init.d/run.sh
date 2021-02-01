@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bashio
+#!/usr/bin/env bashio
 
 #Populate variables
 bashio::log.info "Setting variables according to configuration"
