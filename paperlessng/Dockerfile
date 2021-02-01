@@ -24,4 +24,4 @@ RUN apt-get update \
 #COPY rootfs /
 #RUN ["chmod", "+x", "/etc/init.d/run.sh"]
     
-VOLUME ["/share", "/ssl", "/data"]
+# VOLUME ["/share", "/ssl", "/data"]
