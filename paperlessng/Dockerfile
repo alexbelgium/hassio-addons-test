@@ -20,6 +20,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY run.sh /
-RUN chmod +x /run.sh
+RUN chmod 777 /run.sh
+ENTRYPOINT [ "/run.sh" ]
     
 VOLUME ["/share", "/ssl", "/data"]
