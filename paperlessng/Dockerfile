@@ -4,3 +4,5 @@ VOLUME [ "/data" ]
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+COPY rootfs /
