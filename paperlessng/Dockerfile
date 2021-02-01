@@ -16,10 +16,8 @@ RUN apt-get update \
     \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr \
-    /tmp/* \
-    /var/{cache,log}/* \
-    /var/lib/apt/lists/*
+    && rm -rf /tmp/* \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY rootfs/ /
 RUN chmod +x /etc/init.d/run.sh
