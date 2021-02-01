@@ -3,7 +3,7 @@
     "version": "1.0",
     "slug": "paperlessng",
     "description": "",
-    "url": "",
+    "url": "https://github.com/jonaswinkler/paperless-ng",
     "arch": [
     "aarch64",
     "amd64",
