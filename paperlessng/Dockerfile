@@ -1,5 +1,8 @@
 FROM jonaswinkler/paperless-ng:1.0.0
 
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 # Install bashio
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -18,9 +21,7 @@ RUN apt-get update \
     /var/{cache,log}/* \
     /var/lib/apt/lists/*
 
-VOLUME [ "/data" ]
-
-# Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
 COPY rootfs /
+RUN ["chmod", "+x", "/etc/init.d"]
+    
+VOLUME ["/share", "/ssl", "/data"]
