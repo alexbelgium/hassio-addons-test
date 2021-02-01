@@ -22,6 +22,6 @@ RUN apt-get update \
     /var/lib/apt/lists/*
 
 COPY rootfs /
-RUN ["chmod", "+x", "/etc/init.d"]
+RUN ["chmod", "+x", "/etc/init.d/run.sh"]
     
 VOLUME ["/share", "/ssl", "/data"]
