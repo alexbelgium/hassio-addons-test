@@ -10,7 +10,7 @@
     "armhf"
   ],
    "ports": {
-    "8000/TCP": 8000
+    "8000/tcp": 8000
     },
    "ports_description": {
     }, 
