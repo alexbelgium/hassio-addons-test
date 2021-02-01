@@ -19,7 +19,7 @@ RUN apt-get update \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/*
 
-COPY rootfs/ /
-RUN chmod +x /etc/init.d/run.sh
+COPY run.sh /
+RUN chmod +x /run.sh
     
 VOLUME ["/share", "/ssl", "/data"]
