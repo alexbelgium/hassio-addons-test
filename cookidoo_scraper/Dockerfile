@@ -8,9 +8,7 @@ RUN \
     && pip install --upgrade pip \
     && pip install nodejs npm \
 	&& cd /data \
-	&& git clone https://github.com/tobim-dev/cookidoo-scraper-simple.git /data/ \
-	&& cd cookidoo-scraper-simple \
-	&& npm install
+	&& git clone https://github.com/tobim-dev/cookidoo-scraper-simple.git
 
 # Copy script
 COPY run.sh /
