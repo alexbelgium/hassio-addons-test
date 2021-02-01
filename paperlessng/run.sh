@@ -11,8 +11,8 @@ export DEFAULT_PASSWORD=$(bashio::config 'password')
 #export PAPERLESS_CONSUMPTION_DIR=$(bashio::config 'consumption_dir')
 #export PAPERLESS_DATA_DIR=$(bashio::config 'data_dir')
 #export PAPERLESS_MEDIA_ROOT=$(bashio::config 'media_root')
-export PAPERLESS_FILENAME_FORMAT==$(bashio::config 'format')
-export PAPERLESS_ALLOWED_HOSTS==$(bashio::config 'whitelist')
+#export PAPERLESS_FILENAME_FORMAT==$(bashio::config 'format')
+#export PAPERLESS_ALLOWED_HOSTS==$(bashio::config 'whitelist')
 
 #Optional variables
 if bashio::config.has_value 'UID'; then
