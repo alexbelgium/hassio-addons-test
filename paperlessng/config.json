@@ -11,7 +11,8 @@
   ],
     "webui": "http://[HOST]:[PORT:8000]",
     "ports": {
-    "8000/tcp": 8000
+    "8000/tcp": 8000,
+    "6379/tcp": 6379        
     },
    "ports_description": {
     "8000/tcp": "Web UI"
