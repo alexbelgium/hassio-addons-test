@@ -1,0 +1,44 @@
+{
+    "name": "paperless ng",
+    "version": "1.0",
+    "slug": "paperlessng",
+    "description": "",
+    "url": "",
+    "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
+   "ports": {
+    "8000/tcp": 8000
+    },
+   "ports_description": {
+    "8000/tcp": "Web UI"
+    },
+  "environment": {
+  },
+  "options": {
+  "UID": 1000,
+  "GID": 1000,
+  "secretkey": "secretkey",
+  "ocr_lang": "eng",
+  "username": "username",
+  "email": "email@gmail.com",
+  "password": "password",
+  "consumption_dir": "/share/paperless/consume",
+  "data_dir": "/share/paperless/data",
+  "media_root": "/share/paperless/media"
+},
+  "schema": {
+  "UID": "int?",
+  "GID": "int?",
+  "secretkey": "str",
+  "ocr_lang": "str",
+  "username": "str",
+  "email": "str",
+  "password": "str",
+  "consumption_dir": "str",
+  "data_dir": "str",
+  "media_root": "str"  
+  }
+}

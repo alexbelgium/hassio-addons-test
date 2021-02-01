@@ -1,8 +1,0 @@
-{ "build_from":
-{ "armv7": "linuxserver/embystat:arm32v7-version-0.2.0-beta.24", 
-"armhf": "linuxserver/embystat:arm32v7-version-0.2.0-beta.24", 
-"aarch64": "linuxserver/embystat:arm64v8-version-0.2.0-beta.24", 
-"amd64": "linuxserver/embystat:amd64-version-0.2.0-beta.24" }, 
-"squash": false, 
-"args": {}
-} 
