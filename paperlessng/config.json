@@ -33,7 +33,9 @@
   "password": "password",
   "consumption_dir": "/share/paperless/consume",
   "data_dir": "/share/paperless/data",
-  "media_root": "/share/paperless/media"
+  "media_root": "/share/paperless/media",
+  "format": "{created_year}/{correspondent}/{title}",
+  "whitelist": "192.168.178.23,www.google.fr"
 },
   "schema": {
   "UID": "int?",
@@ -45,6 +47,8 @@
   "password": "str",
   "consumption_dir": "str",
   "data_dir": "str",
-  "media_root": "str"  
+  "media_root": "str",  
+  "format": "str",
+  "whitelist": "str"
   }
 }
