@@ -27,4 +27,5 @@ mkdir -p $PAPERLESS_CONSUMPTION_DIR
 mkdir -p $PAPERLESS_DATA_DIR
 mkdir -p $PAPERLESS_MEDIA_ROOT
 
+bashio::log.info "Starting paperless"
 /./sbin/docker-entrypoint.sh
