@@ -26,3 +26,5 @@ bashio::log.info "Creating directories"
 mkdir -p $PAPERLESS_CONSUMPTION_DIR
 mkdir -p $PAPERLESS_DATA_DIR
 mkdir -p $PAPERLESS_MEDIA_ROOT
+
+./sbin/docker-entrypoint.sh
