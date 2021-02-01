@@ -17,6 +17,10 @@
     },
   "environment": {
   },
+  "map": [
+    "share:rw",
+    "ssl"
+  ],
   "options": {
   "UID": 1000,
   "GID": 1000,
