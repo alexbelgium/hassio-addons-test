@@ -9,7 +9,8 @@
     "amd64",
     "armv7"
   ],
-   "ports": {
+    "webui": "http://[HOST]:[PORT:8000]",
+    "ports": {
     "8000/tcp": 8000
     },
    "ports_description": {
