@@ -1,6 +1,6 @@
 #!/usr/bin/env bashio
 
-#Populate variables
+#Populate variables https://paperless-ng.readthedocs.io/en/latest/configuration.html
 bashio::log.info "Setting variables according to configuration"
 export PAPERLESS_SECRET_KEY=$(bashio::config 'secretkey')
 export PAPERLESS_OCR_LANGUAGE=$(bashio::config 'ocr_lang')
