@@ -18,10 +18,9 @@
     "8000/tcp": "Web UI"
     },
   "environment": {
-"PAPERLESS_OCR_LANGUAGE": "eng",
-"DEFAULT_USERNAME": "username",
-"DEFAULT_EMAIL": "address@gmail.com",
-"DEFAULT_PASSWORD": "password"
+"paperlessng_superuser_name": "username",
+"paperlessng_superuser_email": "address@gmail.com",
+"paperlessng_superuser_password": "password"
   },
   "map": [
     "share:rw",
