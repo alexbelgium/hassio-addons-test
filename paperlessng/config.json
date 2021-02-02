@@ -18,6 +18,10 @@
     "8000/tcp": "Web UI"
     },
   "environment": {
+"PAPERLESS_OCR_LANGUAGE="eng",
+"DEFAULT_USERNAME="username",
+"DEFAULT_EMAIL="address@gmail.com",
+"DEFAULT_PASSWORD="password"
   },
   "map": [
     "share:rw",
