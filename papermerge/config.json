@@ -14,7 +14,7 @@
       "8000/tcp": 8000
     },
    "ports_description": {
-      "9000/tcp": "Web UI port (required)",
+      "9000/tcp": "Web UI port (required)"
     },
   "map": [
     "config:rw",
