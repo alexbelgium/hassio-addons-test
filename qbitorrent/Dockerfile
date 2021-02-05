@@ -18,7 +18,9 @@ RUN apt-get update && apt-get install -y \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -fr /tmp/bashio.tar.gz \
     \
-    && sed '11,13d' /defaults/qBittorrent.conf \
+    # Remove fixed folders
+    && sed '11,13d' /defaults/qBittorrent.conf \ 
+    # Allow connection to webUI
     && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf
 
 # Copy root filesystem
