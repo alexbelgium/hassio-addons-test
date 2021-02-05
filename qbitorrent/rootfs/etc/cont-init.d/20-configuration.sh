@@ -5,3 +5,5 @@ bashio::log.info "Setting variables"
 #sed -i "s|'/downloads/'|"$(bashio::config 'downloads')"|g" /defaults/qBittorrent.conf
 #sed -i "s|'/downloads/incomplete/'|$(bashio::config 'temppath')|g" /defaults/qBittorrent.conf
 echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf
+
+bashio::log.info "Default username/password : admin/adminadmin"
