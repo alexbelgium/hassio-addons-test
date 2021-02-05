@@ -1,7 +1,7 @@
 {
     "name": "Seafile",
     "version": "8.0",
-    "slug": "Seafile",
+    "slug": "seafile",
     "description": "Open source document management system (DMS)",
     "url": "https://hub.docker.com/r/linuxserver/papermerge",
     "arch": [
