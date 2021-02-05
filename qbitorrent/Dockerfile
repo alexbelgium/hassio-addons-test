@@ -21,4 +21,4 @@ RUN apt-get update && apt-get install -y \
 # Copy root filesystem
 COPY rootfs /
 
-VOLUME [ "/data" ]
+VOLUME [ "/data" "/config" ]
