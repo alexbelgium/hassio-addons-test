@@ -22,6 +22,7 @@
       "6881/udp": "Peer port"
     },
   "map": [
+    "config:rw",
     "share:rw",
     "media:rw"
   ],
