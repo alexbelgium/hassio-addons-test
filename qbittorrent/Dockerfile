@@ -3,8 +3,7 @@ ARG BUILD_VERSION
 FROM ${BUILD_FROM}${BUILD_VERSION}
 
 RUN \
-    \
-    && apt-get update \
+    apt-get update \
     && apt-get install -y \
     jq \
     coreutils \
