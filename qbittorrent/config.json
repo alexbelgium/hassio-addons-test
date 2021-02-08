@@ -15,8 +15,7 @@
     "armhf"
   ],
    "ports": {
-      "9091/tcp": 9091,
-      "8181/tcp": 8182,
+      "9091/tcp": 9092,
       "6881/tcp": 6881,
       "6881/udp": 6881
     },
@@ -35,11 +34,11 @@
       "share:rw",
       "ssl"
   ],
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:9091]",
   "boot": "auto", 
   "hassio_api": true,
   "environment": {
-  "WEBUI_PORT": "8181"
+  "WEBUI_PORT": "9091"
   },
   "options": {
     "ssl": false,
