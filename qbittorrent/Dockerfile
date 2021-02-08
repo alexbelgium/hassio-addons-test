@@ -6,19 +6,19 @@ FROM ${BUILD_FROM}${BUILD_VERSION}
 COPY rootfs /
 
 RUN \
-    # Install bashio
     apt-get update \
     \
     && apt-get install -y --no-install-recommends \
     jq \
-	nginx \
+    coreutils \
+    nginx \
     \
     && rm -f -r \
         /etc/nginx \
     && touch /var/log/nginx/error.log \
     && apt-get -y upgrade cifs-utils \
     && curl -J -L -o /tmp/bashio.tar.gz \
-    "https://github.com/hassio-addons/bashio/archive/v0.7.1.tar.gz" \
+    "https://github.com/hassio-addons/bashio/archive/v0.10.1.tar.gz" \
     && mkdir /tmp/bashio \
     && tar zxvf \
     /tmp/bashio.tar.gz \
@@ -39,8 +39,6 @@ RUN \
     && sed '11,13d' /defaults/qBittorrent.conf \ 
     && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
     && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf \
-    # use /data instead of /config for hass.io environment
-    # &&  files=$(grep -rls '/config' /) && echo $files | xargs sed -i "s=/config=/data=g" \
     # Allow custom scripts execution
     && chmod -R 755 /scripts/
 
