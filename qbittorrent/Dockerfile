@@ -3,7 +3,7 @@ ARG BUILD_VERSION
 FROM ${BUILD_FROM}${BUILD_VERSION}
 
 RUN \
-    \ add-apt-repository ppa:nginx/stable \
+    \
     && apt-get update \
     && apt-get install -y \
     jq \
