@@ -15,7 +15,7 @@ RUN \
     \
     && rm -f -r \
         /etc/nginx \
-    && touch /var/log/nginx/error.log
+    && touch /var/log/nginx/error.log \
     && apt-get -y upgrade cifs-utils \
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.7.1.tar.gz" \
