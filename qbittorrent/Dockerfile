@@ -6,9 +6,9 @@ FROM ${BUILD_FROM}${BUILD_VERSION}
 COPY rootfs /
 
 RUN \
-    apt-get update \
-    \
-    && apt-get install -y --no-install-recommends \
+    \ add-apt-repository ppa:nginx/stable \
+    && apt-get update \
+    && apt-get install -y \
     jq \
     coreutils \
     nginx \
