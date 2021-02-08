@@ -13,8 +13,6 @@ RUN \
     coreutils \
     nginx \
     \
-    && rm -f -r \
-        /etc/nginx \
     && touch /var/log/nginx/error.log \
     && apt-get -y upgrade cifs-utils \
     && curl -J -L -o /tmp/bashio.tar.gz \
@@ -28,8 +26,6 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -fr \
     /tmp/* \
-    /var/{cache,log}/* \
-    /var/lib/apt/lists/* \
     \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
