@@ -38,8 +38,6 @@
   "boot": "auto", 
   "environment": {
   "WEBUI_PORT": "8080",
-  "PUID": 0,
-  "PGID": 0
   },
   "options": {
     "ssl": false,
