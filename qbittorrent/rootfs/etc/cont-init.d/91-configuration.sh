@@ -9,17 +9,6 @@ sed -i '/HTTPS/d' qBittorrent.conf
 LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
 LINE=$[LINE + 1] 
 
-bashio::config.require.ssl
-if bashio::config.true 'ssl'; then
-  bashio::log.info "ssl enabled. If webui don't work, disable ssl or check your certificate paths"
-  #set variables 
-  CERTFILE=$(bashio::config 'certfile') 
-  KEYFILE=$(bashio::config 'keyfile')
-  sed -i "$LINE i\WebUI\\\HTTPS\\\Enabled=True" qBittorrent.conf
-  sed -i "$LINE i\WebUI\\\HTTPS\\\CertificatePath=/ssl/$CERTFILE" qBittorrent.conf
-  sed -i "$LINE i\WebUI\\\HTTPS\\\KeyPath=/ssl/$KEYFILE" qBittorrent.conf
-fi
-
 bashio::log.info "Default username/password : admin/adminadmin"
 
 if bashio::config.has_value 'whitelist'; then
