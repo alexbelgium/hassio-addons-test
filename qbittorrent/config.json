@@ -36,6 +36,7 @@
   ],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
   "boot": "auto", 
+  "hassio_api": true,
   "environment": {
   "WEBUI_PORT": "80"
   },
