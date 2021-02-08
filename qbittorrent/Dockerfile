@@ -30,9 +30,7 @@ RUN \
     # Remove fixed folders, allows connection to webUI
     && sed '11,13d' /defaults/qBittorrent.conf \ 
     && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
-    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf \
-    # Allow custom scripts execution
-    && chmod -R 755 /scripts/
+    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf
 
 # Copy root filesystem
 COPY rootfs /
