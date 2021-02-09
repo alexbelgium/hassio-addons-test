@@ -29,8 +29,8 @@ RUN \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     # Remove fixed folders, allows connection to webUI
     && sed '11,13d' /defaults/qBittorrent.conf \ 
-    && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
-    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf
+    && echo "WebUI\HostHeaderValidation=false" >> /defaults/qBittorrent.conf \
+    && echo "WebUI\LocalHostAuth=false" >> /defaults/qBittorrent.conf
 
 # Copy root filesystem
 COPY rootfs /
