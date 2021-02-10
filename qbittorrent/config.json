@@ -4,6 +4,7 @@
     "slug": "qbittorrent2",
     "description": "qBittorrent is a bittorrent client",
     "url": "https://github.com/alexbelgium/hassio-addons/tree/master/qbittorrent",
+    "ingress": true,
     "startup": "services",
     "arch": [
     "aarch64",
