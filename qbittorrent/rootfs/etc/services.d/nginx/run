@@ -2,7 +2,7 @@
 # ==============================================================================
 
 # Wait for qbittorrent to become available
-bashio::net.wait_for 9092 localhost 900 
+bashio::net.wait_for 9091 localhost 900 
 
 bashio::log.info "Starting NGinx..."
 
