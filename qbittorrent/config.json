@@ -15,12 +15,12 @@
     "armhf"
   ],
    "ports": {
-      "8080/tcp": 8081,
+      "9092/tcp": 9092,
       "6881/tcp": 6882,
       "6881/udp": 6882
     },
    "ports_description": {
-      "8080/tcp": "Web UI port",
+      "9092/tcp": "Web UI port",
       "6881/tcp": "Peer port",
       "6881/udp": "Peer port"
     },
