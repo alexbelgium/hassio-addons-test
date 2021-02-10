@@ -14,8 +14,8 @@
   ],
    "ports": {
       "8080/tcp": 8081,
-      "6881/tcp": 6881,
-      "6881/udp": 6881
+      "6881/tcp": 6882,
+      "6881/udp": 6882
     },
    "ports_description": {
       "8080/tcp": "Web UI port",
