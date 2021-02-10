@@ -31,10 +31,10 @@
   "map":[
       "ssl"
   ],
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:9092]",
   "boot": "auto", 
   "environment": {
-  "WEBUI_PORT": "9092"
+  "WEBUI_PORT": "9091"
   },
   "options": {
     "ssl": false,
