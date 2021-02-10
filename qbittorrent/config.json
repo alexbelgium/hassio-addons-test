@@ -27,9 +27,6 @@
   ],
   "full_access": true,
   "map":[
-      "media:rw",
-      "config:rw",
-      "share:rw",
       "ssl"
   ],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
