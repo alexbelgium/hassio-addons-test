@@ -41,7 +41,4 @@ RUN \
 # Copy root filesystem
 COPY rootfs /
 
-# Allow custom scripts execution
-RUN chmod -R 755 /scripts/
-
 VOLUME [ "/data" ]
