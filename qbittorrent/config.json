@@ -25,7 +25,7 @@
       "6881/udp": "Peer port"
     },
   "privileged": [
-    "SYS_ADMIN"
+    "SYS_ADMIN", "DAC_READ_SEARCH" 
   ],
   "full_access": true,
   "map":[
