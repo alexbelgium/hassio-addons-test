@@ -1,6 +1,7 @@
+{
 #include <tunables/global>
 
-profile qBittorrent_addon flags=(attach_disconnected,mediate_deleted) {
+profile Qbittorrent_addon flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
   
   capability,
