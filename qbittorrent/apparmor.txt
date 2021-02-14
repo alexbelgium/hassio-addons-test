@@ -27,7 +27,6 @@ profile qBittorrent_addon flags=(attach_disconnected,mediate_deleted) {
   /init rix,
   /var/run/** mrwkl,
   /var/run/ mrwkl,
-  /proc/self/attr/** mrwkl,
   # Files required
   /dev/sda1 mrwkl,
   /dev/sdb1 mrwkl,
