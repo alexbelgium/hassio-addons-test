@@ -12,6 +12,8 @@ profile qBittorrent_addon flags=(attach_disconnected,mediate_deleted) {
   capability setgid,
   capability setuid,
   capability dac_override,
+  capability sys_amin, 
+  capability dac_read_search 
 
   # S6-Overlay
   /bin/** ix,
