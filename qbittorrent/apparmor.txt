@@ -1,4 +1,3 @@
-{
 #include <tunables/global>
 
 profile Qbittorrent_addon flags=(attach_disconnected,mediate_deleted) {
@@ -14,7 +13,7 @@ profile Qbittorrent_addon flags=(attach_disconnected,mediate_deleted) {
   capability setuid,
   capability dac_override,
   capability sys_amin, 
-  capability dac_read_search 
+  capability dac_read_search, 
 
   # S6-Overlay
   /bin/** ix,
@@ -33,6 +32,6 @@ profile Qbittorrent_addon flags=(attach_disconnected,mediate_deleted) {
   /tmp/** mrkwl,
   
   # Data access
-  /data/** rw
+  /data/** rw, 
  
 }
