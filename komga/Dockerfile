@@ -22,7 +22,7 @@ RUN \
     && rm -fr \
     /tmp/* \
     /var/{cache,log}/* \
-    /var/lib/apt/lists/*
+    /var/lib/apt/lists/* \
 	\
 	&& mkdir -p -m 777 /share/komga	
 
