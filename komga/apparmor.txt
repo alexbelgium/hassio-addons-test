@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile db21ed7f_komga flags=(attach_disconnected,mediate_deleted) {
+profile addon_komga flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
   
   capability,
@@ -38,6 +38,8 @@ profile db21ed7f_komga flags=(attach_disconnected,mediate_deleted) {
   
   # Data access
   /data/** rw, 
+  /config/** rw, 
+  /share/** rw, 
 
   # suppress ptrace denials when using 'docker ps' or using 'ps' inside a container
   ptrace (trace,read) peer=docker-default,

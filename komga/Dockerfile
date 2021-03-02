@@ -1,9 +1,37 @@
-ARG BUILD_VERSION
-FROM "hurlenko/komga:v$BUILD_VERSION"
+ARG BUILD_UPSTREAM="0.77.1"
+FROM gotson/komga:${BUILD_UPSTREAM}
+
+RUN \
+    # Install bashio
+    apt-get update \
+    \
+    && apt-get install -y --no-install-recommends \
+    jq \
+    wget \
+    \
+    && apt-get -y upgrade cifs-utils \
+    && curl -J -L -o /tmp/bashio.tar.gz \
+    "https://github.com/hassio-addons/bashio/archive/v0.7.1.tar.gz" \
+    && mkdir /tmp/bashio \
+    && tar zxvf \
+    /tmp/bashio.tar.gz \
+    --strip 1 -C /tmp/bashio \
+    \
+    && mv /tmp/bashio/lib /usr/lib/bashio \
+    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+    && rm -fr \
+    /tmp/* \
+    /var/{cache,log}/* \
+    /var/lib/apt/lists/*
+	\
+	&& mkdir -p -m 777 /share/komga	
 
 VOLUME [ "/data" ]
-VOLUME [ "/config/komga:/config" ]
-RUN mkdir -p -m 777 /config/komga	
+WORKDIR /
+COPY run /
+RUN chmod 777 /run
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/run" ] 
 
 ### LABELS
 ARG BUILD_ARCH
