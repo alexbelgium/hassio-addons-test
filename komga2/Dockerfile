@@ -10,7 +10,7 @@ RUN \
  echo "**** install build packages ****" && \
  apk add --no-cache --virtual=build-dependencies \
 	curl \
-	shadow \ # allow change UID GID
+	shadow \
 	unzip && \
  echo "**** install runtime packages ****" && \
  apk add --no-cache \
