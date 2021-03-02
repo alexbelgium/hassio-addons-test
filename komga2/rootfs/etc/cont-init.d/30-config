@@ -8,4 +8,4 @@ mkdir -p /share/komga
 	cp /defaults/application.yml /application.yml
 
 # permissions
-chown -R abc:abc /application.yml /share/komga
+#chown -R abc:abc /application.yml /share/komga
