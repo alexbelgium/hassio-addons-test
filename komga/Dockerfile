@@ -27,11 +27,6 @@ RUN \
 	&& mkdir -p -m 777 /share/komga	
 
 VOLUME [ "/data" ]
-WORKDIR /
-COPY run /
-RUN chmod 777 /run
-ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/run" ] 
 
 ### LABELS
 ARG BUILD_ARCH
