@@ -16,7 +16,7 @@ RUN \
 	openjdk8-jre-base && \
  echo "**** install komga ****" && \
     mkdir /app && \
-    && wget -O /komga.jar "https://github.com/gotson/komga/releases/download/v$BUILD_UPSTREAM/komga-$BUILD_UPSTREAM.jar" && \
+    wget -O /komga.jar "https://github.com/gotson/komga/releases/download/v$BUILD_UPSTREAM/komga-$BUILD_UPSTREAM.jar" && \
  echo "**** cleanup ****" && \
  apk del --purge \
 	build-dependencies && \
