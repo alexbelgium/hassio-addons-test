@@ -1,0 +1,11 @@
+#!/usr/bin/with-contenv bash
+
+# make our folders
+mkdir -p /share/komga
+
+# copy config
+[[ ! -e /application.yml ]] && \
+	cp /defaults/application.yml /application.yml
+
+# permissions
+chown -R abc:abc /application.yml /share/komga

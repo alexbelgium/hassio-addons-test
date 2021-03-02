@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv bashio
+
+JAVAMEM=$(bashio::config 'maxmem')
+
+# Run the komga server
+exec java -Xmx"$JAVAMEM"m -jar /komga.jar --server.servlet.context-path="/komga"
