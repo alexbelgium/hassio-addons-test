@@ -1,0 +1,12 @@
+#!/usr/bin/with-contenv bashio
+# Wait for scrutiny to become available
+bashio::net.wait_for 8080 localhost 9000
+
+bashio::log.info "Starting NGinx..."
+
+# Disable HA Authentication if front door is open
+if bashio::config.true 'leave_front_door_open'; then
+    export DISABLE_HA_AUTHENTICATION=true
+fi
+
+exec nginx
