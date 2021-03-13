@@ -7,19 +7,6 @@ FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 COPY rootfs /
 
 RUN \
-    apk add --no-cache --virtual .build-dependencies \
-        g++ \
-        gcc \
-        libc-dev \
-        linux-headers \
-        make \
-    \
-    && apk add --no-cache \
-        nginx  \
-        npm \
-        patch
-
-RUN \
     chmod a+x /run.sh \
     \
     # Install bashio
