@@ -7,6 +7,24 @@ FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 COPY rootfs /
 
 RUN \
+    apk add --no-cache --virtual .build-dependencies \
+        g++=10.2.1_pre1-r3 \
+        gcc=10.2.1_pre1-r3 \
+        libc-dev=0.7.2-r3 \
+        linux-headers=5.7.8-r0 \
+        make=4.3-r0 \
+        py3-pip=20.3.4-r0 \
+        python3-dev=3.8.7-r1 \
+    \
+    && apk add --no-cache \
+        git=2.30.1-r0 \
+        nginx=1.18.0-r13  \
+        nodejs=14.16.0-r0 \
+        npm=14.16.0-r0 \
+        openssh-client=8.4_p1-r2 \
+        patch=2.7.6-r6
+
+RUN \
     chmod a+x /run.sh \
     \
     # Install bashio
