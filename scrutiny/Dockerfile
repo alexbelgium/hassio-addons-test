@@ -6,6 +6,9 @@ FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 # Copy root filesystem
 COPY rootfs /
 
+#Add nginx and create the run folder for nginx.
+RUN apk --no-cache  add nginx;mkdir -p /run/nginx;
+
 RUN \
     chmod a+x /run.sh \
     \
@@ -14,10 +17,8 @@ RUN \
     jq \
     curl \
     cifs-utils \
-	nginx \
     \
-    && mkdir -p /run/nginx \
-	&& curl -J -L -o /tmp/bashio.tar.gz \
+    && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.10.1.tar.gz" \
     && mkdir /tmp/bashio \
     && tar zxvf \
