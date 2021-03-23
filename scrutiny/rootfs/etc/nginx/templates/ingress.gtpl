@@ -8,6 +8,11 @@ server {
         allow   172.30.32.2;
         deny    all;
 
-        proxy_pass {{ .protocol }}://backend;
+        set $upstream_app scrutiny;
+        set $upstream_port 8080;
+        set $upstream_proto http;
+        proxy_pass $upstream_proto://$upstream_app:$upstream_port;
+   
+       // proxy_pass {{ .protocol }}://backend;
     }
 }
