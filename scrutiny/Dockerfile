@@ -6,9 +6,6 @@ FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 # Copy root filesystem
 COPY rootfs /
 
-#Add nginx and create the run folder for nginx.
-RUN apk --no-cache  add nginx;mkdir -p /run/nginx;
-
 RUN \
     chmod a+x /run.sh \
     \
@@ -17,6 +14,7 @@ RUN \
     jq \
     curl \
     cifs-utils \
+    nginx \
     \
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.10.1.tar.gz" \
@@ -40,6 +38,7 @@ RUN \
     && sed -i 's| /config| /data|g' /etc/cont-init.d/* \
     && sed -i 's| /config| /data|g' /etc/logrotate.d/scrutiny \
     && sed -i 's| /config| /data|g' /etc/crontabs/root \
+ # analyse local devices at reboot and every hours   
     && sed -i -e '$a @reboot /run.sh' /etc/crontabs/root \
     && sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root
 
