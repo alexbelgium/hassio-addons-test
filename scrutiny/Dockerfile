@@ -15,6 +15,7 @@ RUN \
     curl \
     cifs-utils \
     nginx \
+    core-utils \
     \
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.10.1.tar.gz" \
