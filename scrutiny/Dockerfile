@@ -12,9 +12,10 @@ ARG TEMPIO_VERSION=2021.01.0
 ARG BUILD_ARCH
 
 RUN \
+# Install script
     chmod a+x /run.sh \
     \
-    # Install bashio
+# Add apps
     && apk add --no-cache \
     jq \
     curl \
