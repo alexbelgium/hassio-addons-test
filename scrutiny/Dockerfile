@@ -21,7 +21,6 @@ RUN \
     curl \
     cifs-utils \
     nginx \
-    core-utils \
     \
 # Install tempio
     && curl -L -f -s -o /usr/bin/tempio \
