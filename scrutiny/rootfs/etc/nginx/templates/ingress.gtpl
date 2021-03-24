@@ -10,6 +10,7 @@ server {
     location / {
         resolver 127.0.0.11 valid=30s;
         allow   172.30.32.2;
+        allow   172.30.33.2;
         deny    all;
         proxy_pass {{ .protocol }}://backend;
     }
