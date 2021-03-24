@@ -18,4 +18,13 @@ server {
         proxy_set_header   X-Forwarded-For    $proxy_add_x_forwarded_for;
         proxy_pass {{ .protocol }}://backend;
     }
+     location /web/dashboard/ {
+         proxy_pass         http://backend/web/dashboard;
+     }
+     location /dashboard/ {
+         proxy_pass         http://backend/web/dashboard;
+     }
+     location /web/ {
+         proxy_pass         http://backend/web/dashboard;
+     }
 }
