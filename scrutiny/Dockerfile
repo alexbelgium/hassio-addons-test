@@ -47,6 +47,8 @@ RUN \
     && sed -i 's| /config| /data|g' /etc/crontabs/root \
  # analyse local devices at reboot and every hours   
     && sed -i -e '$a @reboot /run.sh' /etc/crontabs/root \
-    && sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root
-
+    && sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root \
+ # correct url paths  
+    && sed -i 's|/web|./web|g' /app/scrutiny-web/index.html
+    
 VOLUME [ "/data" ]
