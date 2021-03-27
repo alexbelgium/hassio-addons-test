@@ -49,6 +49,8 @@ RUN \
     && sed -i -e '$a @reboot /run.sh' /etc/crontabs/root \
     && sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root \
  # correct url paths  
-    && sed -i 's|/web|./web|g' /app/scrutiny-web/index.html
+    && grep -rl '/web/' /app/scrutiny-web/ | xargs sed -i 's|/web/|./|g' \
+    && grep -rl '/app/' /app/scrutiny-web/ | xargs sed -i 's|/app/|app/|g'
+#  && sed -i 's|/web|./web|g' /app/scrutiny-web/index.html
     
 VOLUME [ "/data" ]
