@@ -28,4 +28,4 @@ ingress_interface=$(bashio::addon.ip_address)
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 # allow true url 
-sed -i 's|<base href="./">|<base href="http://192.168.178.23:8086/web/>"|g' /app/scrutiny-web/index.html
+# sed -i 's|<base href="./">|<base href="http://192.168.178.23:8086/web/"|g' /app/scrutiny-web/index.html
