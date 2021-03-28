@@ -49,8 +49,7 @@ RUN \
     && sed -i -e '$a @reboot /run.sh' /etc/crontabs/root \
     && sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root \
  # correct url paths  
-    && grep -rl '/web/' /app/scrutiny-web/ | xargs sed -i 's|/web/|./|g' || true \
-    && grep -rl '/app/' /app/scrutiny-web/ | xargs sed -i 's|/app/|app/|g' || true
+    && grep -rl '/web/' /app/scrutiny-web/ | xargs sed -i 's|/web/|./|g'
 #    && grep -rl '/api/summary' /app/scrutiny-web/ | xargs sed -i 's|/api/summary|api/summary|g' || true
 #  && sed -i 's|/web|./web|g' /app/scrutiny-web/index.html
     
