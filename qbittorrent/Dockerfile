@@ -10,10 +10,11 @@ RUN \
     # Install bashio
     apt-get update \
     \
+    && apt-get purge nginx nginx-common nginx-full || true \
+    && apt-get install -y nginx nginx-common nginx-full \
     && apt-get install -y \
     jq \
     wget \
-    nginx \
     \
     && apt-get -y upgrade cifs-utils \
     && curl -J -L -o /tmp/bashio.tar.gz \
