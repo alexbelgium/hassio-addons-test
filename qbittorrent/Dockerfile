@@ -10,10 +10,10 @@ RUN \
     # Install bashio
     apt-get update \
     \
-    && apt-get install -y --no-install-recommends \
+    && apt-get install \
     jq \
     wget \
-	nginx \
+    nginx \
     \
     && apt-get -y upgrade cifs-utils \
     && curl -J -L -o /tmp/bashio.tar.gz \
