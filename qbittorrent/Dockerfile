@@ -10,7 +10,7 @@ RUN \
     # Install bashio
     apt-get update \
     \
-    && apt-get install \
+    && apt-get install -y \
     jq \
     wget \
     nginx \
