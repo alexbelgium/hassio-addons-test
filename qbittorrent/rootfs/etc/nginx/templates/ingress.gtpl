@@ -16,5 +16,6 @@ server {
         deny    all;
         proxy_pass {{ .protocol }}://backend/;
         proxy_ssl_server_name on;
+        proxy_set_header X-Forwarded-Proto http;
     }
 }
