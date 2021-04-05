@@ -12,7 +12,7 @@ server {
     {{ end }}
     
     location / {
-        proxy_pass http://backend/;
+        proxy_pass https://backend/;
         proxy_ssl_server_name on;
         proxy_set_header X-Forwarded-Proto http;
     }
