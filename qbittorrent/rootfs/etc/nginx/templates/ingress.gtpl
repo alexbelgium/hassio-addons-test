@@ -13,7 +13,7 @@ server {
     
     location / {
         allow   172.30.32.2;
-        return 301 https://127.0.0.1:8080$request_uri;
+        return 301 https://backend$request_uri;
         proxy_ssl_server_name on;
         proxy_set_header X-Forwarded-Proto http;
     }
