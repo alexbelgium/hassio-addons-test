@@ -9,7 +9,7 @@ ARG TEMPIO_VERSION=2021.01.0
 ARG BUILD_ARCH
 
 RUN \
-    # Install bashio
+    # Install apps
     apt-get update \
     && apt-get install -y \
     jq \
@@ -29,7 +29,7 @@ RUN \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio
-    
+
 # Copy root filesystem
 COPY rootfs / 
 
