@@ -12,14 +12,6 @@ server {
     {{ end }}
     
     location / {
-        proxy_pass https://backend/;
-        proxy_ssl_server_name on;
-        proxy_set_header X-Forwarded-Proto http;
-    }
-
-    location /(?<url>.*) {
-        proxy_pass https://backend/$url;
-        proxy_ssl_server_name on;
-        proxy_set_header X-Forwarded-Proto http;
+        proxy_pass https://backend;
     }
 }
