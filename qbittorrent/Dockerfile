@@ -3,9 +3,6 @@ ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="14.3.4.99202104031018-7348-2b6baa609ubuntu20.04.1-ls125"
 FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 
-# Copy root filesystem
-COPY rootfs / 
-
 # Base system
 ARG BASHIO_VERSION=0.13.0
 ARG TEMPIO_VERSION=2021.01.0
@@ -31,9 +28,14 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
+    && rm -rf /tmp/bashio
+    
+# Copy root filesystem
+COPY rootfs / 
+
+RUN \
     # Allow UID and GID setting
-    && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
+    sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     # Correct permissions 
