@@ -7,7 +7,6 @@ server {
     location / {
         allow   172.30.32.2;
         deny    all;
-
-        proxy_pass http://backend/;
+        proxy_pass {{ .protocol }}://backend;
     }
 }
