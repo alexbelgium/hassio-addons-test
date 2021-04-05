@@ -8,6 +8,7 @@ server {
     include /etc/nginx/includes/ssl_params.conf;
     ssl_certificate /ssl/{{ .certfile }};
     ssl_certificate_key /ssl/{{ .keyfile }};
+    proxy_ssl_verify off;
     {{ end }}
     
     location / {
