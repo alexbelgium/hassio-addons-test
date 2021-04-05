@@ -15,5 +15,6 @@ server {
         allow   172.30.32.2;
         deny    all;
         proxy_pass {{ .protocol }}://backend/;
+        proxy_ssl_server_name on;
     }
 }
