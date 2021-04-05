@@ -11,7 +11,6 @@ ARG BUILD_ARCH
 RUN \
     # Install bashio
     apt-get update \
-    && apt-get --purge remove nginx-*
     && apt-get install -y \
     jq \
     curl \
