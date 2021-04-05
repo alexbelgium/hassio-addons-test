@@ -12,6 +12,6 @@ server {
     {{ end }}
     
     location / {
-        proxy_pass https://backend$request_uri;
+        proxy_pass https://backend;
     }
 }
