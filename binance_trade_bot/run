@@ -1,0 +1,26 @@
+#!/usr/bin/env bashio
+
+####################
+# SET UID GID v1.0 #
+####################
+CONFIG=""
+CONFIG="${CONFIG}[binance_user_config]\n"
+CONFIG="${CONFIG}api_key=$(bashio::config 'api_key')\n"
+CONFIG="${CONFIG}api_secret_key=$(bashio::config 'api_secret_key')\n"
+CONFIG="${CONFIG}current_coin=$(bashio::config 'current_coin')\n"
+CONFIG="${CONFIG}bridge=$(bashio::config 'bridge')\n"
+CONFIG="${CONFIG}tld=$(bashio::config 'tld')\n"
+CONFIG="${CONFIG}hourToKeepScoutHistory=$(bashio::config 'hourToKeepScoutHistory')\n"
+CONFIG="${CONFIG}scout_multiplier=$(bashio::config 'scout_multiplier')\n"
+CONFIG="${CONFIG}scout_sleep_time=$(bashio::config 'scout_sleep_time')\n"
+CONFIG="${CONFIG}strategy=$(bashio::config 'strategy')\n"
+CONFIG="${CONFIG}buy_timeout=$(bashio::config 'buy_timeout')\n"
+CONFIG="${CONFIG}sell_timeout=$(bashio::config 'sell_timeout')\n"
+printf "${CONFIG}" > /user.cfg
+bashio::log.info "config generated"
+
+##############
+# LAUNCH BOT #
+##############
+bashio::log.info "Trading bot launching"
+python -m binance_trade_bot

@@ -1,0 +1,56 @@
+{
+  "name": "binance_trade_bot",
+  "version": "0.169.0",
+  "upstream": "0.169.0",
+  "slug": "binance_trade_bot",
+  "description": "Automated cryptocurrency trading bot",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "startup": "services",
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
+  "ports": {
+    "8080/tcp": 8088
+  },
+  "ports_description": {
+    "8080/tcp": "Web UI"
+  },
+  "apparmor": true,
+  "privileged": [
+  ],
+  "map": [
+    "config:rw"
+  ],
+  "webui": "http://[HOST]:[PORT:8080]",
+  "environment": {
+  },
+  "options": {
+	"CURRENT_COIN_SYMBOL": "",
+	"SUPPORTED_COIN_LIST": "XLM TRX ICX EOS IOTA ONT QTUM ETC ADA XMR DASH NEO ATOM DOGE VET BAT OMG BTT",
+	"BRIDGE_SYMBOL": "USDT",
+	"API_KEY": "vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A",
+	"API_SECRET_KEY": "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j",
+	"SCOUT_MULTIPLIER": 5,
+	"SCOUT_SLEEP_TIME": 5,
+	"TLD": "com",
+	"STRATEGY": "default",
+	"buy_timeout": "0",
+	"sell_timeout": "0"
+  },
+  "schema": {
+	"CURRENT_COIN_SYMBOL": "str?",
+	"SUPPORTED_COIN_LIST": "str",
+	"BRIDGE_SYMBOL": "str",
+	"API_KEY": "str",
+	"API_SECRET_KEY": "str",
+	"SCOUT_MULTIPLIER": "int",
+	"SCOUT_SLEEP_TIME": "int",
+	"TLD": "str",
+	"STRATEGY": "str",
+	"buy_timeout": "int",
+	"sell_timeout": "int"
+  }
+}
