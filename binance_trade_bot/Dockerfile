@@ -2,9 +2,13 @@ ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="0.169.0"
 FROM danstis/binance-trade-bot:${BUILD_UPSTREAM}
 
-RUN \
-	# Install bashio
-    curl -J -L -o /tmp/bashio.tar.gz \
+RUN apt-get update \
+    \
+    && apt-get install -y --no-install-recommends \
+    jq \
+    \
+    # Install bashio
+    && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.7.1.tar.gz" \
     && mkdir /tmp/bashio \
     && tar zxvf \
