@@ -7,11 +7,11 @@ VOLUME [ "/data" ]
 RUN \
     apk add --no-cache git moreutils \
     && pip install --upgrade pip \
-	&& git clone https://github.com/whittlem/pycryptobot \
-	&& cd pycryptobot \
-	&& python3 -m pip install -r requirements.txt
-
-# Copy script
+    && git clone https://github.com/edeng23/binance-trade-bot \
+    && cd binance-trade-bot \
+    && python3 -m pip install -r requirements.txt
+ 
+# Copy files
 COPY rootfs/ /
 RUN chmod a+x /run.sh
 CMD [ "/run.sh"] 
