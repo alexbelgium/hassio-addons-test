@@ -22,7 +22,7 @@
   "options": {
   "APIKEY": "key",
   "APISECRET": "key",
-  "CURRENTCOIN": "BNB",
+  "CURRENTCOIN": "",
   "BRIDGE": "BUSD",
   "DOMAIN": "com",
   "HISTORY": "1",
