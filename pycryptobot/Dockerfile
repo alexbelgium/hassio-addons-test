@@ -5,8 +5,9 @@ VOLUME [ "/data" ]
 
 #Install last version https://github.com/dvershinin/lastversion
 RUN \
-    apk add --no-cache git moreutils \
+    apk add --no-cache git moreutils gcc musl-dev python3-dev libffi-dev openssl-dev cargo \
     && pip install --upgrade pip \
+    && pip install -U pip \
     && git clone https://github.com/edeng23/binance-trade-bot \
     && cd binance-trade-bot \
     && python3 -m pip install -r requirements.txt
