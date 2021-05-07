@@ -1,34 +1,26 @@
 #!/usr/bin/with-contenv bashio
 
-
+APIKEY=$(bashio::config 'APIKEY')
+sed -i 's/APIKEY/$APIKEY/g' /user.cfg
+APISECRET=$(bashio::config 'APISECRET')
+sed -i 's/APISECRET/$APISECRET/g' /user.cfg
+CURRENTCOIN=$(bashio::config 'CURRENTCOIN')
+sed -i 's/CURRENTCOIN/$CURRENTCOIN/g' /user.cfg
+BRIDGE=$(bashio::config 'BRIDGE')
+sed -i 's/BRIDGE/$BRIDGE/g' /user.cfg
+DOMAIN=$(bashio::config 'DOMAIN')
+sed -i 's/DOMAIN/$DOMAIN/g' /user.cfg
+HISTORY=$(bashio::config 'HISTORY')
+sed -i 's/HISTORY/$HISTORY/g' /user.cfg
+SCOUTMULTI=$(bashio::config 'SCOUTMULTI')
+sed -i 's/SCOUTMULTI/$SCOUTMULTI/g' /user.cfg
+SCOUTSLEEP=$(bashio::config 'SCOUTSLEEP')
+sed -i 's/SCOUTSLEEP/$SCOUTSLEEP/g' /user.cfg
+STRATEGY=$(bashio::config 'STRATEGY')
+sed -i 's/STRATEGY/$STRATEGY/g' /user.cfg
+BUYTIMEOUT=$(bashio::config 'BUYTIMEOUT')
+sed -i 's/BUYTIMEOUT/$BUYTIMEOUT/g' /user.cfg
+SELLTIMEOUT=$(bashio::config 'SELLTIMEOUT')
+sed -i 's/SELLTIMEOUT/$SELLTIMEOUT/g' /user.cfg
 
 python -m binance_trade_bot
-
-
-
-APIKEY=$(bashio::config 'apikey')
-APISECRET=$(bashio::config 'apisecret')
-BASE=$(bashio::config 'basecurrency')
-QUOTE=$(bashio::config 'quotecurrency')
-GRANULARITY=$(bashio::config 'granularity')
-LIVE="1"
-VERBOSE="1"
-
-touch /config.json
-echo '{' >> /config.json
-echo '    "binance" : {' >> /config.json
-echo '        "api_url" : "https://api.binance.com",' >> /config.json
-echo "        \"api_key\" : \"$APIKEY\"," >> /config.json
-echo "        \"api_secret\" : \"$APISECRET\"," >> /config.json
-echo '        "config" : {' >> /config.json
-echo "            \"base_currency\" : \"$BASE\"," >> /config.json
-echo "            \"quote_currency\" : \"$QUOTE\"," >> /config.json
-echo "            \"granularity\" : \"$GRANULARITY\"," >> /config.json
-echo "            \"live\" : \"$LIVE\"," >> /config.json
-echo "            \"verbose\" : \"$VERBOSE\"" >> /config.json
-echo '        }' >> /config.json
-echo '    }' >> /config.json
-echo '}' >> /config.json
-
-python3 pycryptobot.py --market BTC-GBP --granularity 3600 --live 1 --verbose 0 --selllowerpcnt -2
-
