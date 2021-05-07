@@ -1,8 +1,8 @@
 {
-    "name": "Addons_Updater",
-    "version": "2.6",
-    "slug": "updater",
-    "description": "Automatic addons update by aligning version tag with upstream releases",
+    "name": "Binance Trader Bot",
+    "version": "1.0",
+    "slug": "binance_bot",
+    "description": "Automated binance cryptocurrency trading bot",
     "url": "https://github.com/alexbelgium/hassio-addons",
     "arch": [
     "aarch64",
@@ -16,20 +16,31 @@
     }, 
   "startup": "once",
   "boot": "manual",
-  "environment": { "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1" }, 
+  "environment": { "SUPPORTED_COIN_LIST: "XLM TRX ICX EOS IOTA ONT QTUM ETC ADA XMR DASH NEO ATOM DOGE VET BAT OMG BTT" }, 
   "options": {
-  "addon": [{ "slug": "addon slug", "beta": false, "fulltag": false, "repository": "https://github.com/user/repo", "upstream": "github_user/repo_name" }],
-  "gituser": "gituser",
-  "gitpass": "gitpassword",
-  "gitmail": "youremail@gmail.com", 
-  "verbose": true
+  "APIKEY": "key",
+  "APISECRET": "key",
+  "CURRENTCOIN": "BNB",
+  "BRIDGE": "BUSD",
+  "DOMAIN": "com",
+  "HISTORY": "1",
+  "SCOUTMULTI": "5",
+  "SCOUTSLEEP": "5",
+  "STRATEGY": "default",
+  "BUYTIMEOUT": "0",
+  "SELLTIMEOUT": "0"
   },
   "schema": {
-  "addon": [{ "slug": "str", "beta": "bool", "fulltag": "bool", "repository": "str", "upstream": "str"}],
-  "gituser": "str",
-  "gitpass": "str",
-  "gitmail": "str",
-  "gitapi": "str?",
-  "verbose": "bool"
+  "APIKEY": "str",
+  "APISECRET": "str",
+  "CURRENTCOIN": "str",
+  "BRIDGE": "list(BUSD|USDT|BNB)",
+  "DOMAIN": "list(com|us)",
+  "HISTORY": "int",
+  "SCOUTMULTI": "int",
+  "SCOUTSLEEP": "int",
+  "STRATEGY": "list(default|multiple_coins|custom)",
+  "BUYTIMEOUT": "int",
+  "SELLTIMEOUT": "int"
   }
 }
