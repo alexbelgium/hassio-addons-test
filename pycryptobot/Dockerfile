@@ -12,9 +12,10 @@ RUN \
     && python3 -m pip install -r requirements.txt
  
 # Copy files
-COPY rootfs/ /
-RUN chmod a+x /run.sh
-CMD [ "/run.sh"] 
+COPY rootfs/ /binance-trade-bot/
+RUN chmod a+x /binance-trade-bot/run.sh
+WORKDIR [ "/binance-trade-bot" ] 
+CMD [ "run.sh" ] 
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
