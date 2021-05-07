@@ -1,0 +1,12 @@
+[binance_user_config]
+api_key=APIKEY
+api_secret_key=APISECRET
+current_coin=CURRENTCOIN
+bridge=BRIDGE
+tld=DOMAIN
+hourToKeepScoutHistory=HISTORY
+scout_multiplier=SCOUTMULTI
+scout_sleep_time=SCOUTSLEEP
+strategy=STRATEGY
+buy_timeout=BUYTIMEOUT
+sell_timeout=SELLTIMEOUT
