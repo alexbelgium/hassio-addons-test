@@ -17,7 +17,7 @@
   "startup": "once",
   "boot": "manual",
   "environment": { 
-  "SUPPORTED_COIN_LIST: "XLM TRX ICX EOS IOTA ONT QTUM ETC ADA XMR DASH NEO ATOM DOGE VET BAT OMG BTT" 
+  "SUPPORTED_COIN_LIST": "XLM TRX ICX EOS IOTA ONT QTUM ETC ADA XMR DASH NEO ATOM DOGE VET BAT OMG BTT" 
   },
   "options": {
   "APIKEY": "key",
