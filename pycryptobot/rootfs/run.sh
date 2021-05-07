@@ -1,5 +1,11 @@
 #!/usr/bin/with-contenv bashio
 
+
+
+python -m binance_trade_bot
+
+
+
 APIKEY=$(bashio::config 'apikey')
 APISECRET=$(bashio::config 'apisecret')
 BASE=$(bashio::config 'basecurrency')
