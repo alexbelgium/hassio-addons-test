@@ -9,7 +9,7 @@ RUN \
     && pip install --upgrade pip \
     && pip install -U pip \
     && git clone https://github.com/edeng23/binance-trade-bot \
-    && cd binance-trade-bot \
+    && cd /binance-trade-bot \
     && python3 -m pip install -r requirements.txt
  
 # Copy files
