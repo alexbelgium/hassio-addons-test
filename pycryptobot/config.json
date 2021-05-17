@@ -1,6 +1,6 @@
 {
     "name": "Binance Trader Bot",
-    "version": "1.2",
+    "version": "0.1",
     "slug": "binance_bot",
     "description": "Automated binance cryptocurrency trading bot",
     "url": "https://github.com/alexbelgium/hassio-addons",
