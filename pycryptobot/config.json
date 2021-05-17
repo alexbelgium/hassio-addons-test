@@ -25,12 +25,12 @@
   "CURRENTCOIN": "",
   "BRIDGE": "BUSD",
   "DOMAIN": "com",
-  "HISTORY": "1",
-  "SCOUTMULTI": "5",
-  "SCOUTSLEEP": "5",
+  "HISTORY": "1.0",
+  "SCOUTMULTI": "5.0",
+  "SCOUTSLEEP": "5.0",
   "STRATEGY": "default",
-  "BUYTIMEOUT": "0",
-  "SELLTIMEOUT": "0"
+  "BUYTIMEOUT": "0.0",
+  "SELLTIMEOUT": "0.0"
   },
   "schema": {
   "APIKEY": "str",
@@ -38,11 +38,11 @@
   "CURRENTCOIN": "str",
   "BRIDGE": "list(BUSD|USDT|BNB)",
   "DOMAIN": "list(com|us)",
-  "HISTORY": "int",
-  "SCOUTMULTI": "int",
-  "SCOUTSLEEP": "int",
+  "HISTORY": "float",
+  "SCOUTMULTI": "float",
+  "SCOUTSLEEP": "float",
   "STRATEGY": "list(default|multiple_coins|custom)",
-  "BUYTIMEOUT": "int",
-  "SELLTIMEOUT": "int"
+  "BUYTIMEOUT": "float",
+  "SELLTIMEOUT": "float"
   }
 }
