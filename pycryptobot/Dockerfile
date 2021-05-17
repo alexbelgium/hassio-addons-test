@@ -15,7 +15,7 @@ RUN \
 # Copy files
 COPY rootfs/ /binance-trade-bot/
 RUN chmod a+x /binance-trade-bot/run.sh
-WORKDIR [ "/binance-trade-bot" ] 
+WORKDIR [ "/binance-trade-bot/" ] 
 CMD [ "run.sh" ] 
 
 # Set shell
