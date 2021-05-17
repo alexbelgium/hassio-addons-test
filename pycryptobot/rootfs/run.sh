@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 
+cd /binance-trade-bot
 APIKEY=$(bashio::config 'APIKEY')
 sed -i 's/APIKEY/$APIKEY/g' /user.cfg
 APISECRET=$(bashio::config 'APISECRET')
