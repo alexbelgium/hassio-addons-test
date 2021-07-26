@@ -15,8 +15,6 @@ RUN \
     && apt-get install -y --no-install-recommends \
     curl \
     jq \
-    bash \
-    bind-tools \
     \
     ##################
     # Install bashio #
