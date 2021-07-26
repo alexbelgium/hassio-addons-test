@@ -14,7 +14,7 @@
   "ports_description": {
     "2342/tcp": "Web interface"
   },
-  "map": ["config:rw", "share:rw"],
+  "map": ["share:rw"],
   "full_access": true,
   "environment": {
     "PHOTOPRISM_UPLOAD_NSFW": "true",
