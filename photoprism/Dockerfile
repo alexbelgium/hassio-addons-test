@@ -20,13 +20,14 @@ RUN \
     \
     /var/{cache,log}/* \
     /var/lib/apt/lists/* \
-    \
+
+RUN \ 
     ###################
     # Configure image #
     ###################
     \
     # Create directories
-    && mkdir -m 777 -p \
+    mkdir -m 777 -p \
     /data/photoprism/originals \
     /data/photoprism/import \
     /data/photoprism/storage/config \
