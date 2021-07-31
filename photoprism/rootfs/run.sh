@@ -1,5 +1,7 @@
 #!/usr/bin/env bashio
 
+bashio::log.warning "Warning - minimum configuration required: 2 cpu cores and 4 GB of memory" 
+
 ##########
 # BANNER #
 ##########
