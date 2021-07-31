@@ -127,4 +127,5 @@ fi || true
 
 bashio::log.info "Please wait 1 or 2 minutes to allow the server to load"
 
+cd /
 ./entrypoint.sh photoprism start
