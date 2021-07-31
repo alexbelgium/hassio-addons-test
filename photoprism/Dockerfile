@@ -19,7 +19,7 @@ RUN \
     && rm -rf /tmp/bashio \
     \
     /var/{cache,log}/* \
-    /var/lib/apt/lists/* \
+    /var/lib/apt/lists/*
 
 RUN \ 
     ###################
