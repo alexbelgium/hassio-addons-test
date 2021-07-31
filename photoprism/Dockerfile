@@ -9,6 +9,18 @@ COPY rootfs /
 ARG BASHIO_VERSION=0.13.0 
 
 RUN \
+    ################
+    # Install apps #
+    ################
+    apt-get update \
+    && apt-get install -y \
+        jq \
+        curl \
+        cifs-utils \
+        keyutils \
+        samba \
+        coreutils \
+    \
     ##################
     # Install bashio #
     ##################
@@ -20,9 +32,8 @@ RUN \
     && rm -rf /tmp/bashio \
     \
     /var/{cache,log}/* \
-    /var/lib/apt/lists/*
-
-RUN \ 
+    /var/lib/apt/lists/* \
+    \ 
     ###################
     # Configure image #
     ###################
