@@ -2,6 +2,8 @@
 
 ![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 
+MINIMUM CONFIG REQUIRED : 2 cores and 4 GB of memory
+
 ## About
 
 A server-based application for browsing, organizing and sharing your personal photo collection.
