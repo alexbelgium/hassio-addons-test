@@ -1,6 +1,6 @@
 {
   "name": "Photoprism",
-  "version": "preview",
+  "version": "0.1",
   "upstream": "preview",
   "slug": "photoprism",
   "description": "A server-based application for browsing, organizing and sharing your personal photo collection",
