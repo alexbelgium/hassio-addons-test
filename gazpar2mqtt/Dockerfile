@@ -9,9 +9,6 @@ FROM yukulehe/gazpar2mqtt:latest
 ##################
 
 ENV TZ=Europe/Paris
-RUN \
-    mkdir -p /share/gazpar2mqtt \
-    && cp -n /templates/config.yaml /share/gazpar2mqtt/ 
 
 ##################
 # 3 Install apps #
