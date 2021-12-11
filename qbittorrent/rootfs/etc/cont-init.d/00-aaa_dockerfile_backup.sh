@@ -7,8 +7,8 @@ if [ -e "/ENVFILE" ]; then
         #######################
         # Automatic installer #
         #######################
-        $(ls /bin/bash &>/dev/null) || (apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) && \
-        $(curl --help &>/dev/null) || (apt-get install -yqq --no-install-recommends curl &>/dev/null || apk add --no-cache curl) && \
+        $(ls /bin/bash &>/dev/null) || (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) && \
+        $(curl --help &>/dev/null) || (apt-get update && apt-get install -yqq --no-install-recommends curl &>/dev/null || apk add --no-cache curl) && \
         curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
         chmod 777 /automatic_packages.sh && \
         eval /./automatic_packages.sh "$PACKAGES" && \
