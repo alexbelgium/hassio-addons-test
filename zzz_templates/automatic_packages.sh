@@ -13,23 +13,18 @@ PACKAGES="${*:-}"
 # CHECK WHICH BASE IS USED #
 ############################
 
-if command -v apk &>/dev/null; then
+COMMAND="nginx"
+if command -v $COMMAND &>/dev/null; then
     # If apk based
     [ "$VERBOSE" = true ] && echo "apk based"
     PACKMANAGER="apk"
     PACKAGES="apk add --no-cache $PACKAGES"
-elif command -v apt-get &>/dev/null; then
+else
     # If apt-get based
     [ "$VERBOSE" = true ] && echo "apt based"
     PACKMANAGER="apt"
     PACKAGES="apt-get update \
     && apt-get install -yqq --no-install-recommends $PACKAGES"
-elif command -v apt &>/dev/null; then
-    # If apt-get based
-    [ "$VERBOSE" = true ] && echo "apt based"
-    PACKMANAGER="apt"
-    PACKAGES="apt update \
-    && apt install -yqq $PACKAGES"
 fi
 
 ###################
@@ -140,7 +135,7 @@ eval "$PACKAGES"
 
 # Clean after install
 [ "$VERBOSE" = true ] && echo "Cleaning apt cache"
-[ "$PACKMANAGER" = "apt" ] && apt-get clean || apt clean || true
+[ "$PACKMANAGER" = "apt" ] && apt-get clean || true
 
 # Replace nginx if installed
 if ls /etc/nginx2 1>/dev/null 2>&1; then
