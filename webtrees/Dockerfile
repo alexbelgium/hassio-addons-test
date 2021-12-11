@@ -14,8 +14,7 @@ ENV WEBTREES_HOME="/data/webtrees"
 WORKDIR $WEBTREES_HOME
 RUN \
     # Change data location
-    sed -i 's|/etc/services.d/*/run|/scripts/99-run.sh|g' /scripts/90-config_yaml.sh \
-    && grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \
+    grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \
     # Add entry script
     && chown root:root /entrypoint.sh \
     && chmod 777 /entrypoint.sh \
