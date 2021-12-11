@@ -1,5 +1,5 @@
 {
-  "name": "HA Add-ons by alexbelgium",
-  "url": "https://github.com/alexbelgium/hassio-addons",
+  "name": "HA Add-ons tests, do not install",
+  "url": "https://github.com/alexbelgium/hassio-addons-test",
   "maintainer": "alexbelgium"
 }
