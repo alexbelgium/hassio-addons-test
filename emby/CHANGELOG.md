@@ -1,3 +1,4 @@
+- New standardized logic for Dockerfile build and packages installation
 
 ## 4.7.0.18 (20-11-2021)
 - Update to latest version from linuxserver/docker-emby

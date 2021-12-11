@@ -1,3 +1,5 @@
+- New standardized logic for Dockerfile build and packages installation
+
 ## nightly-0.1.0.1024-ls29 (14-11-2021)
 
 - Update to latest version from linuxserver/docker-booksonic-air

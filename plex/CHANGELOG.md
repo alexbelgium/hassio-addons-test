@@ -1,3 +1,4 @@
+- New standardized logic for Dockerfile build and packages installation
 
 ## 1.25.1.5286-34f965be8-ls91 (07-12-2021)
 - Update to latest version from linuxserver/docker-plex

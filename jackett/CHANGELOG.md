@@ -1,3 +1,4 @@
+- New standardized logic for Dockerfile build and packages installation
 - Removed full access (not used anymore)
 
 ## 0.20.147 (11-12-2021)
