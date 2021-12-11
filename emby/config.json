@@ -15,6 +15,20 @@
     "/dev/video10",
     "/dev/video11",
     "/dev/video12",
+    "/dev/video13",
+    "/dev/video14",
+    "/dev/video15",
+    "/dev/video16",
+    "/dev/ttyUSB0",
+    "/dev/sda",
+    "/dev/sdb",
+    "/dev/sdc",
+    "/dev/sdd",
+    "/dev/sde",
+    "/dev/sdf",
+    "/dev/sdg",
+    "/dev/nvme",
+    "/dev/mmcblk",
     "/dev/sda1",
     "/dev/sdb1",
     "/dev/sdc1",
@@ -28,14 +42,14 @@
     "/dev/sdd2",
     "/dev/sde2",
     "/dev/sdf2",
-    "/dev/sdg2"
+    "/dev/sdg2",
+    "/dev/nvme0",
+    "/dev/nvme1",
+    "/dev/nvme2"
   ],
   "map": ["config:rw", "share:rw", "media:rw", "ssl:rw"],
   "name": "Emby NAS",
   "options": {
-    "ssl": false,
-    "certfile": "fullchain.pem",
-    "keyfile": "privkey.pem",
     "PUID": 0,
     "PGID": 0,
     "silent": true
@@ -54,9 +68,6 @@
   },
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
-    "ssl": "bool",
-    "certfile": "str",
-    "keyfile": "str",
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?",
@@ -64,13 +75,15 @@
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
+    "cifsdomain": "str?",
     "smbv1": "bool?",
     "silent": "bool?"
   },
   "slug": "emby_nas",
   "startup": "services",
-  "upstream": "4.7.0.17",
+  "upstream": "4.7.0.18",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.7.0.17",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8096]"
+  "version": "4.7.0.18",
+  "video": true,
+  "webui": "http://[HOST]:[PORT:8096]"
 }

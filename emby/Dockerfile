@@ -1,56 +1,54 @@
+#################
+# 1 Build Image #
+#################
+
 ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
-ARG BASHIO_VERSION=0.13.1
-ARG TEMPIO_VERSION=2021.01.0
+
+##################
+# 2 Modify Image #
+##################
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN \
-    ################
-    # Install apps #
-    ################
-    apt-get clean \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends \
-    jq \
-    cifs-utils \
-    keyutils \
-    samba \
-    smbclient \
-    nginx \
-    \
-    ##################
-    # Install bashio #
-    ##################
-    && mkdir -p /tmp/bashio \
-    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    | tar -xzf - --strip 1 -C /tmp/bashio \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    \
-    #############################
-    # Allow UID and GID setting #
-    #############################
-    \
-    && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
+    # Allow UID and GID setting
+    sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     && sed -i "s|chown abc:abc /config||g" /etc/cont-init.d/10-adduser \
     \
-    ###########
-    # FOLDERS #
-    ###########
-    \
+    # FOLDERS
     && sed -i "s|/config|/emby|g" /etc/services.d/emby/run \
     && sed -i "s|/config|/emby|g" /etc/cont-init.d/30-config
 
-# copy local files
-COPY root/ /
+##################
+# 3 Install apps #
+##################
+# Copy local files
+COPY rootfs/ /
 
-### LABELS
+# Manual apps
+ENV PACKAGES=""
+
+# Automatic apps & bashio
+RUN $(ls /bin/bash &>/dev/null) || (apt-get install -y --no-install-recommends bash || apk add --no-cache bash) && \
+    $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+    chmod 777 /automatic_packages.sh && \
+    /automatic_packages.sh "${PACKAGES:-}" && \
+    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
+
+################
+# 4 Entrypoint #
+################
+
+############
+# 5 Labels #
+############
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

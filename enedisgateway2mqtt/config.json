@@ -1,0 +1,21 @@
+{
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "description": "use Enedis Gateway API to send data in your MQTT Broker (latest channel)",
+  "map": ["config:rw"],
+  "name": "Enedisgateway2mqtt",
+  "options": {
+    "CONFIG_LOCATION": "/config/enedisgateway2mqtt/config.yaml",
+    "mqtt_autodiscover": true,
+    "TZ": "Europe/Paris"
+  },
+  "services": ["mqtt:want"],
+  "schema": {
+    "CONFIG_LOCATION": "str",
+    "mqtt_autodiscover": "bool",
+    "TZ": "str?"
+  },
+  "slug": "enedisgateway2mqtt",
+  "upstream": "0.7.7",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "0.7.7"
+}
