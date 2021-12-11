@@ -13,19 +13,25 @@ PACKAGES="${*:-}"
 # CHECK WHICH BASE IS USED #
 ############################
 
-COMMAND="apk"
-if command -v $COMMAND &>/dev/null; then
+if command -v apk &>/dev/null; then
     # If apk based
     [ "$VERBOSE" = true ] && echo "apk based"
     PACKMANAGER="apk"
     PACKAGES="apk add --no-cache $PACKAGES"
-else
+elif command -v apt-get &>/dev/null; then
     # If apt-get based
     [ "$VERBOSE" = true ] && echo "apt based"
     PACKMANAGER="apt"
     PACKAGES="apt-get clean \
     && apt-get update \
-    && apt-get install -y --no-install-recommends $PACKAGES"
+    && apt-get install -yqq --no-install-recommends $PACKAGES"
+elif command -v apt &>/dev/null; then
+    # If apt-get based
+    [ "$VERBOSE" = true ] && echo "apt based"
+    PACKMANAGER="apt"
+    PACKAGES="apt clean \
+    && apt update \
+    && apt install -yqq $PACKAGES"
 fi
 
 ###################
