@@ -1,3 +1,4 @@
+- Removed full access (not used anymore)
 
 ## 0.20.147 (11-12-2021)
 - Update to latest version from linuxserver/docker-jackett
