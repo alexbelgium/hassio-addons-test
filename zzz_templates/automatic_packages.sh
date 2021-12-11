@@ -22,15 +22,13 @@ elif command -v apt-get &>/dev/null; then
     # If apt-get based
     [ "$VERBOSE" = true ] && echo "apt based"
     PACKMANAGER="apt"
-    PACKAGES="apt-get clean \
-    && apt-get update \
+    PACKAGES="apt-get update \
     && apt-get install -yqq --no-install-recommends $PACKAGES"
 elif command -v apt &>/dev/null; then
     # If apt-get based
     [ "$VERBOSE" = true ] && echo "apt based"
     PACKMANAGER="apt"
-    PACKAGES="apt clean \
-    && apt update \
+    PACKAGES="apt update \
     && apt install -yqq $PACKAGES"
 fi
 
@@ -139,6 +137,10 @@ done
 # Install apps
 [ "$VERBOSE" = true ] && echo "installing packages $PACKAGES"
 eval "$PACKAGES"
+
+# Clean after install
+[ "$VERBOSE" = true ] && echo "Cleaning apt cache"
+[ "$PACKMANAGER" = "apt" ] && apt-get clean || apt clean || true
 
 # Replace nginx if installed
 if ls /etc/nginx2 1>/dev/null 2>&1; then
