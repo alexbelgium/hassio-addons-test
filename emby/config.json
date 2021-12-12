@@ -49,6 +49,7 @@
   ],
   "ingress": true,
   "ingress_port": 8099,
+  "ingress_stream": true,
   "panel_icon": "mdi:emby",
   "map": ["config:rw", "share:rw", "media:rw", "ssl:rw"],
   "name": "Emby NAS",
