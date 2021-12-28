@@ -91,4 +91,5 @@ php artisan firefly-iii:upgrade-database
 
 bashio::log.info "Please wait while the app is loading !"
 
-/./usr/local/bin/entrypoint.sh
+/./usr/local/bin/entrypoint.sh & echo "Starting nginx" 
+nginx
