@@ -97,6 +97,22 @@ esac
 php artisan migrate --seed
 php artisan firefly-iii:upgrade-database
 
+################
+# CRON OPTIONS #
+################
+
+if bashio::config.has_value 'Updates'; then
+    # Align update with options
+    echo ""
+    FREQUENCY=$(bashio::config 'Updates')
+    bashio::log.info "$FREQUENCY updates"
+    echo ""
+
+    # Sets cron // do not delete this message
+    cp /templates/cronupdate /etc/cron.${FREQUENCY}/
+    chmod 775 /etc/cron.${FREQUENCY}/cronupdate
+fi
+
 ##############
 # LAUNCH APP #
 ##############
