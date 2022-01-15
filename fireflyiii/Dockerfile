@@ -27,18 +27,6 @@ FROM ${BUILD_FROM}
 #    # Change data location
 #    grep -rl "/var/www/html" /etc/ | xargs sed -i 's|/var/www/html|/data/firefly|g'
 
-#Install fpm
-RUN apt-get update \
-    \
-    && apt-get install -y --no-install-recommends \
-        software-properties-common \
-        unzip \
-    && curl -J -L -o /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
-    && echo "deb https://packages.sury.org/php/ buster main" > /etc/apt/sources.list.d/php.list \
-    && apt-get update \
-    && apt-get install  -y --no-install-recommends \
-        php8.0-fpm
-
 ##################
 # 3 Install apps #
 ##################
