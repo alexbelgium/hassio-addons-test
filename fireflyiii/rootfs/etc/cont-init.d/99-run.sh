@@ -39,15 +39,15 @@ sqlite_internal)
     # Set variable
     export DB_CONNECTION=sqlite
     # Creating database
-#    mkdir -p /config/addons_config/fireflyiii/database
-#    rm -r /var/www/html/storage/database
-#    ln -snf /config/addons_config/fireflyiii/database /var/www/html/storage
+    mkdir -p /config/addons_config/fireflyiii/database
+    rm -r /var/www/html/storage/database
+    ln -snf /config/addons_config/fireflyiii/database /var/www/html/storage
 #    chown -R www-data:www-data /config/addons_config/fireflyiii
 #    chown -R www-data:www-data /var/www/html/storage/database
-#    chmod 775 /var/www/html/storage/database
+    chmod 775 /var/www/html/storage/database
+#    mkdir -p /config/addons_config/fireflyiii/database
 #    touch /var/www/html/storage/database/database.sqlite
-    export DB_DATABASE=/config/addons_config/fireflyiii/database/database.sqlite
-    touch /config/addons_config/fireflyiii/database/database.sqlite
+#    touch /config/addons_config/fireflyiii/database/database.sqlite
     ;;
 
 # Use MariaDB
