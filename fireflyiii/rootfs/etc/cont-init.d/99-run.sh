@@ -94,8 +94,9 @@ mariadb_addon)
 esac
 
 # Install database
-php artisan migrate --seed
-php artisan firefly-iii:upgrade-database
+echo "updating database"
+php artisan migrate --seed --quiet
+php artisan firefly-iii:upgrade-database --quiet
 
 ################
 # CRON OPTIONS #
