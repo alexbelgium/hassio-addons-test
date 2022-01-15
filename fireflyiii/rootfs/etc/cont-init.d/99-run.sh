@@ -46,7 +46,7 @@ sqlite_internal)
 #    chown -R www-data:www-data /var/www/html/storage/database
 #    chmod 775 /var/www/html/storage/database
 #    touch /var/www/html/storage/database/database.sqlite
-    DB_DATABASE=/config/addons_config/fireflyiii/database/database.sqlite
+    export DB_DATABASE=/config/addons_config/fireflyiii/database/database.sqlite
     touch /config/addons_config/fireflyiii/database/database.sqlite
     ;;
 
