@@ -1,7 +1,5 @@
 #!/bin/bash 
 # If dockerfile failed install manually
-echo "manual mode"
-sleep 50000
 if [ -e "/ENVFILE" ]; then
     echo "Executing script"
     PACKAGES=$(</ENVFILE)
