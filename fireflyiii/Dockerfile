@@ -35,7 +35,7 @@ FROM ${BUILD_FROM}
 COPY rootfs/ /
 
 # Manual apps
-ENV PACKAGES=""
+ENV PACKAGES="cron"
 
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
