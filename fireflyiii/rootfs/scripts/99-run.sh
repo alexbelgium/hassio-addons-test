@@ -5,8 +5,8 @@
 ########
 
 # Change data location
-echo "Update data location"
-mkdir -p /data/fireflyiii
+#echo "Update data location"
+#mkdir -p /data/fireflyiii
 
 # Check APP_KEY format
 if [ ! ${#APP_KEY} = 32 ]; then bashio::exit.nok "Your APP_KEY has ${#APP_KEY} instead of 32 characters"; fi
@@ -14,7 +14,7 @@ if [ ! ${#APP_KEY} = 32 ]; then bashio::exit.nok "Your APP_KEY has ${#APP_KEY} i
 # Backup APP_KEY file
 bashio::log.info "Backuping APP_KEY to /config/addons_config/fireflyiii/APP_KEY_BACKUP.txt"
 bashio::log.warning "Changing this value will require to reset your database" 
-APP_KEY="$(bashio::config 'APP_KEY')"
+#APP_KEY="$(bashio::config 'APP_KEY')"
 
 # Get current app_key
 mkdir -p /config/addons_config/fireflyiii
@@ -39,12 +39,12 @@ sqlite_internal)
     # Set variable
     export DB_CONNECTION=sqlite
     # Creating database
-    mkdir -p /config/addons_config/fireflyiii/database
-    rm -r /var/www/html/storage/database
-    ln -snf /config/addons_config/fireflyiii/database /var/www/html/storage
-    chown -R www-data:www-data /config/addons_config/fireflyiii
-    chown -R www-data:www-data /var/www/html/storage/database
-    chmod 775 /var/www/html/storage/database
+#    mkdir -p /config/addons_config/fireflyiii/database
+#    rm -r /var/www/html/storage/database
+#    ln -snf /config/addons_config/fireflyiii/database /var/www/html/storage
+#    chown -R www-data:www-data /config/addons_config/fireflyiii
+#    chown -R www-data:www-data /var/www/html/storage/database
+#    chmod 775 /var/www/html/storage/database
     touch /var/www/html/storage/database/database.sqlite
     ;;
 
