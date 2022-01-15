@@ -19,7 +19,8 @@ for KEYS in "${arr[@]}"; do
   export $line
   # Export the variable to run scripts
   line="${KEYS}=${VALUE//[\"\']/} &>/dev/null"
-  sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || sed -i "1a export $line" /cont-init.d/*run*
+  sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || true
+  sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null || true
 done
 
 ################
