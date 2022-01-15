@@ -4,9 +4,8 @@
 # Init #
 ########
 
-# Change data location
-#echo "Update data location"
-#mkdir -p /data/fireflyiii
+# APP_KEY
+APP_KEY="$(bashio::config 'APP_KEY')"
 
 # Check APP_KEY format
 if [ ! ${#APP_KEY} = 32 ]; then bashio::exit.nok "Your APP_KEY has ${#APP_KEY} instead of 32 characters"; fi
@@ -14,7 +13,6 @@ if [ ! ${#APP_KEY} = 32 ]; then bashio::exit.nok "Your APP_KEY has ${#APP_KEY} i
 # Backup APP_KEY file
 bashio::log.info "Backuping APP_KEY to /config/addons_config/fireflyiii/APP_KEY_BACKUP.txt"
 bashio::log.warning "Changing this value will require to reset your database" 
-#APP_KEY="$(bashio::config 'APP_KEY')"
 
 # Get current app_key
 mkdir -p /config/addons_config/fireflyiii
@@ -102,8 +100,9 @@ esac
 
 # Install database
 echo "updating database"
-php artisan migrate --seed --quiet
+php artisan migrate:refresh --seed --quiet
 php artisan firefly-iii:upgrade-database --quiet
+php artisan passport:install --quiet
 
 ################
 # CRON OPTIONS #
