@@ -40,11 +40,16 @@ sqlite_internal)
     export DB_CONNECTION=sqlite
     # Creating database
     mkdir -p /config/addons_config/fireflyiii/database
+    touch /config/addons_config/fireflyiii/database/database.sqlite
+    chown -R www-data:www-data /config/addons_config/fireflyiii/database
+    chmod 775 /config/addons_config/fireflyiii/database/database.sqlite
+
+    # Creating symlink
     rm -r /var/www/html/storage/database
-    ln -snf /config/addons_config/fireflyiii/database /var/www/html/storage
+    ln -s /config/addons_config/fireflyiii/database /var/www/html/storage/database
 #    chown -R www-data:www-data /config/addons_config/fireflyiii
 #    chown -R www-data:www-data /var/www/html/storage/database
-    chmod 775 /var/www/html/storage/database
+
 #    mkdir -p /config/addons_config/fireflyiii/database
 #    touch /var/www/html/storage/database/database.sqlite
 #    touch /config/addons_config/fireflyiii/database/database.sqlite
