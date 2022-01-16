@@ -34,18 +34,33 @@ case $(bashio::config 'DB_CONNECTION') in
 # Use sqlite
 sqlite_internal)
     bashio::log.info "Using built in sqlite"
+
     # Set variable
     export DB_CONNECTION=sqlite
+
+    # Creating folders
+    mkdir -p /config/addons_config/fireflyiii/database
+    chown -R www-data:www-data /config/addons_config/fireflyiii/database
+
     # Creating database
-#    mkdir -p /config/addons_config/fireflyiii/database
-    touch /var/www/html/storage/database/database.sqlite
-#    touch /config/addons_config/fireflyiii/database/database.sqlite
-#    chown -R www-data:www-data /config/addons_config/fireflyiii/database
-#    chmod 775 /config/addons_config/fireflyiii/database/database.sqlite
+    if [ ! -f /config/addons_config/fireflyiii/database/database.sqlite ]; then
+        # Create database
+        touch /config/addons_config/fireflyiii/database/database.sqlite
+        # Install database
+        echo "updating database"
+        php artisan migrate:refresh --seed --quiet
+        php artisan firefly-iii:upgrade-database --quiet
+        php artisan passport:install --quiet
+    fi
 
     # Creating symlink
-#    rm -r /var/www/html/storage/database
-#    ln -s /config/addons_config/fireflyiii/database /var/www/html/storage/database
+    rm -r /var/www/html/storage/database
+    ln -s /config/addons_config/fireflyiii/database /var/www/html/storage/database
+
+    # Updating permissions
+    chmod 775 /config/addons_config/fireflyiii/database/database.sqlite
+    chown -R www-data:www-data /config/addons_config/fireflyiii
+
 #    chown -R www-data:www-data /config/addons_config/fireflyiii
 #    chown -R www-data:www-data /var/www/html/storage/database
 
@@ -98,12 +113,6 @@ mariadb_addon)
     ;;
 
 esac
-
-# Install database
-echo "updating database"
-php artisan migrate:refresh --seed --quiet
-php artisan firefly-iii:upgrade-database --quiet
-#php artisan passport:install --quiet
 
 ################
 # CRON OPTIONS #
