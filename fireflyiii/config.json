@@ -3,8 +3,7 @@
   "arch": [
     "aarch64",
     "amd64",
-    "armv7",
-    "armhf"
+    "armv7"
   ],
   "boot": "auto",
   "description": "A free and open source personal finance manager",
