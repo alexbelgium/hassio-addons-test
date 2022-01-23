@@ -1,0 +1,79 @@
+name: Builder
+
+env:
+  BUILD_ARGS: ""
+  MONITORED_FILES: "builder"
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  check-addon-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      changedAddons: ${{ steps.filter.outputs.changes }}
+    steps:
+
+    - name: ↩️ Checkout
+      uses: actions/checkout@v2
+
+    - name: 📂 Detect chanced files
+      uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: .github/paths-filter.yml
+
+  build:
+    if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
+    needs: check-addon-changes
+    runs-on: ubuntu-latest
+    name: Build ${{ matrix.arch }} ${{ matrix.addon }} add-on
+    strategy:
+      matrix:
+        addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
+        arch: ["aarch64", "amd64", "armv7"]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2.4.0
+
+      - name: Get information
+        id: info
+        uses: home-assistant/actions/helpers/info@master
+        with:
+          path: "./${{ matrix.addon }}"
+
+      - name: Check if add-on should be built
+        id: check
+        run: |
+          if [[ "${{ steps.info.outputs.architectures }}" =~ ${{ matrix.arch }} ]]; then
+             echo "::set-output name=build_arch::true";
+             echo "::set-output name=image::$(echo ${{ steps.info.outputs.image }} | cut -d'/' -f3)";
+             if [[ -z "${{ github.head_ref }}" ]] && [[ "${{ github.event_name }}" == "push" ]]; then
+                 echo "BUILD_ARGS=" >> $GITHUB_ENV;
+             fi
+           else
+             echo "${{ matrix.arch }} is not a valid arch for ${{ matrix.addon }}, skipping build";
+             echo "::set-output name=build_arch::false";
+          fi
+      - name: Login to GitHub Container Registry
+        if: env.BUILD_ARGS != '--test'
+        uses: docker/login-action@v1.12.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build ${{ matrix.addon }} add-on
+        if: steps.check.outputs.build_arch == 'true'
+        uses: alexbelgium/builder@dev
+        with:
+          args: |
+            ${{ env.BUILD_ARGS }} \
+            --${{ matrix.arch }} \
+            --target /data/${{ matrix.addon }} \
+            --image "${{ steps.check.outputs.image }}" \
+            --docker-hub "ghcr.io/${{ github.repository_owner }}" \
+            --addon
