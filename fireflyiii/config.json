@@ -7,7 +7,6 @@
   ],
   "boot": "auto",
   "description": "A free and open source personal finance manager",
-  "image": "ghcr.io/alexbelgium/fireflyiii-{arch}",
   "devices": [],
   "environment": {
     "TRUSTED_PROXIES": "**"
