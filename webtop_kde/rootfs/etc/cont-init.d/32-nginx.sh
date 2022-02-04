@@ -32,4 +32,4 @@ ingress_interface=$(bashio::addon.ip_address)
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 
-if [ -f /etc/services.d/*/*run* ]; then sed -i "1a export SUBFOLDER=$(bashio::addon.ingress_url)" /etc/services.d/*/*run* 2>/dev/null; fi
+if [ cat /etc/services.d/*/*run* &>/dev/null ]; then sed -i "1a export SUBFOLDER=$(bashio::addon.ingress_url)" /etc/services.d/*/*run* 2>/dev/null; fi
