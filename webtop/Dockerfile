@@ -16,26 +16,33 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM ${BUILD_FROM}alpine-kde
+FROM ${BUILD_FROM}ubuntu-mate
 
 ##################
 # 2 Modify Image #
 ##################
 
+ARG CUSTOMREPOSITORIES="libreoffice/ppa \
+    ubuntuhandbook1/darktable \
+    mozillateam/ppa \
+    stebbins/handbrake-releases \
+    kritalime/ppa \
+    team-xbmc/ppa \
+    lutris-team/lutris \
+    graphics-drivers/ppa"
+
 # Allow UID and GID setting
 RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
-    \
     # Change home folder location
-    && sed -i 's|/config|/share/webtop_kde|g' /defaults/* \
-    && sed -i 's|/config|/share/webtop_kde|g' /etc/cont-init.d/* \
-    && sed -i 's|/config|/share/webtop_kde|g' /etc/services.d/*/run \
-    && usermod --home /share/webtop_kde abc \
-    \
-    # Correct error in upstream image
-    && sed -i 's|startwm |startwm.sh |g' /etc/cont-init.d/30-config
-
+    && sed -i 's|/config|/share/webtop|g' /defaults/* \
+    && sed -i 's|/config|/share/webtop|g' /etc/cont-init.d/* \
+    && sed -i 's|/config|/share/webtop|g' /etc/services.d/*/run \
+    && usermod --home /share/webtop abc \
+    # Add custom repositories
+    && echo "Adding custom repository : " \
+    && for repositories in $CUSTOMREPOSITORIES; do add-apt-repository ppa:$repositories >/dev/null || true; done
 
 ##################
 # 3 Install apps #
@@ -55,7 +62,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && chmod -R 755 /etc/cont-init.d || printf '%s\n' "${MODULES}" >/MODULESFILE
 
 # Manual apps
-ENV PACKAGES="engrampa nginx"
+ENV PACKAGES=""
 
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \

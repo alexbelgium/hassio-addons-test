@@ -9,7 +9,7 @@
   "environment": {
     "PUID": "1000",
     "PGID": "1000",
-    "HOME": "/share/webtop_kde",
+    "HOME": "/share/webtop",
     "shm_size": "1gb"
   },
   "description": "Full linux desktop environment accessible via any modern web browser",
@@ -58,15 +58,14 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "ingress": true,
-  "panel_icon": "mdi:kde",
+  "image": "ghcr.io/alexbelgium/webtop-{arch}",
   "video": true,
   "map": [
     "media:rw",
     "share:rw",
     "ssl"
   ],
-  "name": "Webtop Alpine KDE test",
+  "name": "Webtop Ubuntu Mate",
   "privileged": [
     "SYS_ADMIN",
     "DAC_READ_SEARCH",
@@ -75,20 +74,13 @@
   "ports": {
     "3000/tcp": 3000
   },
-  "udev": true,
-  "devicetree": true,
-  "host_dbus": true,
   "ports_description": {
     "3000/tcp": "web interface"
   },
   "options": {
-    "PUID": 1000,
-    "PGID": 1000,
     "additional_apps": "engrampa,thunderbird,libreoffice"
   },
   "schema": {
-    "PUID": "int",
-    "PGID": "int",
     "TZ": "str?",
     "localdisks": "str?",
     "networkdisks": "str?",
@@ -98,9 +90,9 @@
     "DNS_server": "str?",
     "additional_apps": "str?"
   },
-  "slug": "webtop-kde",
-  "upstream": "4.16-r0-ls40",
+  "slug": "webtop",
+  "upstream": "4.16-r0-ls42",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.16-r0-ls40",
+  "version": "4.16-r0-ls42",
   "webui": "http://[HOST]:[PORT:3000]"
 }

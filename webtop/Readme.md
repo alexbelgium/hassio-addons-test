@@ -1,4 +1,4 @@
-# Home assistant add-on: Webtop KDE Alpine
+# Home assistant add-on: Webtop
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
