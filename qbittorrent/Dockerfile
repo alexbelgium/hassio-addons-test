@@ -16,25 +16,49 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM ${BUILD_FROM}
+ARG BUILD_UPSTREAM="14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls166"
+FROM ${BUILD_FROM}-$BUILD_UPSTREAM
 
 ##################
 # 2 Modify Image #
 ##################
 
-# Correct data path
-# hadolint ignore=DL4006
-RUN grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g'
+# Environment variables
+ENV \
+    DEBIAN_FRONTEND="noninteractive"\
+    LANG="C.UTF-8" \
+    PS1="$(whoami)@$(hostname):$(pwd)$ " \
+    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
+    S6_CMD_WAIT_FOR_SERVICES=1 \
+    TERM="xterm-256color"
+
+# hadolint ignore=SC2015
+RUN \
+    # Allow UID and GID setting
+    sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
+    && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
+    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
+    \
+    # Correct permissions
+    && sed -i 's=/config=/config/qBittorrent || true=g' /etc/cont-init.d/10-adduser \
+    && sed -i 's=	/config=/config/qBittorrent || true=g' /etc/cont-init.d/30-config \
+    \
+    # Set download folder to /share
+    && sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
+    \
+    # Remove fixed folders, allows connection to webUI
+    && sed '11,13d' /defaults/qBittorrent.conf \
+    && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
+    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf || true
 
 ##################
 # 3 Install apps #
 ##################
-
-# Add rootfs
+# Copy local files
 COPY rootfs/ /
 
 # Modules
-ARG MODULES="00-banner.sh"
+ARG MODULES="00-banner.sh 92-local_mounts.sh 92-smb_mounts.sh 90-dns_set.sh"
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
@@ -44,7 +68,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && chmod -R 755 /etc/cont-init.d || printf '%s\n' "${MODULES}" >/MODULESFILE
 
 # Manual apps
-ENV PACKAGES="jq curl bash nginx"
+ARG PACKAGES=""
 
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
@@ -57,13 +81,6 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 # 4 Entrypoint #
 ################
-
-RUN \
-    # Add custom instructions to run.sh
-    sed -i '1d' /app/mealie/run.sh \
-    && cat /app/mealie/run.sh >> /run.txt \
-    && cat /run.txt > /app/mealie/run.sh \
-    && chmod +x /app/mealie/run.sh
 
 ############
 # 5 Labels #
