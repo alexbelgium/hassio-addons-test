@@ -25,14 +25,10 @@ FROM tritruongtr/zoneminder:latest
 
 # Global variables
 ENV DZM_CONFIG_DIR="/config/addons_config/zoneminder"
-ENV PUID=1000
-ENV PGID=1000
 
-# Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
+# Change config location
 # hadolint ignore=DL4006
-#RUN sed -i 's|/config|/config/addons_config/zoneminder|g' /etc/cont-init.d/*
+RUN sed -i 's|/etc/zm.conf|/config/addons_config/zoneminder/zm.conf|g' /usr/local/bin/entrypoint.sh
 
 ##################
 # 3 Install apps #
