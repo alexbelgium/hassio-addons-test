@@ -68,8 +68,11 @@ external)
 
 
 # Use remote
-internal)
+*)
     bashio::log.info "Using internal database"
+    mkdir "$CONFIGSOURCE"/mysql
+    rm -r /var/lib/mysql/mysql
+    ln -s "$CONFIGSOURCE"/mysql /var/lib/mysql
     ;;
 
 esac
