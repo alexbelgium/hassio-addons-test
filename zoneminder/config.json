@@ -7,7 +7,7 @@
   "host_pid": true,
   "auth_api": true,
   "journald": true,
-  "devices": "/dev/log",
+  "devices": [ "/dev/log" ],
   "hassio_api": true,
   "homeassistant_api": true,
   "hassio_role": "admin",
