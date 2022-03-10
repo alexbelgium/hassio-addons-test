@@ -2,32 +2,16 @@
 # shellcheck shell=bash
 # hadolint ignore=SC2155
 
-###################################
-# Export all addon options as env #
-###################################
+#################
+# Define config #
+#################
 
-# For all keys in options.json
-JSONSOURCE="/data/options.json"
+CONFIGSOURCE="/config/addons_config/zoneminder"
+if [ ! -f "$CONFIGSOURCE"/zm.conf ]; then
 
-# Export keys as env variables
-# echo "All addon options were exported as variables"
-mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
-
-for KEYS in "${arr[@]}"; do
-  # export key
-  VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
-  line="${KEYS}='${VALUE//[\"\']/}'"
-  # Use locally
-  if [[ "${KEYS}" == *"PASS"* ]]; then
-    bashio::log.blue "${KEYS}=******"
-  else
-    bashio::log.blue "$line"
-  fi
-  # Export the variable to run scripts
-  export $line
-  if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
-  if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi
-done
+# Copy conf files
+cp /etc/zm/zm.conf "$CONFIGSOURCE"
+fi
 
 ###################
 # Define database #
@@ -54,6 +38,7 @@ mariadb_addon)
     ZM_DB_USER=$(bashio::services "mysql" "username")
     ZM_DB_PASS=$(bashio::services "mysql" "password")
     export DB_CONNECTION
+    export remoteDB=1
     export ZM_DB_HOST && bashio::log.blue "ZM_DB_HOST=$ZM_DB_HOST"
     export ZM_DB_PORT && bashio::log.blue "ZM_DB_PORT=$ZM_DB_PORT"
     export ZM_DB_NAME && bashio::log.blue "ZM_DB_NAME=$ZM_DB_NAME"
@@ -79,6 +64,12 @@ external)
             bashio::exit.nok "Remote database has been specified but $conditions is not defined in addon options"
         fi
     done
+    ;;
+
+
+# Use remote
+internal)
+    bashio::log.info "Using internal database"
     ;;
 
 esac
