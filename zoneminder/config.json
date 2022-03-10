@@ -14,7 +14,7 @@
     "80/tcp": "web interface"
   },
   "schema": {
-    "DB_CONNECTION": "list(mariadb_addon|external)",
+    "DB_CONNECTION": "list(mariadb_addon|external|internal)",
     "ZM_DB_HOST": "str?",
     "ZM_DB_PORT": "str?",
     "ZM_DB_NAME": "str?",
