@@ -4,7 +4,6 @@
   "boot": "auto",
   "description": "A full-featured, open source, state-of-the-art video surveillance software system",
   "name": "Zoneminder",
-  "full_access": "true",
   "options": {
     "DB_CONNECTION": "mariadb_addon"
   },
@@ -27,5 +26,5 @@
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "notworking",
   "services": ["mysql:want"],
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:80]/zm"
 }
