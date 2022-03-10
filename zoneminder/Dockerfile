@@ -32,7 +32,7 @@ ENV PGID=1000
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # hadolint ignore=DL4006
-RUN sed -i 's|/config|/config/addons_config/zoneminder|g' /etc/cont-init.d/*
+#RUN sed -i 's|/config|/config/addons_config/zoneminder|g' /etc/cont-init.d/*
 
 ##################
 # 3 Install apps #
