@@ -16,64 +16,48 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="release-4.4.1-ls173"
-FROM ${BUILD_FROM}-$BUILD_UPSTREAM
+ARG BUILD_UPSTREAM="1.36.12"
+FROM ${BUILD_FROM}
 
 ##################
 # 2 Modify Image #
 ##################
 
-# Environment variables
-ENV \
-    DEBIAN_FRONTEND="noninteractive"\
-    LANG="C.UTF-8" \
-    PS1="$(whoami)@$(hostname):$(pwd)$ " \
-    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
-    S6_CMD_WAIT_FOR_SERVICES=1 \
-    TERM="xterm-256color"
+# Global variables
+ENV DZM_CONFIG_DIR="/config/addons_config/zoneminder"
+ENV PUID=0
+ENV PGID=0
 
-# hadolint ignore=SC2015
-RUN \
-    # Allow UID and GID setting
-    sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
-    \
-    # Correct permissions
-    && sed -i 's=/config=/config/qBittorrent || true=g' /etc/cont-init.d/10-adduser \
-    && sed -i 's=	/config=/config/qBittorrent || true=g' /etc/cont-init.d/30-config \
-    \
-    # Set download folder to /share
-    && sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
-    \
-    # Remove fixed folders, allows connection to webUI
-    && sed '11,13d' /defaults/qBittorrent.conf \
-    && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
-    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf || true
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# hadolint ignore=DL4006
+RUN sed -i 's|/config|/config/addons_config/zoneminder|g' /etc/cont-init.d/*
 
 ##################
 # 3 Install apps #
 ##################
+
 # Copy local files
 COPY rootfs/ /
 
 # Modules
-ARG MODULES="00-banner.sh 92-local_mounts.sh 92-smb_mounts.sh 90-dns_set.sh"
+ARG MODULES=""
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
     && if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null; fi \
     && mkdir -p /etc/cont-init.d \
-    && for scripts in $MODULES; do curl -L -f -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" || (echo "script failed to install $scripts" && exit 1); done \
+    && for scripts in $MODULES; do echo "$scripts" && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" && [ "$(sed -n '/\/bin/p;q' /etc/cont-init.d/"$scripts")" != "" ] || (echo "script failed to install $scripts" && exit 1); done \
     && chmod -R 755 /etc/cont-init.d || printf '%s\n' "${MODULES}" >/MODULESFILE
 
 # Manual apps
-ARG PACKAGES=""
+ENV PACKAGES=""
 
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
     && if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null; fi \
-    && curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/automatic_packages.sh" --output /automatic_packages.sh \
+    && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/automatic_packages.sh" --output /automatic_packages.sh \
     && chmod 777 /automatic_packages.sh \
     && eval /./automatic_packages.sh "${PACKAGES:-}" \
     && rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
@@ -81,6 +65,16 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 # 4 Entrypoint #
 ################
+
+RUN set -x && \
+    apt-get update && apt-get install -y dos2unix && \
+    chmod -R +x /etc/cont-init.d/* && \
+    dos2unix /etc/cont-init.d/* && \
+    sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' /etc/cont-init.d/*
+
+#RUN chmod 777 /entrypoint.sh
+ENTRYPOINT [ "/init" ]
+CMD [ "" ]
 
 ############
 # 5 Labels #
