@@ -25,8 +25,8 @@ FROM ${BUILD_FROM}
 
 # Global variables
 ENV DZM_CONFIG_DIR="/config/addons_config/zoneminder"
-ENV PUID=0
-ENV PGID=0
+ENV PUID=1000
+ENV PGID=1000
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
