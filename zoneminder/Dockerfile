@@ -66,15 +66,9 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
-#RUN set -x && \
-#    apt-get update && apt-get install -y dos2unix && \
-#    chmod -R +x /etc/cont-init.d/* && \
-#    dos2unix /etc/cont-init.d/* && \
-#    sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' /etc/cont-init.d/*
-
-#RUN chmod 777 /entrypoint.sh
-#ENTRYPOINT [ "/init" ]
-#CMD [ "" ]
+RUN chmod 777 /entrypoint.sh
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/entrypoint.sh" ]
 
 ############
 # 5 Labels #
