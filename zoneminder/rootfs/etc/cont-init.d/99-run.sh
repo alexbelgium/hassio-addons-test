@@ -34,7 +34,7 @@ done
 ###################
 
 bashio::log.info "Defining database"
-case "$DB_CONNECTION" in
+case "$(bashio::config "DB_CONNECTION")" in
 
 # Use MariaDB
 mariadb_addon)
