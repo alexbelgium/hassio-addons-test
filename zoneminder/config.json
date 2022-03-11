@@ -5,7 +5,6 @@
   "description": "A full-featured, open source, state-of-the-art video surveillance software system",
   "name": "Zoneminder",
   "options": {
-    "DB_CONNECTION": "mariadb_addon"
   },
   "ports": {
     "80/tcp": 3777
@@ -17,12 +16,6 @@
     "80/tcp": "web interface"
   },
   "schema": {
-    "DB_CONNECTION": "list(mariadb_addon|external|internal)",
-    "ZM_DB_HOST": "str?",
-    "ZM_DB_PORT": "str?",
-    "ZM_DB_NAME": "str?",
-    "ZM_DB_USER": "str?",
-    "ZM_DB_PASS": "str?"
   },
   "slug": "zoneminder",
   "upstream": "1.36.12",
