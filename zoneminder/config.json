@@ -5,7 +5,6 @@
   "description": "A full-featured, open source, state-of-the-art video surveillance software system",
   "name": "Zoneminder",
   "options": {
-    "DB_CONNECTION": "mariadb_addon"
   },
   "ports": {
     "80/tcp": 3777
@@ -13,16 +12,16 @@
   "map": [
     "config:rw"
   ],
+  "image": "ghcr.io/alexbelgium/zoneminder-{arch}",
   "ports_description": {
     "80/tcp": "web interface"
   },
   "schema": {
-    "DB_CONNECTION": "list(mariadb_addon|external|internal)"
   },
   "slug": "zoneminder",
   "upstream": "1.36.12",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "notworking",
+  "version": "1.36.12",
   "services": ["mysql:want"],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]/zm"
 }
