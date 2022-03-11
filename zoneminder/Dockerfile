@@ -29,7 +29,9 @@ ENV DZM_CONFIG_DIR="/config/addons_config/zoneminder"
 # Change config location
 # hadolint ignore=DL4006
 RUN sed -i 's|/etc/zm.conf|/config/addons_config/zoneminder/zm.conf|g' /usr/local/bin/entrypoint.sh \
-    && sed -i 's|ZM_PATH_CONF=/config|ZM_PATH_CONF=/config/addons_config/zoneminder/zm.conf|g' /etc/zm/zm.conf
+    && sed -i 's|ZM_PATH_CONF=/config|ZM_PATH_CONF=/config/addons_config/zoneminder/zm.conf|g' /etc/zm/zm.conf \
+    && sed -i 's|/var/lib/mysql|/config/addons_config/zoneminder/mysql|g' /usr/local/bin/entrypoint.sh \
+    && grep -rl '/var/lib/mysql' /etc | xargs sed -i 's|/var/lib/mysql|/config/addons_config/zoneminder/mysql|g'
 
 ##################
 # 3 Install apps #
