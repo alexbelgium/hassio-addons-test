@@ -10,6 +10,9 @@
   "ports": {
     "80/tcp": 3777
   },
+  "map": [
+    "config:rw"
+  ],
   "ports_description": {
     "80/tcp": "web interface"
   },
