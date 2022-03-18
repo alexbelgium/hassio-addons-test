@@ -60,6 +60,7 @@
   ],
   "host_network": true,
   "ingress": true,
+  "ingress_stream": true,
   "map": [
     "config:rw",
     "share:rw",
@@ -72,6 +73,7 @@
     "PUID": 0,
     "silent": true
   },
+  "panel_icon": "mdi:emby",
   "ports": {
     "1900/udp": null,
     "7359/udp": null,
