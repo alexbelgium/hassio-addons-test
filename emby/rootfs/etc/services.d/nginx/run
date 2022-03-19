@@ -2,9 +2,19 @@
 # shellcheck shell=bash
 # ==============================================================================
 
-# Wait for transmission to become available
-bashio::net.wait_for 8096 localhost 900
+# Waiting for js to become available
 
+filelocation=$(find / -name "connectionmanager.js")
+until [ -f "$filelocation" ]
+do
+     sleep 5
+done
+echo "Allowing case sensitive url"
+grep -rl toLowerCase /app/emby | xargs sed -i 's/toLowerCase()/toString()/g'
+
+# Wait for app to become available
+
+bashio::net.wait_for 8096 localhost 900
 bashio::log.info "Starting NGinx..."
 
 exec nginx
