@@ -7,8 +7,8 @@ bashio::net.wait_for 8096 localhost 900
 
 # Allow uppercase url
 echo "Allowing case sensitive url"
-#grep -rl toLowerCase /app/emby/dashboard-ui/modules/emby-apiclient | xargs sed -i 's/toLowerCase()/toString()/g'
-grep -rl toLowerCase /app | xargs sed -i 's/toLowerCase()/toString()/g'
+grep -rl toLowerCase /app/emby/dashboard-ui/modules/emby-apiclient | xargs sed -i 's/toLowerCase()/toString()/g'
+#grep -rl toLowerCase /app | xargs sed -i 's/toLowerCase()/toString()/g'
 
 bashio::log.info "Starting NGinx..."
 
