@@ -60,6 +60,7 @@
   ],
   "host_network": true,
   "ingress": true,
+  "ingress_entry": "embyingress",
   "ingress_stream": true,
   "map": [
     "config:rw",
