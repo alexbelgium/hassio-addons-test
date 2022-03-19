@@ -17,5 +17,5 @@ sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 
 # Allow uppercase url
 echo "Allowing case sensitive url"
-apidirectory=$(dirname $(find / -name "connectionmanager.js"))
-grep -rl toLowerCase "$apidirectory" | xargs sed -i 's/toLowerCase()/toString()/g'
+#apidirectory=$(dirname $(find / -name "connectionmanager.js"))
+grep -rl toLowerCase /app/emby | xargs sed -i 's/toLowerCase()/toString()/g'
