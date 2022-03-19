@@ -60,7 +60,6 @@
   ],
   "host_network": true,
   "ingress": true,
-  "ingress_entry": "api/hassio_ingress/embyingress/",
   "ingress_stream": true,
   "map": [
     "config:rw",
