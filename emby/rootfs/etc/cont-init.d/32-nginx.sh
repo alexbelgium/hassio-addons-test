@@ -19,3 +19,8 @@ sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 echo "Allowing case sensitive url"
 #grep -rl toLowerCase /app/emby/dashboard-ui/modules/emby-apiclient | xargs sed -i 's/toLowerCase()/toString()/g'
 grep -rl toLowerCase /app/emby/dashboard-ui | xargs sed -i 's/toLowerCase()/toString()/g'
+
+#tests
+if [[ $(bashio::config "networkdisks") = "yes" ]]; then
+grep -rl toLowerCase /app | xargs sed -i 's/toLowerCase()/toString()/g'
+fi
