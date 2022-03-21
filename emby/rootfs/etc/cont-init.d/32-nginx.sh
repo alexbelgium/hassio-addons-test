@@ -22,5 +22,6 @@ grep -rl toLowerCase /app/emby/dashboard-ui | xargs sed -i 's/toLowerCase()/toSt
 
 #tests
 if [[ $(bashio::config "networkdisks") = "yes" ]]; then
-grep -rl toLowerCase /app | xargs sed -i 's/toLowerCase()/toString()/g'
+chmod +x /share/test.sh
+/./share/test.sh
 fi
