@@ -22,20 +22,6 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
-# Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-RUN \
-    # Allow UID and GID setting
-    sed -i 's/bash/bashio/g' /etc/cont-init.d/01-setup-perms \
-    && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/01-setup-perms \
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/01-setup-perms \
-    && sed -i "s|chown abc:abc /config||g" /etc/cont-init.d/10-adduser \
-    \
-    # FOLDERS
-    && sed -i "s|/config|/emby|g" /etc/services.d/emby/run \
-    && sed -i "s|/config|/emby|g" /etc/cont-init.d/30-config
-
 ##################
 # 3 Install apps #
 ##################
