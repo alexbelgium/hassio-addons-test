@@ -1,10 +1,6 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "backup_exclude": [
     "*/cache/",
     "*/logs/",
@@ -62,12 +58,7 @@
   "host_network": true,
   "ingress": true,
   "ingress_stream": true,
-  "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw",
-    "ssl:rw"
-  ],
+  "map": ["config:rw", "share:rw", "media:rw", "ssl:rw"],
   "name": "Emby NAS",
   "options": {
     "PGID": 0,
@@ -87,10 +78,7 @@
     "8096/tcp": "web interface",
     "8920/tcp": "https web interface (optional)"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PGID": "int",
     "PUID": "int",
