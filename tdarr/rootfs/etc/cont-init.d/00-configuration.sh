@@ -9,8 +9,8 @@
 PGID=$(bashio::config 'PGID')
 PUID=$(bashio::config 'PUID')
 # If blank, set 0
-PGID="${PGID:-0}"
-PUID="${PUID:-0}"
+[[ "$PUID" = "null" ]] && PUID=0
+[[ "$PGID" = "null" ]] && PGID=0
 # Write in permission file
 sed -i "1a PGID=$PGID" /etc/cont-init.d/01-setup-perms
 sed -i "1a PUID=$PUID" /etc/cont-init.d/01-setup-perms
