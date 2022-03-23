@@ -25,9 +25,9 @@ bashio::log.info "Setting PUID=$PUID, PGID=$PGID"
 CONFIGLOCATION="$(bashio::config 'CONFIG_LOCATION')"
 
 # Rename base folder
-mv /app /tdarr
-sed -i "s|/app|/tdarr|g" /etc/cont-init.d/*
-sed -i "s|/app|/tdarr|g" /etc/services.d/*
+#mv /app /tdarr
+#sed -i "s|/app|/tdarr|g" /etc/cont-init.d/*
+#sed -i "s|/app|/tdarr|g" /etc/services.d/*/run
 
 # Symlink configs
 rm -r /tdarr/configs
