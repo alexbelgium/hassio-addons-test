@@ -40,8 +40,6 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "init": false,
-  "full_access": true,
   "environment": {
     "serverIP": "0.0.0.0",
     "serverPort": "8266",
@@ -67,9 +65,7 @@
   ],
   "name": "Tdarr",
   "options": {
-    "CONFIG_LOCATION": "/config/addons_config/tdarr",
-    "PGID": 0,
-    "PUID": 0
+    "CONFIG_LOCATION": "/config/addons_config/tdarr"
   },
   "panel_icon": "mdi:file-search",
   "ports": {
@@ -83,8 +79,6 @@
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "CONFIG_LOCATION": "str",
-    "PGID": "int",
-    "PUID": "int",
     "TZ": "str?",
     "cifsdomain": "str?",
     "cifspassword": "str?",
