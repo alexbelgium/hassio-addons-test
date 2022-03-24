@@ -55,6 +55,7 @@
     "NVIDIA_VISIBLE_DEVICES": "all"
   },
   "host_dbus": true,
+  "image": "ghcr.io/alexbelgium/tdarr-{arch}",
   "map": [
     "media:rw",
     "config:rw",
