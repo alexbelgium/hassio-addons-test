@@ -14,10 +14,10 @@
     "PUID": 1000
   },
   "ports": {
-    "4822/tcp": 4822
+    "8080/tcp": 4822
   },
   "ports_description": {
-    "4822/tcp": "web interface"
+    "8080/tcp": "web interface"
   },
 
   "schema": {
@@ -30,5 +30,5 @@
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.4.0-not-working2",
   "video": true,
-  "webui": "http://[HOST]:[PORT:4822]"
+  "webui": "http://[HOST]:[PORT:8080]"
 }
