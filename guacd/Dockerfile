@@ -23,22 +23,8 @@ FROM ${BUILD_FROM}
 ##################
 
 # Allow UID and GID setting
-RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
-    \
-    # Change home folder location
-    #    && sed -i 's|/config|/share/guacd|g' /defaults/* \
-    && sed -i 's|/config|/config/addons_config/guacd|g' /etc/cont-init.d/*
-#    && sed -i 's|/config|/share/guacd|g' /etc/services.d/*/run \
-#    && usermod --home /share/guacd abc \
-#    \
-#    # Correct error in upstream image
-#    && sed -i 's|startwm |startwm.sh |g' /etc/cont-init.d/30-config \
-#    \
-#    # Update distribution
-#    # hadolint ignore=DL3017
-#    && apk upgrade --no-cache
+RUN sed -i 's|/config|/config/addons_config/guacd|g' /etc/cont-init.d/* \
+    && sed -i 's|/config|/config/addons_config/guacd|g' /etc/services.d/*/run
 
 ##################
 # 3 Install apps #
