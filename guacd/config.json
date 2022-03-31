@@ -7,7 +7,6 @@
     "FM_HOME": "/config/addons_config/guacd",
     "HOME": "/config/addons_config/guacd"
   },
-  "image": "ghcr.io/alexbelgium/guacd-{arch}",
   "map": ["media:rw", "share:rw", "ssl"],
   "name": "Guacamole Client",
   "options": {
