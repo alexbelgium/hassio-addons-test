@@ -20,7 +20,7 @@
   "ports_description": {
     "8080/tcp": "web interface"
   },
-
+  "init": false,
   "schema": {
     "PGID": "int",
     "PUID": "int",
