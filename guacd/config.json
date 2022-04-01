@@ -6,7 +6,8 @@
   "environment": {
     "FM_HOME": "/data",
     "HOME": "/data",
-    "PGDATA": "/data/postgres"
+    "PGDATA": "/data/postgres",
+    "GUACAMOLE_HOME": "/data" 
   },
   "name": "Guacamole Client",
   "options": {
