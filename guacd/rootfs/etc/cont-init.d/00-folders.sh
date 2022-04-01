@@ -3,7 +3,7 @@
 
 # Define home
 HOME="/config/addons_config/guacd"
-mkdir "$HOME"/postgres
+mkdir -p "$HOME"/postgres
 
 PUID="$(bashio::config "PUID")"
 PGID="$(bashio::config "PGID")"
