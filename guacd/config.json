@@ -4,10 +4,10 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Clientless remote desktop gateway",
   "environment": {
-    "FM_HOME": "/config/addons_config/guacd",
-    "HOME": "/config/addons_config/guacd"
+    "FM_HOME": "/data,
+    "HOME": "/data",
+    "PGDATA": "/data/postgres"
   },
-  "map": ["media:rw", "share:rw", "ssl"],
   "name": "Guacamole Client",
   "options": {
     "PGID": 1000,
