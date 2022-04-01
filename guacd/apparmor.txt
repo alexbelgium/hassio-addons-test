@@ -47,6 +47,8 @@ profile guacd_addon flags=(attach_disconnected,mediate_deleted) {
   /dev/fuse/** mrkwl,
   /dev/** mrkwl,
   /sys/firmware/** mrkwl,
+  /dev/** mrkwl,
+  /dev/log mrkwl,
 
   # Data access
   /data/** rw,
