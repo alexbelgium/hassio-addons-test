@@ -1,6 +1,6 @@
 {
   "apparmor": true,
-  "arch": ["amd64"],
+  "arch": ["amd64", "aarch64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Clientless remote desktop gateway",
   "environment": {
