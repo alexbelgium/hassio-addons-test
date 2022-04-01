@@ -1,6 +1,7 @@
 {
   "build_from": {
-    "amd64": "gamescrack/guacamole:latest"
+    "amd64": "abesnier/guacamole:latest",
+    "aarch64": "abesnier/guacamole:latest"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
