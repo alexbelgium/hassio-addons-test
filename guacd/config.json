@@ -4,7 +4,7 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Clientless remote desktop gateway",
   "environment": {
-    "FM_HOME": "/data,
+    "FM_HOME": "/data",
     "HOME": "/data",
     "PGDATA": "/data/postgres"
   },
