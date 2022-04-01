@@ -22,11 +22,9 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
-ENV PGDATA=/config/addons_config/guacd/postgres
-
 # Allow UID and GID setting
-RUN sed -i 's|/config|/config/addons_config/guacd|g' /etc/cont-init.d/* \
-    && sed -i 's|/config|/config/addons_config/guacd|g' /etc/services.d/*/run
+RUN sed -i 's|/config|/data|g' /etc/cont-init.d/* \
+    && sed -i 's|/config|/data|g' /etc/services.d/*/run
 
 ##################
 # 3 Install apps #
@@ -61,7 +59,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 
 #RUN chmod 777 /entrypoint.sh
-#WORKDIR /
+WORKDIR /data
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/entrypoint.sh" ]
 #SHELL ["/bin/bash", "-o", "pipefail", "-c"]
