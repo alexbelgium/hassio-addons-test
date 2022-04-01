@@ -22,6 +22,8 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
+ENV PGDATA=/config/addons_config/guacd/postgres
+
 # Allow UID and GID setting
 RUN sed -i 's|/config|/config/addons_config/guacd|g' /etc/cont-init.d/* \
     && sed -i 's|/config|/config/addons_config/guacd|g' /etc/services.d/*/run
