@@ -26,7 +26,7 @@ FROM ${BUILD_FROM}
 RUN sed -i 's|/config|/data|g' /etc/cont-init.d/* \
     && sed -i 's|/config|/data|g' /etc/services.d/*/run \
     # Change log location
-    && find -type f / -name *syslog* | xargs sed -i "s|/dev/log|/data/log|g"
+    && find / -name *syslog* -type f | xargs sed -i "s|/dev/log|/data/log|g"
 
 ##################
 # 3 Install apps #
