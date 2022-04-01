@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile guacd_addon flags=(attach_disconnected,mediate_deleted) {
+profile guacamole_addon flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   capability,

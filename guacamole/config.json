@@ -5,7 +5,7 @@
   "description": "Clientless remote desktop gateway",
   "environment": {
     "PGDATA": "/data/postgres",
-    "GUACAMOLE_HOME": "/data" 
+    "GUACAMOLE_HOME": "/data"
   },
   "name": "Guacamole Client",
   "options": {
@@ -25,7 +25,7 @@
     "EXTENSIONS": "str?",
     "TZ": "str?"
   },
-  "slug": "guacd",
+  "slug": "guacamole",
   "upstream": "1.4.0",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.4.0-not-working2",

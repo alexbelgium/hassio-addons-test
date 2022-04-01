@@ -4,7 +4,7 @@
 cp -rn /config/* /data
 
 # Define home
-#HOME="/config/addons_config/guacd"
+#HOME="/config/addons_config/guacamole"
 #mkdir -p "$HOME"/postgres
 
 #PUID="$(bashio::config "PUID")"
