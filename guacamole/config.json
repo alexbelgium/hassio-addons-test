@@ -4,8 +4,6 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Clientless remote desktop gateway",
   "environment": {
-    "PGDATA": "/data/postgres",
-    "GUACAMOLE_HOME": "/data"
   },
   "name": "Guacamole Client",
   "options": {
@@ -28,7 +26,7 @@
   "slug": "guacamole",
   "upstream": "1.4.0",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.4.0-not-working3",
+  "version": "1.4.0-not-working4",
   "video": true,
   "webui": "http://[HOST]:[PORT:8080]"
 }
