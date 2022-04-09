@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-cp -rn /config/* /data
+# cp -rn /config/* /data
 
 # Define home
 #HOME="/config/addons_config/guacamole"
