@@ -22,6 +22,9 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
+# Avoid timeouts
+RUN sed -i 's|-t3000|-t300000|g' /etc/s6-overlay/s6-rc.d/*/*
+
 # Allow UID and GID setting
 #RUN sed -i 's|/config|/data|g' /etc/cont-init.d/* \
 #    && sed -i 's|/config|/data|g' /etc/services.d/*/run
