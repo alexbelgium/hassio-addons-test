@@ -26,7 +26,7 @@
   "slug": "guacamole",
   "upstream": "1.4.0",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.4.0-not-working6",
+  "version": "1.4.0-not-working7",
   "video": true,
   "webui": "http://[HOST]:[PORT:8080]"
 }
