@@ -14,7 +14,7 @@
     "SSL_KEY_NAME": "tls.key",
     "TZ": "Etc/UTC"
   },
-  "name": "omada",
+  "name": "Omada",
   "options": {},
   "ports": {
     "8088/tcp": 8088,
