@@ -9,10 +9,22 @@ echo "Creating directory"
 mkdir -p "$CONFIGSOURCE"
 fi
 
+# Ensure structure is correct
+mkdir -p "$CONFIGSOURCE"/db "$CONFIGSOURCE"/html "$CONFIGSOURCE"/pdf
+cp -rnf /opt/tplink/EAPController/data/* "$CONFIGSOURCE"
+
 # Make sure permissions are right
 echo "Updating permissions"
 chown -R "508:508" "$CONFIGSOURCE"
 
+# Delete previous directories
+echo "Removing previous directories"
+rm -r /opt/tplink/EAPController/data/html
+rm -r /opt/tplink/EAPController/data/pdf
+rm -r /opt/tplink/EAPController/data/db
+
 # Create symlink
 echo "Creating symlink"
-ln -s /config/addons_config/omada /opt/tplink/EAPController/data
+ln -s /config/addons_config/omada/pdf /opt/tplink/EAPController/pdf
+ln -s /config/addons_config/omada/html /opt/tplink/EAPController/html
+ln -s /config/addons_config/omada/db /opt/tplink/EAPController/db
