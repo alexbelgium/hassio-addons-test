@@ -23,7 +23,7 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
-RUN echo "Adding symlinks to entrypoint"
+RUN echo "Adding symlinks to entrypoint" \
     && sed -i '1a ln -s /config/addons_config/omada/pdf /opt/tplink/EAPController/data' /entrypoint.sh \
     && sed -i '1a ln -s /config/addons_config/omada/html /opt/tplink/EAPController/data' /entrypoint.sh \
     && sed -i '1a ln -s /config/addons_config/omada/db /opt/tplink/EAPController/data' /entrypoint.sh \
