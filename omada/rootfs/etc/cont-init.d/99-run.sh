@@ -8,4 +8,4 @@
 
 bashio::log.info "Please wait while the app is loading !"
 
-./docker-entrypoint.sh
+/./docker-entrypoint.sh
