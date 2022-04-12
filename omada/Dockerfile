@@ -23,23 +23,17 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
-RUN sed -i '1a ln -s /config/addons_config/omada /opt/tplink/EAPController/data' /entrypoint.sh \
+RUN echo "Adding symlinks to entrypoint"
+    && sed -i '1a ln -s /config/addons_config/omada/pdf /opt/tplink/EAPController/data' /entrypoint.sh \
+    && sed -i '1a ln -s /config/addons_config/omada/html /opt/tplink/EAPController/data' /entrypoint.sh \
+    && sed -i '1a ln -s /config/addons_config/omada/db /opt/tplink/EAPController/data' /entrypoint.sh \
+    && sed -i '1a rm -r /opt/tplink/EAPController/data/html \
+    && sed -i '1a rm -r /opt/tplink/EAPController/data/pdf \
+    && sed -i '1a rm -r /opt/tplink/EAPController/data/db \
+    && sed -i '1a cp -rnf /opt/tplink/EAPController/data "$CONFIGSOURCE"' \
     && sed -i '1a chown -R "508:508" "$CONFIGSOURCE"' /entrypoint.sh \
-    && sed -i '1a mkdir -p "$CONFIGSOURCE" || true' /entrypoint.sh \
+    && sed -i '1a mkdir -p "$CONFIGSOURCE"/db "$CONFIGSOURCE"/html "$CONFIGSOURCE"/pdf' /entrypoint.sh \
     && sed -i '1a CONFIGSOURCE="/config/addons_config/omada"' /entrypoint.sh
-
-# Rename entrypoint
-#RUN mv /entrypoint.sh /docker-entrypoint.sh
-
-# Global variables
-#ENV DZM_CONFIG_DIR="/config/addons_config/omada"
-
-# Change config location
-# hadolint ignore=DL4006
-#RUN sed -i 's|/etc/zm.conf|/config/addons_config/omada/zm.conf|g' /usr/local/bin/entrypoint.sh \
-#    && sed -i 's|ZM_PATH_CONF=/config|ZM_PATH_CONF=/config/addons_config/omada/zm.conf|g' /etc/zm/zm.conf \
-#    && sed -i 's|/var/lib/mysql|/config/addons_config/omada/mysql|g' /usr/local/bin/entrypoint.sh \
-#    && grep -rl '/var/lib/mysql' /etc | xargs sed -i 's|/var/lib/mysql|/config/addons_config/omada/mysql|g'
 
 ##################
 # 3 Install apps #
