@@ -27,7 +27,7 @@ RUN echo "Adding symlinks to entrypoint" \
     && sed -i \
     -e '1a chmod a+x /etc/cont-init.d/*' \
     -e '1a sed -i "s|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g" /etc/cont-init.d/*' \
-    -e '1a /./etc/cont-init.d/*' \       
+    -e '1a for i in /etc/cont-init.d/*; do /."$i"; done' \
     /entrypoint.sh
 
 ##################
