@@ -28,7 +28,7 @@ RUN echo "Adding symlinks to entrypoint" \
     -e '1a CONFIGSOURCE="/config/addons_config/omada"' \
     -e '1a mkdir -p "$CONFIGSOURCE"/db "$CONFIGSOURCE"/html "$CONFIGSOURCE"/pdf' \
     -e '1a chown -R "508:508" "$CONFIGSOURCE"' \
-    -e '1a cp -rnf /opt/tplink/EAPController/data "$CONFIGSOURCE"' \
+    -e '1a cp -rnf /opt/tplink/EAPController/data/* "$CONFIGSOURCE"' \
     -e '1a rm -r /opt/tplink/EAPController/data/html' \
     -e '1a rm -r /opt/tplink/EAPController/data/pdf' \
     -e '1a rm -r /opt/tplink/EAPController/data/db' \
