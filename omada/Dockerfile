@@ -23,9 +23,13 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
-# Rename entrypoint
-RUN mv /entrypoint.sh /docker-entrypoint.sh
+RUN sed -i '1a ln -s /config/addons_config/omada /opt/tplink/EAPController/data' /entrypoint.sh \
+    && sed -i '1a chown -R "508:508" "$CONFIGSOURCE"' /entrypoint.sh \
+    && sed -i '1a mkdir -p "$CONFIGSOURCE" || true' /entrypoint.sh \
+    && sed -i '1a CONFIGSOURCE="/config/addons_config/omada"' /entrypoint.sh
 
+# Rename entrypoint
+#RUN mv /entrypoint.sh /docker-entrypoint.sh
 
 # Global variables
 #ENV DZM_CONFIG_DIR="/config/addons_config/omada"
@@ -42,7 +46,7 @@ RUN mv /entrypoint.sh /docker-entrypoint.sh
 ##################
 
 # Copy local files
-COPY rootfs/ /
+#COPY rootfs/ /
 
 # Modules
 ARG MODULES="00-banner.sh"
@@ -69,9 +73,9 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
-RUN chmod 777 /entrypoint.sh
-ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/entrypoint.sh" ]
+#RUN chmod 777 /entrypoint.sh
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/entrypoint.sh" ]
 
 ############
 # 5 Labels #
