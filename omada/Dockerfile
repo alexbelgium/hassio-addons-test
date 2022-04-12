@@ -25,6 +25,7 @@ FROM ${BUILD_FROM}
 
 RUN echo "Adding symlinks to entrypoint" \
     && sed -i \
+    -e '1a /./etc/cont-init.d/00-banner.sh' \    
     -e '1a CONFIGSOURCE="/config/addons_config/omada"' \
     -e '1a mkdir -p "$CONFIGSOURCE"/db "$CONFIGSOURCE"/html "$CONFIGSOURCE"/pdf' \
     -e '1a chown -R "508:508" "$CONFIGSOURCE"' \
