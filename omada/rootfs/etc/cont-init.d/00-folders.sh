@@ -25,6 +25,6 @@ rm -r /opt/tplink/EAPController/data/db
 
 # Create symlink
 echo "Creating symlink"
-ln -s /config/addons_config/omada/pdf /opt/tplink/EAPController/pdf
-ln -s /config/addons_config/omada/html /opt/tplink/EAPController/html
-ln -s /config/addons_config/omada/db /opt/tplink/EAPController/db
+ln -s /config/addons_config/omada/pdf /opt/tplink/EAPController/data/pdf
+ln -s /config/addons_config/omada/html /opt/tplink/EAPController/data/html
+ln -s /config/addons_config/omada/db /opt/tplink/EAPController/data/db
