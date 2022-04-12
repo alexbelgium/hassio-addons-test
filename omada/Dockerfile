@@ -24,16 +24,18 @@ FROM ${BUILD_FROM}
 ##################
 
 RUN echo "Adding symlinks to entrypoint" \
-    && sed -i -e '1a ln -s /config/addons_config/omada/pdf /opt/tplink/EAPController/data' \
-    -e '1a ln -s /config/addons_config/omada/html /opt/tplink/EAPController/data' \
-    -e '1a ln -s /config/addons_config/omada/db /opt/tplink/EAPController/data' \
+    && sed -i \
+    -e '1a CONFIGSOURCE="/config/addons_config/omada"' \
+    -e '1a mkdir -p "$CONFIGSOURCE"/db "$CONFIGSOURCE"/html "$CONFIGSOURCE"/pdf' \
+    -e '1a chown -R "508:508" "$CONFIGSOURCE"' \
+    -e '1a cp -rnf /opt/tplink/EAPController/data "$CONFIGSOURCE"' \
     -e '1a rm -r /opt/tplink/EAPController/data/html' \
     -e '1a rm -r /opt/tplink/EAPController/data/pdf' \
     -e '1a rm -r /opt/tplink/EAPController/data/db' \
-    -e '1a cp -rnf /opt/tplink/EAPController/data "$CONFIGSOURCE"' \
-    -e '1a chown -R "508:508" "$CONFIGSOURCE"' \
-    -e '1a mkdir -p "$CONFIGSOURCE"/db "$CONFIGSOURCE"/html "$CONFIGSOURCE"/pdf' \
-    -e '1a CONFIGSOURCE="/config/addons_config/omada"' /entrypoint.sh
+    -e '1a ln -s /config/addons_config/omada/pdf /opt/tplink/EAPController/data' \
+    -e '1a ln -s /config/addons_config/omada/html /opt/tplink/EAPController/data' \
+    -e '1a ln -s /config/addons_config/omada/db /opt/tplink/EAPController/data' \
+    /entrypoint.sh
 
 ##################
 # 3 Install apps #
