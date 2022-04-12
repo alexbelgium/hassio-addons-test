@@ -14,6 +14,7 @@
     "SSL_KEY_NAME": "tls.key",
     "TZ": "Etc/UTC"
   },
+  "image": "ghcr.io/alexbelgium/omada-{arch}",
   "name": "Omada",
   "options": {},
   "ports": {
