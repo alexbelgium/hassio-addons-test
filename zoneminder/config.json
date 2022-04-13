@@ -12,7 +12,6 @@
   "map": [
     "config:rw"
   ],
-  "image": "ghcr.io/alexbelgium/zoneminder-{arch}",
   "ports_description": {
     "80/tcp": "web interface"
   },
