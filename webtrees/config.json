@@ -93,7 +93,7 @@
   "services": [
     "mysql:want"
   ],
-  "slug": "webtrees",
+  "slug": "webtrees_test",
   "startup": "services",
   "upstream": "2.1.0-beta.2",
   "url": "https://github.com/alexbelgium/hassio-addons",
