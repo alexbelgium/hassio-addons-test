@@ -64,7 +64,7 @@
     "share:rw",
     "ssl"
   ],
-  "name": "Webtrees",
+  "name": "Webtrees test",
   "options": {
     "BASE_URL": "http://192.168.178.23",
     "CONFIG_LOCATION": "/config/addons_config/webtrees/config.yaml",
