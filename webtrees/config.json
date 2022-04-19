@@ -56,7 +56,6 @@
     "WT_PASS": "mybadpassword",
     "WT_USER": "admin"
   },
-  "image": "ghcr.io/alexbelgium/webtrees-{arch}",
   "ingress": true,
   "ingress_port": 8099,
   "map": [
