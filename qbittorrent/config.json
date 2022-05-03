@@ -55,7 +55,7 @@
     "share:rw",
     "ssl"
   ],
-  "name": "Qbittorrent",
+  "name": "Qbittorrent test",
   "options": {
     "ssl": false,
     "certfile": "fullchain.pem",
@@ -108,7 +108,7 @@
     "run_duration": "str?",
     "TZ": "str?"
   },
-  "slug": "qbittorrent",
+  "slug": "qbittorrent2",
   "upstream": "release-4.4.1-ls173",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "release-4.4.1-ls173-8",
