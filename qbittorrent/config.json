@@ -47,7 +47,7 @@
   "hassio_api": true,
   "hassio_role": "homeassistant",
   "homeassistant_api": true,
-  "image": "",
+  "image": false,
   "ingress": true,
   "ingress_port": 8099,
   "map": [
