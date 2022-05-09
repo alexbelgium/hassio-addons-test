@@ -18,7 +18,12 @@ if [ -e "/MODULESFILE" ]; then
     
     files=(/etc/cont-init.d/*)
     for scripts in $MODULES; do
-        sed -i "1a ./etc/cont-init.d/$scripts)" ${files[0]}
+        if [ -f ${files[3]} ]; then
+            echo "Scripts will be executed manually" 
+            sed -i "1a ./etc/cont-init.d/$scripts)" ${files[3]}
+        else
+            echo "Warning : custom scripts can't be run" 
+        fi
     done
 fi
 
