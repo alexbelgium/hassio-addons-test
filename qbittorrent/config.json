@@ -47,7 +47,7 @@
   "hassio_api": true,
   "hassio_role": "homeassistant",
   "homeassistant_api": true,
-  "image": "ghcr.io/alexbelgium/test2-{arch}",
+  "image": "",
   "ingress": true,
   "ingress_port": 8099,
   "map": [
