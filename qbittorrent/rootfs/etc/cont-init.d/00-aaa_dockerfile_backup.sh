@@ -27,9 +27,9 @@ if [ -e "/MODULESFILE" ]; then
         for scripts in $MODULES; do
             if [ -f ${files[1]} ]; then
                 echo "copy $scripts in ${files[1]}"
-                sed -i "1a rm /etc/cont-init.d/$scripts)" ${files[1]}
-                sed -i "1a /./etc/cont-init.d/$scripts)" ${files[1]}
-                sed -i "1a .$scripts)" ${files[1]}
+                sed -i "1a rm /etc/cont-init.d/$scripts" ${files[1]}
+                sed -i "1a /./etc/cont-init.d/$scripts" ${files[1]}
+                sed -i "1a echo .$scripts" ${files[1]}
             else
                 echo "Warning : custom scripts can't be run" 
             fi
