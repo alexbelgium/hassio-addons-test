@@ -42,8 +42,8 @@ if [ -e "/MODULESFILE" ] && [ ! -f /entrypoint.sh ]; then
     echo "no entrypoint"
     for scripts in $MODULES; do
         echo "$SCRIPTS: executing"
-        chown "$(id -u)":"$(id -g)" "$SCRIPTS"
-        chmod a+x "$SCRIPTS"
+        chown "$(id -u)":"$(id -g)" /etc/cont-init.d/"$SCRIPTS"
+        chmod a+x /etc/cont-init.d/"$SCRIPTS"
         /./etc/cont-init.d/"$SCRIPTS" || echo "/etc/cont-init.d/$SCRIPTS: exiting $?"
         rm /etc/cont-init.d/"$SCRIPTS"
     done | tac
