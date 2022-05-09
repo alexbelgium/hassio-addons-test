@@ -18,16 +18,18 @@ if [ -e "/MODULESFILE" ]; then
     
     # Degraded mode if no entrypoint.sh
     if [ ! -f /entrypoint.sh ]; then
+        # Get list of files
         files=(/etc/cont-init.d/*)
+        # Reverse
         for scripts in $MODULES; do
             # If first file exists, use it to run all the others
             if [ -f ${files[1]} ]; then
-                echo "Scripts will be executed manually" 
-                sed -i "1a ./etc/cont-init.d/$scripts)" ${files[1]}
+                sed -i "1i /./etc/cont-init.d/$scripts)" ${files[1]}
+                sed -i "1i .$scripts)" ${files[1]}
             else
                 echo "Warning : custom scripts can't be run" 
             fi
-        done
+        done | tac
     fi
 
 fi
