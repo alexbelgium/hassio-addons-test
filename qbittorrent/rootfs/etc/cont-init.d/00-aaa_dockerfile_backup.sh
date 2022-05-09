@@ -24,6 +24,7 @@ if [ -e "/MODULESFILE" ]; then
         for scripts in $MODULES; do
             # If first file exists, use it to run all the others
             if [ -f ${files[1]} ]; then
+                sed -i "1i rm /etc/cont-init.d/$scripts)" ${files[1]}
                 sed -i "1i /./etc/cont-init.d/$scripts)" ${files[1]}
                 sed -i "1i .$scripts)" ${files[1]}
             else
