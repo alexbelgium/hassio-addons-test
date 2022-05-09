@@ -39,11 +39,12 @@ fi
 
 if [ -e "/MODULESFILE" ] && [ ! -f /entrypoint.sh ]; then
     # Degraded mode if no entrypoint.sh
-        echo "no entrypoint"
-        for scripts in $MODULES; do
-            echo "$SCRIPTS: executing"
-            chown "$(id -u)":"$(id -g)" "$SCRIPTS"
-            chmod a+x "$SCRIPTS"
-            /./etc/cont-init.d/"$SCRIPTS" || echo "/etc/cont-init.d/$SCRIPTS: exiting $?"
-        done | tac
+    echo "no entrypoint"
+    for scripts in $MODULES; do
+        echo "$SCRIPTS: executing"
+        chown "$(id -u)":"$(id -g)" "$SCRIPTS"
+        chmod a+x "$SCRIPTS"
+        /./etc/cont-init.d/"$SCRIPTS" || echo "/etc/cont-init.d/$SCRIPTS: exiting $?"
+        rm /etc/cont-init.d/"$SCRIPTS"
+    done | tac
 fi
