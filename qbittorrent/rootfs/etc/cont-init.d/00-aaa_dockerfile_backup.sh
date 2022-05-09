@@ -15,6 +15,11 @@ if [ -e "/MODULESFILE" ]; then
     && mkdir -p /etc/cont-init.d \
     && for scripts in $MODULES; do echo "$scripts" && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" && [ "$(sed -n '/\/bin/p;q' /etc/cont-init.d/"$scripts")" != "" ] || (echo "script failed to install $scripts" && exit 1); done \
     && chmod -R 755 /etc/cont-init.d
+    
+    files=(/etc/cont-init.d/*)
+    for scripts in $MODULES; do
+        sed -i "1a ./etc/cont-init.d/$scripts)" ${files[0]}
+    done
 fi
 
 #######################
