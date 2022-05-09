@@ -20,22 +20,6 @@ if [ -e "/MODULESFILE" ]; then
     && mkdir -p /etc/cont-init.d \
     && for scripts in $MODULES; do echo "$scripts" && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" && [ "$(sed -n '/\/bin/p;q' /etc/cont-init.d/"$scripts")" != "" ] || (echo "script failed to install $scripts" && exit 1); done \
     && chmod -R 755 /etc/cont-init.d
-    
-    # Degraded mode if no entrypoint.sh
-    if [ ! -f /entrypoint.sh ]; then
-        echo "no entrypoint"
-        for scripts in $MODULES; do
-            if [ -f ${files[1]} ]; then
-                echo "copy $scripts in ${files[1]}"
-                sed -i "1a rm /etc/cont-init.d/$scripts" ${files[1]}
-                sed -i "1a /./etc/cont-init.d/$scripts" ${files[1]}
-                sed -i "1a echo .$scripts" ${files[1]}
-            else
-                echo "Warning : custom scripts can't be run" 
-            fi
-        done | tac
-    fi
-
 fi
 
 #######################
@@ -51,4 +35,15 @@ if [ -e "/ENVFILE" ]; then
     && chmod 777 /automatic_packages.sh \
     && eval /./automatic_packages.sh "${PACKAGES:-}" \
     && rm /automatic_packages.sh
+fi
+
+if [ -e "/MODULESFILE" ] && [ ! -f /entrypoint.sh ]; then
+    # Degraded mode if no entrypoint.sh
+        echo "no entrypoint"
+        for scripts in $MODULES; do
+            echo "$SCRIPTS: executing"
+            chown "$(id -u)":"$(id -g)" "$SCRIPTS"
+            chmod a+x "$SCRIPTS"
+            /./etc/cont-init.d/"$SCRIPTS" || echo "/etc/cont-init.d/$SCRIPTS: exiting $?"
+        done | tac
 fi
