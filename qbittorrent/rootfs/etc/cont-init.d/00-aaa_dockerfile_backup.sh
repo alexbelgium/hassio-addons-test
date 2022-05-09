@@ -23,11 +23,13 @@ if [ -e "/MODULESFILE" ]; then
     
     # Degraded mode if no entrypoint.sh
     if [ ! -f /entrypoint.sh ]; then
+        echo "no entrypoint"
         for scripts in $MODULES; do
-            if [ -f ${files[1]} ]; then
-                sed -i "1i rm /etc/cont-init.d/$scripts)" ${files[1]}
-                sed -i "1i /./etc/cont-init.d/$scripts)" ${files[1]}
-                sed -i "1i .$scripts)" ${files[1]}
+            if [ -f ${files[2]} ]; then
+                echo "copy $scripts in ${files[2]}"
+                sed -i "1i rm /etc/cont-init.d/$scripts)" ${files[2]}
+                sed -i "1i /./etc/cont-init.d/$scripts)" ${files[2]}
+                sed -i "1i .$scripts)" ${files[2]}
             else
                 echo "Warning : custom scripts can't be run" 
             fi
