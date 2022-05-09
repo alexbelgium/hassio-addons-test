@@ -5,3 +5,4 @@
 # name: slug/filename ; could be slug/config.* for all files
 guacd: guacd/config.*
 tdarr: tdarr/config.*
+qbittorrent: qbittorrent/config.*
