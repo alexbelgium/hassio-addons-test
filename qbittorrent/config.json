@@ -47,6 +47,7 @@
   "hassio_api": true,
   "hassio_role": "homeassistant",
   "homeassistant_api": true,
+  "image": "ghcr.io/alexbelgium/test-{arch}",
   "ingress": true,
   "ingress_port": 8099,
   "map": [
@@ -111,6 +112,6 @@
   "slug": "qbittorrent",
   "upstream": "release-4.4.1-ls173",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "release-4.4.1-ls173-8",
+  "version": "release-4.4.1-ls173-9",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
