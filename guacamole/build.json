@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "amd64": "abesnier/guacamole:latest",
-    "aarch64": "abesnier/guacamole:latest"
+    "amd64": "maxwaldorf/guacamole:latest",
+    "aarch64": "maxwaldorf/guacamole:latest"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
