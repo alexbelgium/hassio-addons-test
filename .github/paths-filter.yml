@@ -3,6 +3,6 @@
 ###############
 # Those are the addon path filters used in the workflows to determine which addon needs to be build.
 # name: slug/filename ; could be slug/config.* for all files
-guacd: guacd/config.*
+guacamole: guacamole.*
 tdarr: tdarr/config.*
 qbittorrent: qbittorrent/config.*
