@@ -23,7 +23,7 @@ FROM ${BUILD_FROM}
 ##################
 
 # Avoid timeouts
-RUN sed -i 's|-t3000|-t300000|g' /etc/s6-overlay/s6-rc.d/*/run
+#RUN sed -i 's|-t3000|-t300000|g' /etc/s6-overlay/s6-rc.d/*/run
 
 # Allow UID and GID setting
 #RUN sed -i 's|/config|/data|g' /etc/cont-init.d/* \
