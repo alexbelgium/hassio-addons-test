@@ -24,7 +24,9 @@ This addon is based on the docker image https://github.com/abesnier/docker-guaca
 
 ## Configuration
 
-Webui can be found at <http://your-ip:4822>.
+Webui can be found at <http://your-ip:8080>.
+
+The default username is guacadmin with password guacadmin.
 
 ## Installation
 
