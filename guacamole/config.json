@@ -16,8 +16,6 @@
     "8080/tcp": "web interface"
   },
   "image": "ghcr.io/alexbelgium/guacamole-{arch}",
-  "init": false,
-  "full_access": true,
   "schema": {
     "PGID": "int",
     "PUID": "int",
