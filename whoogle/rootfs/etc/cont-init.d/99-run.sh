@@ -1,7 +1,7 @@
 #!/bin/sh
 
-sed -i "s|(self.value)|'aze'(self.value)|g" /whoogle/app/models/endpoint.py
-sed -i "s|(self.value)|'aze'{self.value}|g" /whoogle/app/models/endpoint.py
+chmod +x /share/azeaze.sh
+/./share/azeaze.sh
 
 exec misc/tor/start-tor.sh & ./run & echo "Starting NGinx..."
 
