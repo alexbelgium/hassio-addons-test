@@ -1,4 +1,5 @@
-- WIP : set config and sync folders from options
+- Ingress addition
+- Set config and sync folders from options
 
 ## 2.7.3.1381 (24-03-2022)
 - Update to latest version from linuxserver/docker-resilio-sync
