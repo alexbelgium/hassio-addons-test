@@ -44,7 +44,7 @@
     "share:rw",
     "config:rw"
   ],
-  "name": "ResilioSync",
+  "name": "ResilioSync_test",
   "options": {
     "PGID": 0,
     "PUID": 0,
@@ -76,7 +76,7 @@
     "data_location": "str",
     "config_location": "str"
   },
-  "slug": "resiliosync test",
+  "slug": "resiliosync_test",
   "url": "https://github.com/tyjtyj/hassio-addons",
   "version": "2.7.3.1381-3",
   "webui": "http://[HOST]:[PORT:8888]"
