@@ -64,7 +64,8 @@
     "networkdisks": "//server/share",
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
-    "ssl": false
+    "ssl": false,
+    "PHOTOPRISM_SITE_URL": "http://192.168.178.23:8123"
   },
   "ports": {
     "2342/tcp": 2342
@@ -90,7 +91,8 @@
     "networkdisks": "str?",
     "ssl": "bool",
     "certfile": "str",
-    "keyfile": "str"
+    "keyfile": "str",
+    "PHOTOPRISM_SITE_URL": "str"
   },
   "services": [
     "mysql:want"
