@@ -1,6 +1,14 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
 
+############
+# Base url #
+############
+
+PHOTOPRISM_SITE_URL="$(bashio::config 'PHOTOPRISM_SITE_URL')$(bashio::addon.ingress_entry)"
+bashio::log.blue "Site url : $PHOTOPRISM_SITE_URL"
+export PHOTOPRISM_SITE_URL
+
 ###################
 # Define database #
 ###################
@@ -84,6 +92,8 @@ bashio::log.info "Please wait 1 or 2 minutes to allow the server to load"
 bashio::log.info 'Default username : admin, default password: "please_change_password"'
 
 cd /
-./scripts/entrypoint.sh photoprism start & bashio::log.info "App launched..."
+./scripts/entrypoint.sh photoprism start & bashio::log.info "Starting..."
+
+bashio::net.wait_for 2341 localhost 900 bashio::log.info "App launched..."
 
 exec nginx
