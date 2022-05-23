@@ -43,6 +43,7 @@
     "working_dir": "/data/photoprism"
   },
   "homeassistant": "0.92.0b2",
+  "ingress": true,
   "map": [
     "media:rw",
     "share:rw",
