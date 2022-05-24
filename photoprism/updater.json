@@ -1,9 +1,0 @@
-{
-  "github_fulltag": "true",
-  "last_update": "03-03-2022",
-  "repository": "alexbelgium/hassio-addons",
-  "slug": "photoprism",
-  "source": "dockerhub",
-  "upstream_repo": "photoprism/photoprism",
-  "upstream_version": "220302-impish"
-}
