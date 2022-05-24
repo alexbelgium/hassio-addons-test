@@ -44,6 +44,7 @@
   },
   "homeassistant": "0.92.0b2",
   "ingress": true,
+  "ingress_stream": true,
   "map": [
     "media:rw",
     "share:rw",
