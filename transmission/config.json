@@ -70,9 +70,6 @@
   ],
   "schema": {
     "DNS_server": "str?",
-    "PGID": "int",
-    "PUID": "int",
-    "TZ": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "customUI": "list(standard|combustion-release|transmission-web-control|kettu|flood-for-transmission)",
@@ -81,9 +78,13 @@
     "localdisks": "str?",
     "networkdisks": "str?",
     "pass": "str?",
-    "smbv1": "bool?",
     "user": "str?",
-    "whitelist": "str?"
+    "whitelist": "str?",
+    "OPENVPN_PROVIDER": "str",
+    "OPENVPN_CONFIG": "str",
+    "OPENVPN_USERNAME": "str",
+    "OPENVPN_PASSWORD": "str",
+    "LOCAL_NETWORK": "str"
   },
   "slug": "transmission_ls_test",
   "startup": "services",
