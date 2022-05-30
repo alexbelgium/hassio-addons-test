@@ -45,14 +45,17 @@
     "media:rw",
     "ssl"
   ],
-  "name": "Transmission NAS test",
+  "name": "Transmission Openvpn",
   "options": {
     "DNS_server": "8.8.8.8,1.1.1.1",
-    "PGID": 0,
-    "PUID": 0,
     "customUI": "transmission-web-control",
     "download_dir": "/share/downloads",
-    "incomplete_dir": "/share/incomplete"
+    "incomplete_dir": "/share/incomplete",
+    "OPENVPN_PROVIDER": "PIA",
+    "OPENVPN_CONFIG": "france",
+    "OPENVPN_USERNAME": "user",
+    "OPENVPN_PASSWORD": "pass",
+    "LOCAL_NETWORK": "192.168.0.0/16"
   },
   "ports": {
     "51413/tcp": 51413,
@@ -79,14 +82,13 @@
     "networkdisks": "str?",
     "pass": "str?",
     "user": "str?",
-    "whitelist": "str?",
     "OPENVPN_PROVIDER": "str",
     "OPENVPN_CONFIG": "str",
     "OPENVPN_USERNAME": "str",
     "OPENVPN_PASSWORD": "str",
     "LOCAL_NETWORK": "str"
   },
-  "slug": "transmission_ls_test",
+  "slug": "transmission_openvpn",
   "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "3.00-r5-ls125",
