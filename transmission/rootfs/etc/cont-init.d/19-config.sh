@@ -105,8 +105,8 @@ jq . -S "$CONFIGDIR"/settings.json | cat >temp.json && mv temp.json "$CONFIGDIR"
 ###########
 
 CONFIG=$(<"$CONFIGDIR"/settings.json)
-WHITELIST=$(bashio::config 'whitelist')
-if bashio::config.has_value 'whitelist'; then
+WHITELIST=$(bashio::config 'LOCAL_NETWORK')
+if bashio::config.has_value 'LOCAL_NETWORK'; then
     BOOLEAN=true
     bashio::log.info "Whitelist set, no authentification from IP $WHITELIST"
 else
