@@ -23,6 +23,9 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
+# ADD scripts
+RUN sed -i "1a ./etc/cont-init.d/19-config.sh  "/etc/openvpn/start.sh"
+
 # MOFIFY DATA PATH
 ENV TRANSMISSION_HOME="/addons_config/transmission"
 ENV TRANSMISSION_DOWNLOAD_DIR="/addons_config/transmission/downloads"
