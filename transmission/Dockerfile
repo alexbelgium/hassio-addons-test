@@ -24,7 +24,6 @@ FROM ${BUILD_FROM}
 ##################
 
 # MOFIFY DATA PATH
-RUN grep -rnl "/config" /etc | xargs sed -i "s|/config|/config/addons_config/transmission|g"
 ENV TRANSMISSION_HOME="/addons_config/transmission"
 ENV TRANSMISSION_DOWNLOAD_DIR="/addons_config/transmission/downloads"
 ENV TRANSMISSION_INCOMPLETE_DIR="/addons_config/transmission/incomplete"
