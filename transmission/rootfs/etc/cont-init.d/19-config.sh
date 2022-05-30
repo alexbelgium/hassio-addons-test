@@ -1,7 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-rm -rf /etc/cont-init.d/20-config || true
 
 declare CONFIG
 #declare incomplete_bool
@@ -12,7 +11,7 @@ declare PASS
 declare WHITELIST
 #declare HOST_WHITELIST
 
-CONFIGDIR="/config/transmission"
+CONFIGDIR="$TRANSMISSION_HOME"
 
 ###############
 # PERMISSIONS #
@@ -20,8 +19,7 @@ CONFIGDIR="/config/transmission"
 
 #Default folders
 echo "Updating folders"
-mkdir -p /config/transmission || true
-chown -R abc:abc /config/transmission || true
+mkdir -p "$CONFIGDIR"
 
 if ! bashio::fs.file_exists "$CONFIGDIR/settings.json"; then
     echo "Creating default config"
