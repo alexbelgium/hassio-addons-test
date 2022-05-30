@@ -24,7 +24,7 @@ FROM ${BUILD_FROM}
 ##################
 
 # MOFIFY DATA PATH
-RUN grep "/config" /etc | xargs sed -i "s|/config|/config/addons_config/transmission|g"
+RUN grep -rnl "/config" /etc | xargs sed -i "s|/config|/config/addons_config/transmission|g"
 
 ##################
 # 3 Install apps #
