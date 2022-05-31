@@ -13,8 +13,12 @@ declare WHITELIST
 
 CONFIGDIR="$TRANSMISSION_HOME"
 
+####################
+# Export variables #
+####################
+
 for k in $(bashio::jq "${__BASHIO_ADDON_CONFIG}" 'keys | .[]'); do
-    sed -i "3a export $k=$(bashio::config $k)" /etc/openvpn/*
+    sed -i "/exec openvpn/i export $k=$(bashio::config $k)" /etc/openvpn/start.sh
 done
 
 ###############
