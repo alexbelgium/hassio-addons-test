@@ -25,7 +25,6 @@ FROM ${BUILD_FROM}
 
 # ADD scripts
 RUN sed -i "s|/bin/bash|/usr/bin/env bashio|g" /etc/openvpn/start.sh \
-    && sed -i '1a set +u' /etc/openvpn/start.sh \
     && sed -i '1a export OPENVPN_PROVIDER=$(bashio::config "OPENVPN_PROVIDER")' /etc/openvpn/start.sh \
     && sed -i '1a export OPENVPN_CONFIG=$(bashio::config "OPENVPN_CONFIG")' /etc/openvpn/start.sh \
     && sed -i '1a export OPENVPN_USERNAME=$(bashio::config "OPENVPN_USERNAME")' /etc/openvpn/start.sh \
@@ -35,6 +34,7 @@ RUN sed -i "s|/bin/bash|/usr/bin/env bashio|g" /etc/openvpn/start.sh \
     && sed -i '/exec openvpn/i chmod +x /entrypoint.sh' /etc/openvpn/start.sh
 
 # MOFIFY DATA PATH
+ENV DEBUG=false
 ENV TRANSMISSION_HOME="/addons_config/transmission"
 ENV TRANSMISSION_DOWNLOAD_DIR="/addons_config/transmission/downloads"
 ENV TRANSMISSION_INCOMPLETE_DIR="/addons_config/transmission/incomplete"
