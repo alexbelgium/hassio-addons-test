@@ -24,8 +24,8 @@ FROM ${BUILD_FROM}
 ##################
 
 # ADD scripts
-RUN sed -i '1a ./entrypoint.sh' /etc/openvpn/start.sh \
-    && sed -i '1a chmod +x /entrypoint.sh' /etc/openvpn/start.sh
+RUN sed -i '/exec openvpn/i ./entrypoint.sh' /etc/openvpn/start.sh \
+    && sed -i '/exec openvpn/i chmod +x /entrypoint.sh' /etc/openvpn/start.sh
 
 # MOFIFY DATA PATH
 ENV TRANSMISSION_HOME="/addons_config/transmission"
