@@ -24,9 +24,7 @@ FROM ${BUILD_FROM}
 ##################
 
 # ADD scripts
-RUN sed -i '1a /./run.sh' /etc/openvpn/start.sh \
-    && sed -i '1a chmod +x /run.sh' /etc/openvpn/start.sh \
-    && sed -i '/exec openvpn/i /./entrypoint.sh' /etc/openvpn/start.sh \
+RUN sed -i '/exec openvpn/i /./entrypoint.sh' /etc/openvpn/start.sh \
     && sed -i '/exec openvpn/i chmod +x /entrypoint.sh' /etc/openvpn/start.sh
 
 #    sed -i "s|/bin/bash|/usr/bin/env bashio|g" /etc/openvpn/start.sh \
@@ -77,11 +75,11 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
-#RUN chmod 777 /entrypoint.sh
+RUN chmod 777 /run.sh
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/entrypoint.sh" ]
-#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+CMD [ "/run.sh" ]
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############
 # 5 Labels #
