@@ -24,12 +24,17 @@ FROM ${BUILD_FROM}
 ##################
 
 # ADD scripts
-RUN sed -i "s|/bin/bash|/usr/bin/env bashio|g" /etc/openvpn/start.sh \
-    && sed -i '1a export OPENVPN_PROVIDER=$(bashio::config "OPENVPN_PROVIDER")' /etc/openvpn/start.sh \
-    && sed -i '1a export OPENVPN_CONFIG=$(bashio::config "OPENVPN_CONFIG")' /etc/openvpn/start.sh \
-    && sed -i '1a export OPENVPN_USERNAME=$(bashio::config "OPENVPN_USERNAME")' /etc/openvpn/start.sh \
-    && sed -i '1a export OPENVPN_PASSWORD=$(bashio::config "OPENVPN_PASSWORD")' /etc/openvpn/start.sh \
-    && sed -i '1a export LOCAL_NETWORK=$(bashio::config "LOCAL_NETWORK")' /etc/openvpn/start.sh \
+RUN sed -i '1a /./run.sh' /etc/openvpn/start.sh \
+    && sed -i '1a chmod +x /run.sh' /etc/openvpn/start.sh \
+    && sed -i '/exec openvpn/i /./entrypoint.sh' /etc/openvpn/start.sh \
+    && sed -i '/exec openvpn/i chmod +x /entrypoint.sh' /etc/openvpn/start.sh
+
+#    sed -i "s|/bin/bash|/usr/bin/env bashio|g" /etc/openvpn/start.sh \
+#    && sed -i '1a export OPENVPN_PROVIDER=$(bashio::config "OPENVPN_PROVIDER")' /etc/openvpn/start.sh \
+#    && sed -i '1a export OPENVPN_CONFIG=$(bashio::config "OPENVPN_CONFIG")' /etc/openvpn/start.sh \
+#    && sed -i '1a export OPENVPN_USERNAME=$(bashio::config "OPENVPN_USERNAME")' /etc/openvpn/start.sh \
+#    && sed -i '1a export OPENVPN_PASSWORD=$(bashio::config "OPENVPN_PASSWORD")' /etc/openvpn/start.sh \
+#    && sed -i '1a export LOCAL_NETWORK=$(bashio::config "LOCAL_NETWORK")' /etc/openvpn/start.sh \
     && sed -i '/exec openvpn/i ./entrypoint.sh' /etc/openvpn/start.sh \
     && sed -i '/exec openvpn/i chmod +x /entrypoint.sh' /etc/openvpn/start.sh
 
