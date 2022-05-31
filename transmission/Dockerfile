@@ -35,8 +35,8 @@ RUN sed -i '1a /./run.sh' /etc/openvpn/start.sh \
 #    && sed -i '1a export OPENVPN_USERNAME=$(bashio::config "OPENVPN_USERNAME")' /etc/openvpn/start.sh \
 #    && sed -i '1a export OPENVPN_PASSWORD=$(bashio::config "OPENVPN_PASSWORD")' /etc/openvpn/start.sh \
 #    && sed -i '1a export LOCAL_NETWORK=$(bashio::config "LOCAL_NETWORK")' /etc/openvpn/start.sh \
-    && sed -i '/exec openvpn/i ./entrypoint.sh' /etc/openvpn/start.sh \
-    && sed -i '/exec openvpn/i chmod +x /entrypoint.sh' /etc/openvpn/start.sh
+#    && sed -i '/exec openvpn/i ./entrypoint.sh' /etc/openvpn/start.sh \
+#    && sed -i '/exec openvpn/i chmod +x /entrypoint.sh' /etc/openvpn/start.sh
 
 # MOFIFY DATA PATH
 ENV DEBUG=false
