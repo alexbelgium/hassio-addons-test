@@ -68,7 +68,8 @@
   },
   "privileged": [
     "SYS_ADMIN",
-    "DAC_READ_SEARCH"
+    "DAC_READ_SEARCH",
+    "NET_ADMIN"    
   ],
   "schema": {
     "DNS_server": "str?",
