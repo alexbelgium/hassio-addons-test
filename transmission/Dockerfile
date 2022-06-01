@@ -24,8 +24,8 @@ FROM ${BUILD_FROM}
 ##################
 
 # ADD scripts
-RUN sed -i '/exec openvpn/i chmod +x /entrypoint.sh' /etc/openvpn/start.sh \
-    && sed -i '/exec openvpn/i /./entrypoint.sh' /etc/openvpn/start.sh
+#RUN sed -i '/exec openvpn/i chmod +x /entrypoint.sh' /etc/openvpn/start.sh \
+#    && sed -i '/exec openvpn/i /./entrypoint.sh' /etc/openvpn/start.sh
 
 # MOFIFY DATA PATH
 ENV TRANSMISSION_HOME="/addons_config/transmission" \
@@ -63,10 +63,10 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
-RUN chmod 777 /run.sh
+RUN chmod 777 /entrypoint.sh
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/run.sh" ]
+CMD [ "/entrypoint.sh" ]
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############
