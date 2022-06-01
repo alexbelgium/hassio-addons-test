@@ -89,7 +89,7 @@
     "networkdisks": "str?",
     "pass": "str?",
     "user": "str?",
-    "OPENVPN_PROVIDER": "str?",
+    "OPENVPN_PROVIDER": "str",
     "OPENVPN_CONFIG": "str?",
     "OPENVPN_USERNAME": "str",
     "OPENVPN_PASSWORD": "str",
