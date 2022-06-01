@@ -28,11 +28,7 @@ RUN sed -i '/exec openvpn/i chmod +x /entrypoint.sh' /etc/openvpn/start.sh \
     && sed -i '/exec openvpn/i /./entrypoint.sh' /etc/openvpn/start.sh
 
 # MOFIFY DATA PATH
-ENV DEBUG=false \
-    TRANSMISSION_HOME="/addons_config/transmission" \
-    TRANSMISSION_DOWNLOAD_DIR="/addons_config/transmission/downloads" \
-    TRANSMISSION_INCOMPLETE_DIR="/addons_config/transmission/incomplete" \
-    TRANSMISSION_WATCH_DIR="/addons_config/transmission/watch_dir" \
+ENV TRANSMISSION_HOME="/addons_config/transmission" \
     CREATE_TUN_DEVICE=false
 
 ##################
