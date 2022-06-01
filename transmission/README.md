@@ -1,4 +1,4 @@
-# Home assistant add-on: Transmission
+# Home assistant add-on: Transmission Openvpn
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
@@ -19,7 +19,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 ## About
 
 Transmission is a bittorrent client.
-This addon is based on the [docker image](https://github.com/linuxserver/transmission) from linuxserver.io.
+This addon is based on the [Haugene docker image](https://github.com/haugene/docker-transmission-openvpn).
 
 ## Installation
 
@@ -35,18 +35,9 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-Options :
+Options : see https://github.com/haugene/docker-transmission-openvpn for documentation
 
-```yaml
-download_dir: "/share/downloads" # where the files will be saved after download
-incomplete_dir: "/share/incomplete" # where the files are saved during download
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
-networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount, '' if none
-cifsusername: "<username>" # smb username
-cifspassword: "<password>" # smb password
-```
-
-Complete transmission options are in /share/transmission (make sure addon is stopped before modifying it as Transmission writes its ongoing values when stopping and could erase your changes)
+Complete transmission options are in /config/addons_config/transmission (make sure addon is stopped before modifying it as Transmission writes its ongoing values when stopping and could erase your changes)
 
 Webui can be found at `<your-ip>:9091`.
 
