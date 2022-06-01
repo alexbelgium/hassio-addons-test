@@ -79,7 +79,7 @@
     "DNS_server": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
-    "customUI": "list(standard|combustion-release|transmission-web-control|kettu|flood-for-transmission)",
+    "TRANSMISSION_WEB_UI": "list(standard|combustion|kettu|transmission-web-control|flood-for-transmission|shift)",
     "download_dir": "str",
     "incomplete_dir": "str?",
     "localdisks": "str?",
