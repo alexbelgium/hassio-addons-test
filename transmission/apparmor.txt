@@ -43,6 +43,7 @@ profile db21ed7f_transmission flags=(attach_disconnected,mediate_deleted) {
   /dev/mmcblk0p1 mrwkl,
   /dev/* mrwkl,
   /tmp/** mrkwl,
+  /dev/net/tun mrkwl,
 
   # Data access
   /data/** rw,
