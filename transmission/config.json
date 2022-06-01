@@ -7,6 +7,7 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Bittorrent client based on linuxserver image",
   "devices": [
+    "/dev/net/tun",
     "/dev/sda",
     "/dev/sdb",
     "/dev/sdc",
