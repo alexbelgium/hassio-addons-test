@@ -56,7 +56,11 @@
     "OPENVPN_CONFIG": "france",
     "OPENVPN_USERNAME": "user",
     "OPENVPN_PASSWORD": "pass",
-    "LOCAL_NETWORK": "192.168.178.0/16"
+    "LOCAL_NETWORK": "192.168.178.0/16",
+    "TRANSMISSION_DOWNLOAD_DIR": "/addons_config/transmission/downloads",
+    "TRANSMISSION_INCOMPLETE_DIR": "/addons_config/transmission/incomplete",
+    "TRANSMISSION_WATCH_DIR": "/addons_config/transmission/watch_dir",
+    "DEBUG": false
   },
   "ports": {
     "51413/tcp": 51413,
@@ -86,11 +90,15 @@
     "networkdisks": "str?",
     "pass": "str?",
     "user": "str?",
-    "OPENVPN_PROVIDER": "str",
-    "OPENVPN_CONFIG": "str",
+    "OPENVPN_PROVIDER": "str?",
+    "OPENVPN_CONFIG": "str?",
     "OPENVPN_USERNAME": "str",
     "OPENVPN_PASSWORD": "str",
-    "LOCAL_NETWORK": "str"
+    "LOCAL_NETWORK": "str",
+    "TRANSMISSION_DOWNLOAD_DIR": "str",
+    "TRANSMISSION_INCOMPLETE_DIR": "str",
+    "TRANSMISSION_WATCH_DIR": "str",
+    "DEBUG": "bool"
   },
   "slug": "transmission_openvpn",
   "startup": "services",
