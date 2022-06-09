@@ -90,4 +90,4 @@ esac
 
 bashio::log.info "Starting app"
 #/sbin/my_init -- /scripts/enterpoint.sh
-/./scripts/enterpoint.sh
+/./docker_entrypoint.sh
