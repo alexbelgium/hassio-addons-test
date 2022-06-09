@@ -78,7 +78,7 @@ case $(bashio::config 'database') in
         export MYSQL_USER=$(bashio::services "mysql" "username") && bashio::log.blue "MYSQL_USER=$MYSQL_USER"
         export MYSQL_PORT=$(bashio::services "mysql" "password") && bashio::log.blue "MYSQL_PORT=$MYSQL_PORT"
 
-        bashio::log.warning "Webtrees is using the Maria DB addon"
+        bashio::log.warning "This addon is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
         ;;
