@@ -1,5 +1,7 @@
 #!/usr/bin/env bashio
 
+exit 0
+
 #################
 # DATA LOCATION #
 #################
