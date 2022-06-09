@@ -2,6 +2,9 @@
 
 # If dockerfile failed install manually
 
+echo "forced pause"
+sleep 30000000
+
 ##############################
 # Automatic modules download #
 ##############################
