@@ -25,9 +25,6 @@ ENV BASHIO_VERSION=1.29.1
 
 ENV LANG C.UTF-8
 
-RUN cp /opt/seafile/.env.example /opt/seafile/.env \
-    && sed -i "s|NOSWAG=0|NOSWAG=1|g" /opt/seafile/.env
-
 ##################
 # 3 Install apps #
 ##################
