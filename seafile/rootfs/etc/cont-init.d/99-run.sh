@@ -11,7 +11,7 @@ mkdir -p "$DATA_LOCATION"
 # Make dir
 echo "Checking permissions"
 chown -R "$(id -u)":"$(id -g)" "$DATA_LOCATION"
-chmod -R "$DATA_LOCATION"
+chmod -R 755 "$DATA_LOCATION"
 
 # Create symlink
 echo "Checking symlink"
