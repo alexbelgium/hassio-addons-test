@@ -26,7 +26,7 @@ ENV BASHIO_VERSION=1.29.1
 ENV LANG C.UTF-8
 
 RUN cp "$WORKDIR"/.env.example "$WORKDIR"/.env \
-    && sed -i "s|NOSWAG=0|NOSWAG=1|g" .env
+    && sed -i "s|NOSWAG=0|NOSWAG=1|g" "$WORKDIR"/.env
 
 ##################
 # 3 Install apps #
