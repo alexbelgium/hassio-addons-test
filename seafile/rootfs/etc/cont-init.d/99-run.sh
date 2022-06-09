@@ -1,5 +1,8 @@
 #!/usr/bin/env bashio
 
+cd /opt/seafile
+cp /opt/seafile/.env.example /opt/seafile/.env
+
 ####################
 # GLOBAL VARIABLES #
 ####################
