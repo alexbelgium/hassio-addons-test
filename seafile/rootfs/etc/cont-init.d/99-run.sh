@@ -41,8 +41,7 @@ bashio::log.blue "SEAFILE_ADMIN_PASSWORD=$SEAFILE_ADMIN_PASSWORD"
 ###################
 
 bashio::log.info "Defining database"
-export DB_TYPE=$(bashio::config 'DB_TYPE')
-case $(bashio::config 'DB_TYPE') in
+case $(bashio::config 'database') in
 
     # Use sqlite
     sqlite)
