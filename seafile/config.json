@@ -75,6 +75,9 @@
     "localdisks": "str?",
     "networkdisks": "str?"
   },
+  "services": [
+    "mysql:want"
+  ],
   "slug": "seafile",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/seafile",
   "version": "0.6.18-ls164"
