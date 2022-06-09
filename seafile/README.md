@@ -22,7 +22,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 High performance file syncing and sharing, with also Markdown WYSIWYG editing, Wiki, file label and other knowledge management features.
 
-This addon is based on the docker image https://hub.docker.com/layers/seafile-mc
+This addon is based on the docker image [https://hub.docker.com/r/franchetti/seafile-arm](https://hub.docker.com/r/franchetti/seafile-arm)
 
 ## Installation
 
