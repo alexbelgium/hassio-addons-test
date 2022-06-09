@@ -82,5 +82,6 @@
   ],
   "slug": "seafile",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/seafile",
-  "version": "0.6.18-ls164"
+  "version": "0.6.18-ls164",
+  "webui": "http://[HOST]:[PORT:80]"
 }
