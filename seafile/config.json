@@ -40,6 +40,7 @@
   "environment": {
     "NOSWAG": "1"
   },
+  "image": "ghcr.io/alexbelgium/seafile-{arch}",
   "map": [
     "media:rw",
     "share:rw",
