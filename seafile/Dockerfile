@@ -25,7 +25,7 @@ ENV BASHIO_VERSION=1.29.1
 
 ENV LANG C.UTF-8
 
-RUN cp .env.example .env \
+RUN cp "$WORKDIR"/.env.example "$WORKDIR"/.env \
     && sed -i "s|NOSWAG=0|NOSWAG=1|g" .env
 
 ##################
