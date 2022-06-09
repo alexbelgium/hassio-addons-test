@@ -89,4 +89,5 @@ esac
 ##############
 
 bashio::log.info "Starting app"
-/sbin/my_init -- /scripts/enterpoint.sh
+#/sbin/my_init -- /scripts/enterpoint.sh
+/./scripts/enterpoint.sh
