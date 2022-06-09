@@ -6,3 +6,4 @@
 guacamole: guacamole/config.*
 tdarr: tdarr/config.*
 qbittorrent: qbittorrent/config.*
+seafile: seafile/config.*
