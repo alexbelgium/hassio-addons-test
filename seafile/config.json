@@ -65,6 +65,7 @@
     "NET_ADMIN"
   ],
   "schema": {
+    "data_location": "str",
     "seafile_server_letsencrypt": "bool?",
     "seafile_server_hostname": "str",
     "seafile_admin_email": "email",
