@@ -10,7 +10,12 @@ sed -i "s|PGID=1000|PGID=$(bashio::config 'PGID')|g" .env
 sed -i "s|TZ=Europe/Zurich|TZ=$(bashio::config 'TZ')|g" .env
 sed -i "s|URL=your.domain|URL=$(bashio::config 'SEAFILE_SERVER_HOSTNAME')|g" .env
 sed -i "s|SEAFILE_ADMIN_EMAIL=you@your.email|SEAFILE_ADMIN_EMAIL=$(bashio::config 'SEAFILE_ADMIN_EMAIL')|g" .env
-sed -i "s|SEAFILE_ADMIN_PASSWORD=secret|SEAFILE_ADMIN_PASSWORD=$(bashio::config 'SEAFILE_ADMIN_PASSWORD')|g" .env
+sed -i "s|SEAFILE_CONF_DIR=./seafile/conf|SEAFILE_CONF_DIR=$(bashio::config 'data_location')/conf|g" .env
+sed -i "s|SEAFILE_LOGS_DIR=./seafile/logs|SEAFILE_LOGS_DIR=$(bashio::config 'data_location')/logs|g" .env
+sed -i "s|SEAFILE_DATA_DIR=./seafile/seafile-data|SEAFILE_DATA_DIR=$(bashio::config 'data_location')/seafile-data|g" .env
+sed -i "s|SEAFILE_SEAHUB_DIR=./seafile/seahub-data|SEAFILE_SEAHUB_DIR=$(bashio::config 'data_location'/seahub-data)|g" .env
+sed -i "s|SEAFILE_SQLITE_DIR=./seafile/sqlite|SSEAFILE_SQLITE_DIR=$(bashio::config 'data_location'/sqlite)|g" .env
+sed -i "s|DATABASE_DIR=./db|DATABASE_DIR=$(bashio::config 'data_location'/db)|g" .env
 
 ###################
 # Define database #
