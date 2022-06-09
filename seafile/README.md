@@ -20,9 +20,9 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ---
 
-[seafile](https://github.com/janeczku/seafile) is a web app providing a clean interface for browsing, reading and downloading eBooks using an existing Calibre database. It is also possible to integrate google drive and edit metadata and your calibre library through the app itself.
+High performance file syncing and sharing, with also Markdown WYSIWYG editing, Wiki, file label and other knowledge management features.
 
-This addon is based on the docker image https://github.com/linuxserver/docker-seafile
+This addon is based on the docker image https://hub.docker.com/layers/seafile-mc
 
 ## Installation
 
