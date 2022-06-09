@@ -3,7 +3,6 @@
 ####################
 # GLOBAL VARIABLES #
 ####################
-cp .env.example .env
 sed -i "s|NOSWAG=0|NOSWAG=1|g" .env
 sed -i "s|USE_HTTPS=1|USE_HTTPS=0|g" .env
 sed -i "s|PUID=1000|PUID=$(bashio::config 'PUID')|g" .env
