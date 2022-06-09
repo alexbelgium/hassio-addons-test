@@ -37,7 +37,9 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "environment": {},
+  "environment": {
+    "NOSWAG": "1"
+  },
   "map": [
     "media:rw",
     "share:rw",
