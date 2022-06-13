@@ -106,4 +106,14 @@ esac
 ##############
 
 bashio::log.info "Starting app"
-/./docker_entrypoint.sh
+/./docker_entrypoint.sh & echo "waiting for app readiness"
+
+################
+# LAUNCH NGINX #
+################
+
+bashio::net.wait_for 8000 localhost 900
+
+bashio::log.info "Starting NGinx..."
+
+exec nginx
