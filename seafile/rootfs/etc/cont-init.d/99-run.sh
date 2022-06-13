@@ -49,10 +49,10 @@ chmod -R 755 "$DATA_LOCATION"
 echo "Creating symlink"
 ln -sf "$DATA_LOCATION" /shared
 
-export SEAFILE_CONF_DIR="$DATA_LOCATION/conf" && sed -i "1a export SEAFILE_CONF_DIR=$DATA_LOCATION/conf" /home/seafile/*.sh
-export SEAFILE_LOGS_DIR="$DATA_LOCATION/logs" && sed -i "1a export SEAFILE_LOGS_DIR=$DATA_LOCATION/logs" /home/seafile/*.sh
-export SEAFILE_DATA_DIR="$DATA_LOCATION/seafile-data" && sed -i "1a export SEAFILE_DATA_DIR=$DATA_LOCATION/seafile-data" /home/seafile/*.sh
-export SEAFILE_SEAHUB_DIR="$DATA_LOCATION/seahub-data" && sed -i "1a export SEAFILE_SEAHUB_DIR=$DATA_LOCATION/seahub-data" /home/seafile/*.sh
+#export SEAFILE_CONF_DIR="$DATA_LOCATION/conf" && sed -i "1a export SEAFILE_CONF_DIR=$DATA_LOCATION/conf" /home/seafile/*.sh
+#export SEAFILE_LOGS_DIR="$DATA_LOCATION/logs" && sed -i "1a export SEAFILE_LOGS_DIR=$DATA_LOCATION/logs" /home/seafile/*.sh
+#export SEAFILE_DATA_DIR="$DATA_LOCATION/seafile-data" && sed -i "1a export SEAFILE_DATA_DIR=$DATA_LOCATION/seafile-data" /home/seafile/*.sh
+#export SEAFILE_SEAHUB_DIR="$DATA_LOCATION/seahub-data" && sed -i "1a export SEAFILE_SEAHUB_DIR=$DATA_LOCATION/seahub-data" /home/seafile/*.sh
 export SEAFILE_SQLITE_DIR="$DATA_LOCATION/sqlite" && sed -i "1a export SEAFILE_SQLITE_DIR=$DATA_LOCATION/sqlite" /home/seafile/*.sh
 export DATABASE_DIR="$DATA_LOCATION/db" && sed -i "1a export DATABASE_DIR=$DATA_LOCATION/db" /home/seafile/*.sh
 
