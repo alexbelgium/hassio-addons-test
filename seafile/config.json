@@ -45,7 +45,6 @@
   "map": [
     "media:rw",
     "share:rw",
-    "config:rw",
     "ssl"
   ],
   "name": "Seafile",
