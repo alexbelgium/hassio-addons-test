@@ -7,7 +7,7 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Mealie is a self hosted recipe manager and meal planner built in Vue",
   "environment": {
-    "APP_PORT": "9925",
+    "FRONTEND_PORT": "9925",
     "DB_ENGINE": "sqlite"
   },
   "map": [
