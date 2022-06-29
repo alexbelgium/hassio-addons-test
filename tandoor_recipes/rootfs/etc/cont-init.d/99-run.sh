@@ -74,6 +74,9 @@ chmod 755 /data/recipes/staticfiles
 ln -s /config/addons_config/tandoor_recipes/mediafiles /opt/recipes
 ln -s /data/recipes/staticfiles /opt/recipes
 
+bashio::log.info "Launching nginx"
+exec nginx & echo "done"
+
 bashio::log.info "Launching app"
 cd /opt/recipes || exit
 ./boot.sh
