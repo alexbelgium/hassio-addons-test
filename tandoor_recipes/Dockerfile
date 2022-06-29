@@ -27,9 +27,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=300000 \
     S6_SERVICES_GRACETIME=300000
 
-# Correct data path
-# hadolint ignore=DL4006
-RUN grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g'
 
 ##################
 # 3 Install apps #
@@ -50,7 +47,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && chmod -R 755 /etc/cont-init.d || printf '%s\n' "${MODULES}" >/MODULESFILE
 
 # Manual apps
-ENV PACKAGES="jq curl bash nginx"
+ENV PACKAGES=""
 
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
@@ -64,19 +61,10 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
-RUN \
-    # Add custom instructions to run.sh on armv7
-    if [ -f /app/run.sh ]; then \
-    sed -i '1d' /app/run.sh \
-    && cat /app/run.sh >> /run.txt \
-    && cat /run.txt > /app/run.sh \
-    && chmod +x /app/run.sh; \
-    # Add custom instructions to run.sh on other aarch
-    elif [ -f /app/mealie/run.sh ]; then \
-    sed -i '1d' /app/mealie/run.sh \
-    && cat /app/mealie/run.sh >> /run.txt \
-    && cat /run.txt > /app/mealie/run.sh \
-    && chmod +x /app/mealie/run.sh; fi
+RUN chmod 777 /entrypoint.sh
+#WORKDIR /data/recipes
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/entrypoint.sh" ]
 
 ############
 # 5 Labels #

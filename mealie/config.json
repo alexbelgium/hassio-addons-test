@@ -10,6 +10,7 @@
     "APP_PORT": "9925",
     "DB_ENGINE": "sqlite"
   },
+  "ingress": true,
   "map": [
     "share:rw",
     "ssl:rw"
