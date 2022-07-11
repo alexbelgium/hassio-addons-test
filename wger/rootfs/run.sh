@@ -22,6 +22,9 @@ echo "Launch app"
 pip install -e . &>/dev/null
 sed -i "1a cd /home/wger/src" /home/wger/entrypoint.sh
 
+echo "Setting static"
+rmdir /home/wger/static && ln -s /home/wger/src/wger/core/static /home/wger || true
+
 su -l wger -c "\
   cd /home/wger/src && \
   export FROM_EMAIL='wger Workout Manager <wger@example.com>' && \
