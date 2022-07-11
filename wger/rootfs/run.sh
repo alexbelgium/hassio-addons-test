@@ -23,5 +23,5 @@ echo "Launch app"
 #exec /home/wger/entrypoint.sh
 sed -i "1a cd /home/wger/src" /home/wger/entrypoint.sh
 #sed -i "s|manage.py|/home/wger/src/manage.py|g" /home/wger/entrypoint.sh
-#sed -i "s|wger bootstrap|/home/wger/src/wger bootstrap|g" /home/wger/entrypoint.sh
+sed -i "s|wger bootstrap|/home/wger/src/wger bootstrap|g" /home/wger/entrypoint.sh
 su wger -c "/bin/bash /home/wger/entrypoint.sh"
