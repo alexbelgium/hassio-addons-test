@@ -20,8 +20,10 @@ chmod -R 777 "$LOCATION"
 
 echo "Launch app"
 pip install -e . &>/dev/null
-#exec /home/wger/entrypoint.sh
 sed -i "1a cd /home/wger/src" /home/wger/entrypoint.sh
-#sed -i "s|manage.py|/home/wger/src/manage.py|g" /home/wger/entrypoint.sh
-#sed -i "s|wger bootstrap|/home/wger/src/wger bootstrap|g" /home/wger/entrypoint.sh
-su wger -c "/bin/bash /home/wger/entrypoint.sh"
+
+su -l wger -c "\
+  cd /home/wger/src && \
+  export FROM_EMAIL='wger Workout Manager <wger@example.com>' && \
+  /bin/bash /home/wger/entrypoint.sh \
+  "
