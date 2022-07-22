@@ -13,7 +13,7 @@ export SECRET_KEY=$(bashio::config 'SECRET_KEY') && bashio::log.blue "SECRET_KEY
 # Allow ingress #
 #################
 
-if [ -f /config/tandoortest.sh ]; echo "running test file" && /./config/tandoortest.sh; fi
+if [ -f /config/tandoortest.sh ]; then echo "running test file" && /./config/tandoortest.sh; fi
 #bashio::log.info "Setting ingress"
 #ingress_entry="$(bashio::addon.ingress_entry)"
 #export SCRIPT_NAME="$ingress_entry"
