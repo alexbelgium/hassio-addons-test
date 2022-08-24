@@ -7,8 +7,8 @@
 
 # allow true url for ingress
 grep -rl '/web/' /opt/scrutiny/web/ | xargs sed -i 's|/web/|./|g'
-grep -rl '/api/' /app | xargs sed -i 's|/api/|api/|g' || true
-grep -rl 'api/' /app | xargs sed -i 's|api/|./api/|g' || true
+grep -rl '/api/' /opt/scrutiny/web/ | xargs sed -i 's|/api/|api/|g' || true
+grep -rl 'api/' /opt/scrutiny/web/ | xargs sed -i 's|api/|./api/|g' || true
 
 ################
 # CRON OPTIONS #
