@@ -35,7 +35,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     #&& sed -i 's| /config| /data|g' /etc/logrotate.d/scrutiny \
     #&& sed -i 's| /config| /data|g' /etc/crontabs/root
     # correct url paths
-#    grep -rl '/web/' /opt/scrutiny/ | xargs sed -i 's|/web/|./|g'
+    #grep -rl '/web/' /opt/scrutiny/web/ | xargs sed -i 's|/web/|./|g'
 
 ##################
 # 3 Install apps #
