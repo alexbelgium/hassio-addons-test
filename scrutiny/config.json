@@ -49,8 +49,6 @@
   "init": false,
   "name": "Scrutiny",
   "options": {
-    "PGID": 0,
-    "PUID": 0,
     "Updates": "Hourly",
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
@@ -69,8 +67,6 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "PGID": "int",
-    "PUID": "int",
     "TZ": "str?",
     "Updates": "list(|Hourly|Daily|Weekly)",
     "certfile": "str",
