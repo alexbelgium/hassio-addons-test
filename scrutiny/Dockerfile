@@ -35,7 +35,7 @@ RUN \
     #&& sed -i 's| /config| /data|g' /etc/logrotate.d/scrutiny \
     #&& sed -i 's| /config| /data|g' /etc/crontabs/root
     # correct url paths
-    grep -rl '/web/' /app/scrutiny-web/ | xargs sed -i 's|/web/|./|g'
+    grep -rl '/web/' /opt/scrutiny/ | xargs sed -i 's|/web/|./|g'
 
 ##################
 # 3 Install apps #
