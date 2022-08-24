@@ -1,12 +1,26 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+#################
+# Create folder #
+#################
+
+mkdir -p /config/addons_config/scrutiny/config
+mkdir -p /config/addons_config/scrutiny/influxdb
+
+#cp /opt/scrutiny/config/* /config/addons_config/scrutiny/config/
+#cp /opt/scrutiny/influxdb/* /config/addons_config/scrutiny/influxdb/
+#rm -r /opt/scrutiny/config
+#rm -r /opt/scrutiny/influxdb
+#ln -s /config/addons_config/scrutiny/config /opt/scrutiny
+#ln -s /config/addons_config/scrutiny/influxdb /opt/scrutiny
+
 ##############
 # Data usage #
 ##############
 
-bashio::log.info "Setting permissions"
-chown -R abc:abc /data
+#bashio::log.info "Setting permissions"
+#chown -R abc:abc /data
 
 #######################
 # VIEWPORT CORRECTION #
