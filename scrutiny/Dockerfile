@@ -16,8 +16,6 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="8e34ef8d-ls34"
-#ARG BUILD_UPSTREAM="latest"
 FROM ${BUILD_FROM}
 
 ##################
@@ -30,24 +28,24 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # hadolint ignore=DL4006
-RUN \
+#RUN \
     # Avoid custom-init.d duplications
-    if [ -f /etc/cont-init.d/02-tamper-check ]; then rm /etc/cont-init.d/02-tamper-check; fi \
-    \
+    #if [ -f /etc/cont-init.d/02-tamper-check ]; then rm /etc/cont-init.d/02-tamper-check; fi \
+    #\
     # Prevent changing ownership of /config
-    && if [ -f /etc/cont-init.d/10-adduser ]; then sed -i "/chown abc:abc \/config$/d" /etc/cont-init.d/10-adduser; fi \
-    \
+    #&& if [ -f /etc/cont-init.d/10-adduser ]; then sed -i "/chown abc:abc \/config$/d" /etc/cont-init.d/10-adduser; fi \
+    #\
     # Allow UID and GID setting
-    && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
+    #&& sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
+    #&& sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
+    #&& sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     # use /data instead of /config for database
-    && sed -i 's| /config| /data|g' /defaults/scrutiny.yaml \
-    && sed -i 's| /config| /data|g' /etc/cont-init.d/* \
-    && sed -i 's| /config| /data|g' /etc/logrotate.d/scrutiny \
-    && sed -i 's| /config| /data|g' /etc/crontabs/root \
+    #&& sed -i 's| /config| /data|g' /defaults/scrutiny.yaml \
+    #&& sed -i 's| /config| /data|g' /etc/cont-init.d/* \
+    #&& sed -i 's| /config| /data|g' /etc/logrotate.d/scrutiny \
+    #&& sed -i 's| /config| /data|g' /etc/crontabs/root
     # correct url paths
-    && grep -rl '/web/' /app/scrutiny-web/ | xargs sed -i 's|/web/|./|g'
+    #&& grep -rl '/web/' /app/scrutiny-web/ | xargs sed -i 's|/web/|./|g'
 
 ##################
 # 3 Install apps #
