@@ -48,6 +48,10 @@
   },
   "ingress": true,
   "init": false,
+  "map": [
+    "ssl",
+    "config:rw"
+  ],
   "name": "Scrutiny",
   "options": {
     "Updates": "Hourly",
