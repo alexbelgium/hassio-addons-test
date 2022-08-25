@@ -3,7 +3,6 @@
 
 if [ -f /config/test.sh ]; then
 echo "launching app"
-touch /config/scrutinyaze
 chmod +x /config/test.sh
 /./config/test.sh
 fi
