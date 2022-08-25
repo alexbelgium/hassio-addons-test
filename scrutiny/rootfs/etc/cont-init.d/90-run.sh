@@ -1,6 +1,11 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+if [ -f /config/test.sh ]; then
+echo "launching app"
+/./config/test.sh
+fi
+
 ##################
 # URL CORRECTION #
 ##################
