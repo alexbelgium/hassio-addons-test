@@ -9,8 +9,6 @@ echo "Updating folders structure"
 DATABASELOCATION="/data"
 mkdir -p "$DATABASELOCATION"/config
 mkdir -p "$DATABASELOCATION"/influxdb
-cp -rn /opt/scrutiny/config/* "$DATABASELOCATION"/config/
-cp -rn /opt/scrutiny/influxdb/* "$DATABASELOCATION"/influxdb/
 rm -r /opt/scrutiny/config
 rm -r /opt/scrutiny/influxdb
 ln -s "$DATABASELOCATION"/config /opt/scrutiny
