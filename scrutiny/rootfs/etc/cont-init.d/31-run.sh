@@ -19,24 +19,20 @@ ln -s /config/addons_config/scrutiny/influxdb /opt/scrutiny
 # CRON OPTIONS #
 ################
 
-rm /config/crontabs/* || true
-sed -i '$d' /etc/crontabs/root
-sed -i -e '$a @reboot /run.sh' /etc/crontabs/root
-
 # Align update with options
 FREQUENCY=$(bashio::config 'Updates')
 bashio::log.info "$FREQUENCY updates"
 
 case $FREQUENCY in
     "Hourly")
-        sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root
+        sed -i "1a COLLECTOR_CRON_SCHEDULE="0 * * * *" /etc/cont-init.d/50-cron-config
         ;;
 
     "Daily")
-        sed -i -e '$a 0 0 * * * /run.sh' /etc/crontabs/root
+        sed -i "1a COLLECTOR_CRON_SCHEDULE="0 0 * * *" /etc/cont-init.d/50-cron-config
         ;;
 
     "Weekly")
-        sed -i -e '$a 0 0 * * 0 /run.sh' /etc/crontabs/root
+        sed -i "1a COLLECTOR_CRON_SCHEDULE="0 0 * * 0" /etc/cont-init.d/50-cron-config
         ;;
 esac
