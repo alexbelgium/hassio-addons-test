@@ -49,7 +49,7 @@
   "ingress": true,
   "init": false,
   "map": [
-    "config:rw"
+    "share:rw"
   ],
   "name": "Scrutiny",
   "options": {
