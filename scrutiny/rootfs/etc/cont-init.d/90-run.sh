@@ -1,43 +1,42 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-if [ -f /config/test.sh ]; then
-echo "launching app"
-chmod +x /config/test.sh
-/./config/test.sh
-fi
+#################
+# Create folder #
+#################
 
-##################
-# URL CORRECTION #
-##################
+mkdir -p /config/addons_config/scrutiny/config
+mkdir -p /config/addons_config/scrutiny/influxdb
 
-# allow true url for ingress
-#grep -rl '/web/' /opt/scrutiny/web/ | xargs sed -i 's|/web/|./|g'
-#grep -rl '/api/' /opt/scrutiny/web/ | xargs sed -i 's|/api/|api/|g'
-#grep -rl 'api/' /opt/scrutiny/web/ | xargs sed -i 's|api/|./api/|g'
+cp /opt/scrutiny/config/* /config/addons_config/scrutiny/config/
+cp /opt/scrutiny/influxdb/* /config/addons_config/scrutiny/influxdb/
+rm -r /opt/scrutiny/config
+rm -r /opt/scrutiny/influxdb
+ln -s /config/addons_config/scrutiny/config /opt/scrutiny
+ln -s /config/addons_config/scrutiny/influxdb /opt/scrutiny
 
 ################
 # CRON OPTIONS #
 ################
 
-#rm /config/crontabs/* || true
-#sed -i '$d' /etc/crontabs/root
-#sed -i -e '$a @reboot /run.sh' /etc/crontabs/root
+rm /config/crontabs/* || true
+sed -i '$d' /etc/crontabs/root
+sed -i -e '$a @reboot /run.sh' /etc/crontabs/root
 
 # Align update with options
-#FREQUENCY=$(bashio::config 'Updates')
-#bashio::log.info "$FREQUENCY updates"
+FREQUENCY=$(bashio::config 'Updates')
+bashio::log.info "$FREQUENCY updates"
 
-#case $FREQUENCY in
-#    "Hourly")
-#        sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root
-#        ;;
-#
-#    "Daily")
-#        sed -i -e '$a 0 0 * * * /run.sh' /etc/crontabs/root
-#        ;;
-#
-#    "Weekly")
-#        sed -i -e '$a 0 0 * * 0 /run.sh' /etc/crontabs/root
-#        ;;
-#esac
+case $FREQUENCY in
+    "Hourly")
+        sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root
+        ;;
+
+    "Daily")
+        sed -i -e '$a 0 0 * * * /run.sh' /etc/crontabs/root
+        ;;
+
+    "Weekly")
+        sed -i -e '$a 0 0 * * 0 /run.sh' /etc/crontabs/root
+        ;;
+esac
