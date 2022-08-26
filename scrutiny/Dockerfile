@@ -27,17 +27,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-# hadolint ignore=DL4006
-#RUN \
-    # use /data instead of /config for database
-    #&& sed -i 's| /config| /data|g' /defaults/scrutiny.yaml \
-    #&& sed -i 's| /config| /data|g' /etc/cont-init.d/* \
-    #&& sed -i 's| /config| /data|g' /etc/logrotate.d/scrutiny \
-    #&& sed -i 's| /config| /data|g' /etc/crontabs/root
-    # correct url paths
-    #grep -rl '/web/' /opt/scrutiny/web/ | xargs sed -i 's|/web/|./|g' \
-    #&& grep -rl '"/web"' /opt/scrutiny/web/ | xargs sed -i 's|"/web"|"./"|g'
-
 ##################
 # 3 Install apps #
 ##################
@@ -79,8 +68,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
-# Collector
-RUN chmod 777 /run.sh
+
 
 ############
 # 5 Labels #

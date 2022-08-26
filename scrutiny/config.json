@@ -49,15 +49,11 @@
   "ingress": true,
   "init": false,
   "map": [
-    "ssl",
     "config:rw"
   ],
   "name": "Scrutiny",
   "options": {
-    "Updates": "Hourly",
-    "certfile": "fullchain.pem",
-    "keyfile": "privkey.pem",
-    "ssl": false
+    "Updates": "Hourly"
   },
   "panel_icon": "mdi:glasses",
   "ports": {
@@ -75,13 +71,10 @@
   ],
   "schema": {
     "TZ": "str?",
-    "Updates": "list(|Hourly|Daily|Weekly)",
-    "certfile": "str",
-    "keyfile": "str",
-    "ssl": "bool"
+    "Updates": "list(|Hourly|Daily|Weekly)"
   },
   "slug": "scrutiny",
   "udev": true,
   "url": "https://github.com/AnalogJ/scrutiny",
-  "version": "2ab714f5-ls35"
+  "version": "v0.5.0"
 }

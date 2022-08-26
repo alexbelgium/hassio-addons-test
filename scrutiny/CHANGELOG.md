@@ -1,4 +1,6 @@
 - Switch to latest omnibus version
+- Database will migrate from sqlite to influxdb
+- PUID/PGID values deprecated
 
 ## 2ab714f5-ls35 (11-05-2022)
 
