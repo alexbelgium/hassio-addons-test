@@ -5,15 +5,25 @@
 # Create folder #
 #################
 
-echo "Creating folders structure"
-mkdir -p /config/addons_config/scrutiny/config
-mkdir -p /config/addons_config/scrutiny/influxdb
-cp -rn /opt/scrutiny/config/* /config/addons_config/scrutiny/config/
-cp -rn /opt/scrutiny/influxdb/* /config/addons_config/scrutiny/influxdb/
+echo "Updating folders structure"
+DATABASELOCATION="/data"
+mkdir -p "$DATABASELOCATION"/config
+mkdir -p "$DATABASELOCATION"/influxdb
+cp -rn /opt/scrutiny/config/* "$DATABASELOCATION"/config/
+cp -rn /opt/scrutiny/influxdb/* "$DATABASELOCATION"/influxdb/
 rm -r /opt/scrutiny/config
 rm -r /opt/scrutiny/influxdb
-ln -s /config/addons_config/scrutiny/config /opt/scrutiny
-ln -s /config/addons_config/scrutiny/influxdb /opt/scrutiny
+ln -s "$DATABASELOCATION"/config /opt/scrutiny
+ln -s "$DATABASELOCATION"/influxdb /opt/scrutiny
+
+###############################
+# Migrating previous database #
+###############################
+
+if [ -f /data/scrutiny.db ]; then
+bashio::log.warning "Previous database detected, migration will start"
+mv /data/scrutiny.db "$DATABASELOCATION"/config/
+fi
 
 ######
 # TZ #
