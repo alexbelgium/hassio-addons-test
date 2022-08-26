@@ -68,8 +68,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
-# Collector
-RUN chmod 777 /run.sh
+
 
 ############
 # 5 Labels #
