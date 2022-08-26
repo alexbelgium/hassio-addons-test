@@ -19,7 +19,8 @@ ln -s "$DATABASELOCATION"/influxdb /opt/scrutiny
 ###############################
 
 if [ -f /data/scrutiny.db ]; then
-bashio::log.warning "Previous database detected, migration will start"
+bashio::log.warning "Previous database detected, migration will start. Backup stored in /share/scrutiny.db.bak"
+cp /data/scrutiny.db /share/scrutiny.db.bak
 mv /data/scrutiny.db "$DATABASELOCATION"/config/
 fi
 
