@@ -113,7 +113,7 @@
     "ssl": "bool",
     "whitelist": "str?"
   },
-  "slug": "qbittorrent",
+  "slug": "qbittorrent2",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "4.4.5-r0-ls214-2-bugfix"
 }
