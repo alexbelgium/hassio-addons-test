@@ -37,8 +37,8 @@ ENV \
     S6_CMD_WAIT_FOR_SERVICES=1 \
     TERM="xterm-256color" \
     HOME="/config/addons_config" \
-    CONFIG_HOME="/config/addons_config" \
-    DATA_HOME="/config/addons_config"
+    XDG_CONFIG_HOME="/config/addons_config" \
+    XDG_DATA_HOME="/config/addons_config"
 
 # Image specific modifications
 RUN \
