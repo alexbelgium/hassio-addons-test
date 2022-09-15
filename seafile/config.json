@@ -1,0 +1,95 @@
+{
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "High performance file syncing and sharing, with also Markdown WYSIWYG editing, Wiki, file label and other knowledge management features",
+  "devices": [
+    "/dev/sda",
+    "/dev/sdb",
+    "/dev/sdc",
+    "/dev/sdd",
+    "/dev/sde",
+    "/dev/sdf",
+    "/dev/sdg",
+    "/dev/nvme",
+    "/dev/nvme0n1p1",
+    "/dev/nvme0n1p2",
+    "/dev/mmcblk",
+    "/dev/sda1",
+    "/dev/sdb1",
+    "/dev/sdc1",
+    "/dev/sdd1",
+    "/dev/sde1",
+    "/dev/sdf1",
+    "/dev/sdg1",
+    "/dev/sda2",
+    "/dev/sdb2",
+    "/dev/sdc2",
+    "/dev/sdd2",
+    "/dev/sde2",
+    "/dev/sdf2",
+    "/dev/sdg2",
+    "/dev/sda3",
+    "/dev/sdb3",
+    "/dev/sda4",
+    "/dev/sdb4",
+    "/dev/nvme0",
+    "/dev/nvme1",
+    "/dev/nvme2"
+  ],
+  "environment": {
+    "NOSWAG": "1",
+    "PUID": "0",
+    "GUID": "0"
+  },
+  "map": [
+    "config:rw",
+    "share:rw",
+    "ssl"
+  ],
+  "name": "Seafile",
+  "options": {
+    "SEAFILE_ADMIN_EMAIL": "me@example.com",
+    "SEAFILE_ADMIN_PASSWORD": "a_very_secret_password",
+    "TZ": "Europe/Paris",
+    "URL": "seafile.example.com",
+    "data_location": "/share/seafile",
+    "database": "sqlite"
+  },
+  "panel_icon": "mdi:library",
+  "ports": {
+    "8000/tcp": 8000,
+    "8082/tcp": 8082
+  },
+  "ports_description": {
+    "8000/tcp": "Seahub",
+    "8082/tcp": "File server"
+  },
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH",
+    "NET_ADMIN"
+  ],
+  "schema": {
+    "SEAFILE_ADMIN_EMAIL": "email",
+    "SEAFILE_ADMIN_PASSWORD": "password",
+    "TZ": "str?",
+    "URL": "str",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
+    "data_location": "str",
+    "database": "list(sqlite|mariadb_addon)",
+    "localdisks": "str?",
+    "networkdisks": "str?"
+  },
+  "services": [
+    "mysql:want"
+  ],
+  "slug": "seafile",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/seafile",
+  "version": "v9.0.8-pro_testdonotupdate18",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8000]"
+}
