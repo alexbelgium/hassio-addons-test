@@ -52,6 +52,8 @@
   ],
   "name": "Seafile",
   "options": {
+    "PUID": "1000",
+    "GUID": "1000",
     "SEAFILE_ADMIN_EMAIL": "me@example.com",
     "SEAFILE_ADMIN_PASSWORD": "a_very_secret_password",
     "TZ": "Europe/Paris",
@@ -78,6 +80,8 @@
     "SEAFILE_ADMIN_PASSWORD": "password",
     "TZ": "str?",
     "URL": "str",
+    "PUID": "int",
+    "GUID": "int",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "data_location": "str",
