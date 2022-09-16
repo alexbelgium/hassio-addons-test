@@ -43,8 +43,7 @@
   "environment": {
     "NOSWAG": "1",
     "PUID": "1000",
-    "PGID": "1000",
-    "ROOTMOUNT": "true"
+    "PGID": "1000"
   },
   "map": [
     "config:rw",
