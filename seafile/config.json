@@ -43,7 +43,7 @@
   "environment": {
     "NOSWAG": "1",
     "PUID": "1000",
-    "GUID": "1000"
+    "PGID": "1000"
   },
   "map": [
     "config:rw",
@@ -53,7 +53,7 @@
   "name": "Seafile",
   "options": {
     "PUID": "1000",
-    "GUID": "1000",
+    "PGID": "1000",
     "SEAFILE_ADMIN_EMAIL": "me@example.com",
     "SEAFILE_ADMIN_PASSWORD": "a_very_secret_password",
     "TZ": "Europe/Paris",
@@ -81,7 +81,7 @@
     "TZ": "str?",
     "URL": "str",
     "PUID": "int",
-    "GUID": "int",
+    "PGID": "int",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "data_location": "str",
