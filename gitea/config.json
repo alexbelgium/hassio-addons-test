@@ -27,7 +27,10 @@
   "schema": {
     "certfile": "str",
     "keyfile": "str",
-    "ssl": "bool"
+    "ssl": "bool",
+    "SITE_TITLE": "str?",
+    "SERVER_DOMAIN": "str?",
+    "BASE_URL": "str?"
   },
   "slug": "gitea",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/gitea",
