@@ -18,8 +18,8 @@ bashio::config.require.ssl
 #sed "/CERT_FILE/d " /data/gitea/conf/app.ini
 #sed "/KEY_FILE/d " /data/gitea/conf/app.ini
 if bashio::config.true 'ssl'; then
-export CERT_FILE=$(bashio::config 'certfile')
-export KEY_FILE=$(bashio::config 'keyfile')
+export CERT_FILE=/ssl/$(bashio::config 'certfile')
+export KEY_FILE=/ssl/$(bashio::config 'keyfile')
 export PROTOCOL=https
 	#sed "/server/a PROTOCOL  = https" /data/gitea/conf/app.ini
 	#sed "/server/a ROOT_URL  = https://$BASE_URL:3000/" /data/gitea/conf/app.ini
