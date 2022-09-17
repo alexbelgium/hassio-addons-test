@@ -25,7 +25,7 @@ export PROTOCOL=https
 	#sed "/server/a ROOT_URL  = https://$BASE_URL:3000/" /data/gitea/conf/app.ini
 	#sed "/server/a CERT_FILE = $(bashio::config 'certfile')" /data/gitea/conf/app.ini
 	#sed "/server/a KEY_FILE = $(bashio::config 'keyfile')" /data/gitea/conf/app.ini
-else
+#else
 	#sed "/server/a PROTOCOL  = http" /data/gitea/conf/app.ini
 	#sed "/server/a ROOT_URL  = http://$BASE_URL:3000/" /data/gitea/conf/app.ini
 fi
