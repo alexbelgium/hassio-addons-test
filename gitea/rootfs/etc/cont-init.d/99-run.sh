@@ -1,9 +1,13 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
 
-sed -i "1a export SITE_TITLE=$(bashio::config 'SITE_TITLE')" /usr/bin/entrypoint
-sed -i "1a export SERVER_DOMAIN=$(bashio::config 'SERVER_DOMAIN')" /usr/bin/entrypoint
-sed -i "1a export BASE_URL=$(bashio::config 'BASE_URL')" /usr/bin/entrypoint
+#sed -i "1a export SITE_TITLE=$(bashio::config 'SITE_TITLE')" /usr/bin/entrypoint
+#sed -i "1a export SERVER_DOMAIN=$(bashio::config 'SERVER_DOMAIN')" /usr/bin/entrypoint
+#sed -i "1a export BASE_URL=$(bashio::config 'BASE_URL')" /usr/bin/entrypoint
+
+echo "SITE_TITLE=$(bashio::config 'SITE_TITLE')" >> /.env
+echo "SERVER_DOMAIN=$(bashio::config 'SERVER_DOMAIN')" >> /.env
+echo "BASE_URL=$(bashio::config 'BASE_URL')" >> /.env
 
 echo "site title $SITE_TITLE"
 echo "server domain $SERVER_DOMAIN"
