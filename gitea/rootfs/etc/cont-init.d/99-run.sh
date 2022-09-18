@@ -12,7 +12,6 @@ fi
 ##############
 
 for param in APP_NAME DOMAIN ROOT_URL; do
-[ ! -f 
   if bashio::config.has_value "$param"; then
     echo "parameter set : $param=$(bashio::config '$param')"
     sed -i "/$param/d" "$file"
