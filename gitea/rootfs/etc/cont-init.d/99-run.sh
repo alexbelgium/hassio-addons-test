@@ -9,9 +9,9 @@ echo "SITE_TITLE=$(bashio::config 'SITE_TITLE')" >> /.env
 echo "SERVER_DOMAIN=$(bashio::config 'SERVER_DOMAIN')" >> /.env
 echo "BASE_URL=$(bashio::config 'BASE_URL')" >> /.env
 
-echo "site title $SITE_TITLE"
-echo "server domain $SERVER_DOMAIN"
-echo "base url $BASE_URL"
+#echo "site title $SITE_TITLE"
+#echo "server domain $SERVER_DOMAIN"
+#echo "base url $BASE_URL"
 
 #sed "s/^APP.*/APP      = $SITE_TITLE/" /data/gitea/conf/app.ini
 #sed "s/^DOMAIN.*/DOMAIN      = $SERVER_DOMAIN/" /data/gitea/conf/app.ini
