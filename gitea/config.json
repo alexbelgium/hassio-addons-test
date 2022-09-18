@@ -22,18 +22,18 @@
   },
   "ports_description": {
     "22/tcp": "Ssh",
-    "3000/tcp": "Http web interface"
+    "3000/tcp": "Web interface"
   },
   "schema": {
     "certfile": "str",
     "keyfile": "str",
     "ssl": "bool",
-    "SITE_TITLE": "str?",
-    "SERVER_DOMAIN": "str?",
-    "BASE_URL": "str?"
+    "APP_NAME": "str?",
+    "DOMAIN": "str?",
+    "ROOT_URL": "str?"
   },
   "slug": "gitea",
-  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/gitea",
-  "version": "1.17.2",
+  "url": "https://github.com/baldarn/hassio-addons/tree/master/gitea",
+  "version": "1.17.2-1",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }
