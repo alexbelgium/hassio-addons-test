@@ -3,11 +3,16 @@
 
 for file in /data/gitea/conf/app.ini /etc/templates/app.ini; do
 
+if [ ! -f "$file" ]; then
+continue
+fi
+
 ##############
 # OTHER CONF #
 ##############
 
 for param in APP_NAME DOMAIN ROOT_URL; do
+[ ! -f 
   if bashio::config.has_value "$param"; then
     echo "parameter set : $param=$(bashio::config '$param')"
     sed -i "/$param/d" "$file"
