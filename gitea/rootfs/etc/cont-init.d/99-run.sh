@@ -12,9 +12,9 @@ fi
 ##############
 
 for param in APP_NAME DOMAIN ROOT_URL; do
+    sed -i "/$param/d" "$file"
   if bashio::config.has_value "$param"; then
     echo "parameter set : $param=$(bashio::config $param)"
-    sed -i "/$param/d" "$file"
     sed -i "/server/a $param = $(bashio::config $param)" "$file"
   fi
 done
