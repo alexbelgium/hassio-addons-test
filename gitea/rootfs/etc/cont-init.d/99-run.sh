@@ -28,9 +28,6 @@ sed -i "/PROTOCOL/d" "$file"
 sed -i "/CERT_FILE/d" "$file"
 sed -i "/KEY_FILE/d" "$file"
 
-
-744
-
 # Add ssl
 bashio::config.require.ssl
 if bashio::config.true 'ssl'; then
@@ -42,6 +39,7 @@ sed -i "/server/a KEY_FILE = /ssl/$(bashio::config 'keyfile')" "$file"
 
 # Adapt permissions for ssl certificates
 chmod 744 /ssl/*
+
 else
 sed -i "/server/a PROTOCOL = http" "$file"
 fi
