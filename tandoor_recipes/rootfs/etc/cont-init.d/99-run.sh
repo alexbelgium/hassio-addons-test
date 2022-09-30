@@ -16,6 +16,7 @@ for element in ${ALLOWED_HOSTS//,/ }; do # Separate comma separated values
     CSRF_TRUSTED_ORIGINS="http://$element,https://$element,$CSRF_TRUSTED_ORIGINS"
 done
 export CSRF_TRUSTED_ORIGINS
+export ALLOWED_HOSTS="*"
 
 #################
 # Allow ingress #
