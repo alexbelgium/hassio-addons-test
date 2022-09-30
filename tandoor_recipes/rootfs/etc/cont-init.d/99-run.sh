@@ -21,8 +21,7 @@ export CSRF_TRUSTED_ORIGINS
 # Allow ingress #
 #################
 
-#sed -i "s|href=\"{% base_path request \'base\' %}\"|href=\"{% base_path request \'base\' %}/\"|g" /opt/recipes/cookbook/templates/base.html
-export BASE_PATH=$(bashio::addon.ingress_entry)
+sed -i "s|href=\"{% base_path request \'base\' %}\"|href=\"{% base_path request \'base\' %}/\"|g" /opt/recipes/cookbook/templates/base.html
 
 ###################
 # Define database #
