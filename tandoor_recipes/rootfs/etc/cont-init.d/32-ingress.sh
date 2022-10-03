@@ -1,6 +1,14 @@
 #!/usr/bin/bashio
 # shellcheck shell=bash
 
+##################
+# ADAPT SETTINGS #
+##################
+
+sed -i "/SECURE_CROSS_ORIGIN_OPENER_POLICY/d" /opt/recipes/recipes/settings.py
+sed -i "/CsrfViewMiddleware/d" /opt/recipes/recipes/settings.py
+sed -i "/CROS_ORIGIN_ALLOW_ALL/a SECURE_CROSS_ORIGIN_OPENER_POLICY = None" /opt/recipes/recipes/settings.py
+
 #################
 # NGINX SETTING #
 #################
