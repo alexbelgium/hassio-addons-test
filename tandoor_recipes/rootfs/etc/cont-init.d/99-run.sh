@@ -72,6 +72,13 @@ case $(bashio::config 'DB_TYPE') in
         bashio::log.warning "This addon is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
+
+        bashio::log.info "Creating database for Emoncms if required"
+
+        mysql \
+          -u "${POSTGRES_USER}" -p"${POSTGRES_PASSWORD}" \
+          -h "${POSTGRES_HOST}" -P "${POSTGRES_PORT}" \
+          -e "CREATE DATABASE IF NOT EXISTS \`${POSTGRES_DB}\` ;"
         ;;
 
     postgresql_external)
