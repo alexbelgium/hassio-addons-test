@@ -73,7 +73,7 @@ case $(bashio::config 'DB_TYPE') in
         bashio::log.warning "Please ensure this is included in your backups"
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
 
-        bashio::log.info "Creating database for Emoncms if required"
+        bashio::log.info "Creating database if required"
 
         mysql \
           -u "${POSTGRES_USER}" -p"${POSTGRES_PASSWORD}" \
