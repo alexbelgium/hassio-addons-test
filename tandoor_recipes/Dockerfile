@@ -27,12 +27,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-ENV POSTGRES_HOST=core-mariadb \
-    POSTGRES_PORT=3306 \
-    POSTGRES_USER=service \
-    POSTGRES_PASSWORD=Zee0chaiC0JeuchaPeGh9eivuL6UiNaineij2ahyioqu3shaelooC2eCeeriKahr \
-    POSTGRES_DB=tandoor
-
 ##################
 # 3 Install apps #
 ##################
