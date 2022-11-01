@@ -72,8 +72,8 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 RUN chmod 777 /entrypoint.sh
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
-ENTRYPOINT [ "/entrypoint.sh" ]
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+#ENTRYPOINT [ "/entrypoint.sh" ]
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############
 # 5 Labels #
