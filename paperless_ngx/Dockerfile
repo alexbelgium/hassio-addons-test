@@ -49,9 +49,6 @@ RUN \
     sed -i 's|usr/bin/env bash|usr/bin/env bashio|g' /sbin/docker-entrypoint.sh && \
     # Run entrypoint
     sed -i '2i /./entrypoint.sh' /sbin/docker-entrypoint.sh && \
-    # Install redis
-    sed -i '2i bashio::log.info "Installing redis"' /sbin/docker-entrypoint.sh && \
-    sed -i '2i apt-get install -yqq redis-server && exec redis-server & echo "Starting redis"' /sbin/docker-entrypoint.sh && \
     # Set variables
     sed -i '2i bashio::log.info "Defining variables"' /sbin/docker-entrypoint.sh && \
     sed -i '2i if bashio::config.has_value "PUID"; then export USERMAP_UID=$(bashio::config "PUID"); fi' /sbin/docker-entrypoint.sh && \
@@ -72,9 +69,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && chmod -R 755 /etc/cont-init.d || printf '%s\n' "${MODULES}" >/MODULESFILE
 
 # Manual apps
-ENV PACKAGES="yamllint \
-    pip \
-    libxml2-dev libxslt-dev python-dev libjpeg-dev zlib1g-dev python3-dev build-essential"
+ENV PACKAGES="redis-server yamllint pip libxml2-dev libxslt-dev python-dev libjpeg-dev zlib1g-dev python3-dev build-essential"
 
 # Automatic apps & bashio
 # hadolint ignore=SC2015
