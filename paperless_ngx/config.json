@@ -80,7 +80,7 @@
     "localdisks": "str?",
     "networkdisks": "str?"
   },
-  "slug": "paperless_ng",
+  "slug": "paperless_ngx",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.8.2-test",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8000]"
