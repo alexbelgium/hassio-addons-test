@@ -39,23 +39,26 @@ RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
     if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi
 
+ENV \
+    PAPERLESS_DATA_DIR=/config/addons_config/paperless_ng \
+    PAPERLESS_MEDIA_ROOT=/config/addons_config/paperless_ng/media \
+    PAPERLESS_CONSUMPTION_DIR=/config/addons_config/paperless_ng/consume
+
 # Modify image
 RUN \
     sed -i 's|usr/bin/env bash|usr/bin/env bashio|g' /sbin/docker-entrypoint.sh && \
-    sed -i '1a apt-get install -yqq redis-server && exec redis-server & echo "Redis starting" \
-      bashio::log.info "Defining variables" \
-      # Implement images modification \
-      if bashio::config.has_value "PUID"; then sed -i "1a export USERMAP_UID=$(bashio::config "PUID")" /sbin/docker-entrypoint.sh; fi \
-      if bashio::config.has_value "PGID"; then sed -i "1a export USERMAP_GID=$(bashio::config "PGID")" /sbin/docker-entrypoint.sh; fi \
-      if bashio::config.has_value "TZ"; then sed -i "1a export PAPERLESS_TIME_ZONE=$(bashio::config "TZ")" /sbin/docker-entrypoint.sh; fi \
-      if bashio::config.has_value "OCRLANG"; then sed -i "1a export PAPERLESS_OCR_LANGUAGES=$(bashio::config "OCRLANG")" /sbin/docker-entrypoint.sh; fi \
-      if bashio::config.has_value "PAPERLESS_OCR_MODE"; then sed -i "1a export PAPERLESS_OCR_MODE=$(bashio::config "PAPERLESS_OCR_MODE")" /sbin/docker-entrypoint.sh; fi \
-      \
-      # Force folders \
-      sed -i "1a export PAPERLESS_DATA_DIR=/config/addons_config/paperless_ng" /sbin/docker-entrypoint.sh \
-      sed -i "1a export PAPERLESS_MEDIA_ROOT=/config/addons_config/paperless_ng/media" /sbin/docker-entrypoint.sh \
-      sed -i "1a export PAPERLESS_CONSUMPTION_DIR=/config/addons_config/paperless_ng/consume" /sbin/docker-entrypoint.sh \
-      ' /sbin/docker-entrypoint.sh
+    # Run entrypoint
+    sed -i '2i /./entrypoint.sh' /sbin/docker-entrypoint.sh && \
+    # Install redis
+    sed -i '2i bashio::log.info "Installing redis"' /sbin/docker-entrypoint.sh && \
+    sed -i '2i apt-get install -yqq redis-server && exec redis-server & echo "Starting redis"' /sbin/docker-entrypoint.sh && \
+    # Set variables
+    sed -i '2i bashio::log.info "Defining variables"' /sbin/docker-entrypoint.sh && \
+    sed -i '2i if bashio::config.has_value "PUID"; then sed -i "1a export USERMAP_UID=$(bashio::config "PUID")" /sbin/docker-entrypoint.sh; fi' /sbin/docker-entrypoint.sh && \
+    sed -i '2i if bashio::config.has_value "PGID"; then sed -i "1a export USERMAP_GID=$(bashio::config "PGID")" /sbin/docker-entrypoint.sh; fi' /sbin/docker-entrypoint.sh && \
+    sed -i '2i if bashio::config.has_value "TZ"; then sed -i "1a export PAPERLESS_TIME_ZONE=$(bashio::config "TZ")" /sbin/docker-entrypoint.sh; fi' /sbin/docker-entrypoint.sh && \
+    sed -i '2i if bashio::config.has_value "OCRLANG"; then sed -i "1a export PAPERLESS_OCR_LANGUAGES=$(bashio::config "OCRLANG")" /sbin/docker-entrypoint.sh; fi' /sbin/docker-entrypoint.sh && \
+    sed -i '2i if bashio::config.has_value "PAPERLESS_OCR_MODE"; then sed -i "1a export PAPERLESS_OCR_MODE=$(bashio::config "PAPERLESS_OCR_MODE")" /sbin/docker-entrypoint.sh; fi' /sbin/docker-entrypoint.sh
 
 # Modules
 ARG MODULES="00-banner.sh 92-local_mounts.sh 92-smb_mounts.sh 90-config_yaml.sh"
