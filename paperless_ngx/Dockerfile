@@ -39,6 +39,10 @@ RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
     if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi
 
+# Modify image
+RUN \
+    sed -i "1a apt-get install redis-server && exec redis-server & echo 'Redis starting'" /sbin/docker-entrypoint.sh
+
 # Modules
 ARG MODULES="00-banner.sh 92-local_mounts.sh 92-smb_mounts.sh 90-config_yaml.sh"
 
