@@ -17,6 +17,7 @@ sed -i "1a export PAPERLESS_CONSUMPTION_DIR=/config/addons_config/paperless_ng/c
 # Install redis
 bashio::log.info "Installing redis"
 apt-get update && apt-get install -yqq redis-server >/dev/null
+exec redis-server & bashio::log.info "Starting redis"
 
 bashio::log.info "Initial username and password are admin. Please change in the administration panel of the webUI after login."
 /./sbin/docker-entrypoint.sh
