@@ -14,8 +14,10 @@ sed -i "1a export PAPERLESS_DATA_DIR=/config/addons_config/paperless_ng" /sbin/d
 sed -i "1a export PAPERLESS_MEDIA_ROOT=/config/addons_config/paperless_ng/media" /sbin/docker-entrypoint.sh
 sed -i "1a export PAPERLESS_CONSUMPTION_DIR=/config/addons_config/paperless_ng/consume" /sbin/docker-entrypoint.sh
 
-bashio::log.info "Starting services"
-/./scripts/start_services.sh
+
+
+bashio::log.info "Installing redis"
+apt-get update && apt-get install -yqq redis-server >/dev/null
 
 bashio::log.info "Initial username and password are admin. Please change in the administration panel of the webUI after login."
 /./sbin/docker-entrypoint.sh
