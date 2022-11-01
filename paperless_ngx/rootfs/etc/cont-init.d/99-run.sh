@@ -14,8 +14,7 @@ sed -i "1a export PAPERLESS_DATA_DIR=/config/addons_config/paperless_ng" /sbin/d
 sed -i "1a export PAPERLESS_MEDIA_ROOT=/config/addons_config/paperless_ng/media" /sbin/docker-entrypoint.sh
 sed -i "1a export PAPERLESS_CONSUMPTION_DIR=/config/addons_config/paperless_ng/consume" /sbin/docker-entrypoint.sh
 
-
-
+# Install redis
 bashio::log.info "Installing redis"
 apt-get update && apt-get install -yqq redis-server >/dev/null
 
