@@ -42,14 +42,14 @@ RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
 # Modify image
 RUN \
     sed -i 's|usr/bin/env bash|usr/bin/env bashio|g' /sbin/docker-entrypoint.sh && \
-    sed -i '1a apt-get install -yqq redis-server && exec redis-server & echo 'Redis starting'
+    sed -i '1a apt-get install -yqq redis-server && exec redis-server & echo "Redis starting"
       bashio::log.info "Defining variables"
       # Implement images modification
-      if bashio::config.has_value 'PUID'; then sed -i "1a export USERMAP_UID=$(bashio::config "PUID")" /sbin/docker-entrypoint.sh; fi
-      if bashio::config.has_value 'PGID'; then sed -i "1a export USERMAP_GID=$(bashio::config "PGID")" /sbin/docker-entrypoint.sh; fi
-      if bashio::config.has_value 'TZ'; then sed -i "1a export PAPERLESS_TIME_ZONE=$(bashio::config "TZ")" /sbin/docker-entrypoint.sh; fi
-      if bashio::config.has_value 'OCRLANG'; then sed -i "1a export PAPERLESS_OCR_LANGUAGES=$(bashio::config "OCRLANG")" /sbin/docker-entrypoint.sh; fi
-      if bashio::config.has_value 'PAPERLESS_OCR_MODE'; then sed -i "1a export PAPERLESS_OCR_MODE=$(bashio::config "PAPERLESS_OCR_MODE")" /sbin/docker-entrypoint.sh; fi
+      if bashio::config.has_value "PUID"; then sed -i "1a export USERMAP_UID=$(bashio::config "PUID")" /sbin/docker-entrypoint.sh; fi
+      if bashio::config.has_value "PGID"; then sed -i "1a export USERMAP_GID=$(bashio::config "PGID")" /sbin/docker-entrypoint.sh; fi
+      if bashio::config.has_value "TZ"; then sed -i "1a export PAPERLESS_TIME_ZONE=$(bashio::config "TZ")" /sbin/docker-entrypoint.sh; fi
+      if bashio::config.has_value "OCRLANG"; then sed -i "1a export PAPERLESS_OCR_LANGUAGES=$(bashio::config "OCRLANG")" /sbin/docker-entrypoint.sh; fi
+      if bashio::config.has_value "PAPERLESS_OCR_MODE"; then sed -i "1a export PAPERLESS_OCR_MODE=$(bashio::config "PAPERLESS_OCR_MODE")" /sbin/docker-entrypoint.sh; fi
 
       # Force folders
       sed -i "1a export PAPERLESS_DATA_DIR=/config/addons_config/paperless_ng" /sbin/docker-entrypoint.sh
