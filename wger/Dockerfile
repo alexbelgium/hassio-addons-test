@@ -35,7 +35,7 @@ VOLUME [ "/data" ]
 
 USER root
 
-RUN sed -i "1a chmod a+x /entrypoint.sh && /./entrypoint.sh" /home/wger/entrypoint.sh
+#RUN sed -i "1a chmod a+x /entrypoint.sh && /./entrypoint.sh" /home/wger/entrypoint.sh
 #    && sed -i "1a ln -s $LOCATION/database.sqlite /home/wger/db" /home/wger/entrypoint.sh \
 #    && sed -i "1a if [ -f /data/database.sqlite ]; then mv -f /data/database.sqlite $LOCATION/database.sqlite; fi" /home/wger/entrypoint.sh \
 #    && sed -i "1a rm /home/wger/db/database.sqlite &>/dev/null || true" /home/wger/entrypoint.sh \
@@ -74,8 +74,8 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
-RUN chmod 777 /run.sh
-CMD [ "/run.sh" ]
+RUN chmod 777 /entrypoint.sh
+CMD [ "/entrypoint.sh" ]
 
 ############
 # 5 Labels #
