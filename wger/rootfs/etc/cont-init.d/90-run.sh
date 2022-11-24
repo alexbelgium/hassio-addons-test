@@ -10,6 +10,7 @@ chmod -R 777 /data
 # Change database location #
 ############################
 export DJANGO_DB_DATABASE="/data/database.sqlite"
+touch /data/database.sqlite
 
 #############
 # Start app #
