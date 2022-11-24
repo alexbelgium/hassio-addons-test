@@ -28,16 +28,14 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 ENV \
     SYNC_EXERCISES_ON_STARTUP=True \
-    DOWNLOAD_EXERCISE_IMAGES_ON_STARTUP=True
+    DOWNLOAD_EXERCISE_IMAGES_ON_STARTUP=True \
+    FROM_EMAIL='wger Workout Manager <wger@example.com>'
 
 VOLUME [ "/data" ]
 
 USER root
-WORKDIR /home/wger/src
 
-ENV FROM_EMAIL='wger Workout Manager <wger@example.com>'
-
-#RUN sed -i "1a python3 manage.py migrate || true" /home/wger/entrypoint.sh \
+RUN sed -i "1a chmod a+x /entrypoint.sh && /./entrypoint.sh" /home/wger/entrypoint.sh
 #    && sed -i "1a ln -s $LOCATION/database.sqlite /home/wger/db" /home/wger/entrypoint.sh \
 #    && sed -i "1a if [ -f /data/database.sqlite ]; then mv -f /data/database.sqlite $LOCATION/database.sqlite; fi" /home/wger/entrypoint.sh \
 #    && sed -i "1a rm /home/wger/db/database.sqlite &>/dev/null || true" /home/wger/entrypoint.sh \
