@@ -9,8 +9,9 @@ touch /data/database.sqlite
 #####################
 # Align permissions #
 #####################
-chown -R wger:wger /data
+chown -R 1000:1000 /data
 chmod -R 777 /data
+sed -i "s|wger:x:0:0|wger:x:1000:1000|g" /etc/passwd
 
 #############
 # Start app #
