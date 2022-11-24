@@ -73,7 +73,8 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 
 RUN chmod 777 /entrypoint.sh
-CMD [ "/entrypoint.sh" ]
+USER wger
+#CMD [ "/entrypoint.sh" ]
 
 ############
 # 5 Labels #
