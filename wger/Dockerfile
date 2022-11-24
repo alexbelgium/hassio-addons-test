@@ -68,14 +68,13 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && eval /./automatic_packages.sh "${PACKAGES:-}" \
     && rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
-USER wger
-
 ################
 # 4 Entrypoint #
 ################
 
 RUN chmod 777 /entrypoint.sh
 CMD [ "/entrypoint.sh" ]
+USER wger
 
 ############
 # 5 Labels #
