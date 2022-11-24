@@ -3,8 +3,8 @@
 ############################
 # Change database location #
 ############################
-export DJANGO_DB_DATABASE="/data/database.sqlite"
-touch /data/database.sqlite
+#export DJANGO_DB_DATABASE="/data/database.sqlite"
+#touch /data/database.sqlite
 
 #####################
 # Align permissions #
