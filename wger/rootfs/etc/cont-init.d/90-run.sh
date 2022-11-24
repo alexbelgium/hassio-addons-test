@@ -11,7 +11,9 @@
 #####################
 chown -R 1000:1000 /data
 chmod -R 777 /data
-sed -i "s|wger:x:0:0|wger:x:1000:1000|g" /etc/passwd
+#sed -i "s|wger:x:0:0|wger:x:1000:1000|g" /etc/passwd
+usermod -u 1000 wger
+groupmod -g 1000 wger
 
 #############
 # Start app #
