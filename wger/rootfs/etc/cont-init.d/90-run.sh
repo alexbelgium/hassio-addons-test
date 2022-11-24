@@ -16,4 +16,4 @@ chmod -R 777 /data
 # Start app #
 #############
 #/bin/su -s /bin/bash -c '/home/wger/entrypoint.sh' wger
-/bin/su - wger -c "/home/wger/entrypoint.sh"
+/./home/wger/entrypoint.sh
