@@ -1,25 +1,25 @@
 #!/usr/bin/env bashio
 
-LOCATION=/data
-mkdir -p "$LOCATION"
-echo "Defining database"
-touch "$LOCATION"/database.sqlite
-ln -s "$LOCATION"/database.sqlite /home/wger/db
+#LOCATION=/data
+#mkdir -p "$LOCATION"
+#echo "Defining database"
+#touch "$LOCATION"/database.sqlite
+#ln -s "$LOCATION"/database.sqlite /home/wger/db
 
-echo "Updating database"
-python3 manage.py migrate || true
+#echo "Updating database"
+#python3 manage.py migrate || true
 
-echo "Defining permissions"
-chown -R wger:wger "$LOCATION"
-chown -R wger:wger "/home/wger"
-chmod -R 777 "$LOCATION"
+#echo "Defining permissions"
+#chown -R wger:wger "$LOCATION"
+#chown -R wger:wger "/home/wger"
+#chmod -R 777 "$LOCATION"
 
-echo "Launch app"
-pip install -e . &>/dev/null
-sed -i "1a cd /home/wger/src" /home/wger/entrypoint.sh
+#echo "Launch app"
+#pip install -e . &>/dev/null
+#sed -i "1a cd /home/wger/src" /home/wger/entrypoint.sh
 
-echo "Setting static"
-rmdir /home/wger/static && ln -s /home/wger/src/wger/core/static /home/wger || true
+#echo "Setting static"
+#rmdir /home/wger/static && ln -s /home/wger/src/wger/core/static /home/wger || true
 
 (set -o posix; export -p) > /env.sh
 chmod 777 /env.sh
