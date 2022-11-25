@@ -34,7 +34,7 @@ ENV \
 USER root
 
 #RUN sed -i "s|wger:x:1000:1000|wger:x:0:0|g" /etc/passwd
-RUN sed -i "1a sudo -E /./home/wger/entrypoint.sh"
+RUN sed -i "1a sudo -E /./entrypoint.sh"
 
 ##################
 # 3 Install apps #
