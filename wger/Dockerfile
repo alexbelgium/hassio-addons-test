@@ -33,6 +33,8 @@ ENV \
 
 USER root
 
+RUN echo "wger ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
 #RUN sed -i "s|wger:x:1000:1000|wger:x:0:0|g" /etc/passwd
 #RUN sed -i "1a sudo -E /entrypoint.sh" /home/wger/src/settings.py
 
