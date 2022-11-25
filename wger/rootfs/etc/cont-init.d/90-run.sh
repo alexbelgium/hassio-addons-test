@@ -17,6 +17,6 @@ chmod -R 777 /data
 ############################
 # Merge static directories #
 ############################
-cp -rnf /home/wger/src/wger/core/static/* /data/static
-cp -rnf /home/wger/src/static/* /data/static
-cp -rnf /home/wger/src/wger/software/static/* /data/static
+#cp -rnf /home/wger/src/wger/core/static/* /data/static
+#cp -rnf /home/wger/src/static/* /data/static
+#cp -rnf /home/wger/src/wger/software/static/* /data/static
