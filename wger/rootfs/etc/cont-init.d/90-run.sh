@@ -5,7 +5,7 @@
 ############################
 #export DJANGO_DB_DATABASE="/data/database.sqlite"
 touch /data/database.sqlite
-sed -i "s|/home/wger/db/database.sqlite|/data/database.sqlite|g" /home/wger/src
+sed -i "s|/home/wger/db/database.sqlite|/data/database.sqlite|g" /home/wger/src/settings.py
 
 #####################
 # Align permissions #
