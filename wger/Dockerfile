@@ -34,8 +34,7 @@ ENV \
 USER root
 
 #RUN sed -i "s|wger:x:1000:1000|wger:x:0:0|g" /etc/passwd
-
-#USER wger
+RUN sed -i "1a sudo -E /./home/wger/entrypoint.sh"
 
 ##################
 # 3 Install apps #
@@ -71,7 +70,8 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 
 RUN chmod 777 /entrypoint.sh
-CMD [ "/entrypoint.sh" ]
+USER wger
+#CMD [ "/entrypoint.sh" ]
 
 ############
 # 5 Labels #
