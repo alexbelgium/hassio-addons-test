@@ -18,4 +18,4 @@ chmod -R 777 /data
 #############
 # Start app #
 #############
-sudo -H -u wger bash -c "{/./entrypoint.sh}"
+sudo -H -u wger bash -c "{./entrypoint.sh}"
