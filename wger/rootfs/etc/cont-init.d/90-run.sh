@@ -14,6 +14,9 @@ sed -i "s|/home/wger/db/database.sqlite|/data/database.sqlite|g" /home/wger/src/
 chown -R 1000:1000 /data
 chmod -R 777 /data
 
+bashio::log.info "Starting nginx"
+nginx & true
+
 ############################
 # Merge static directories #
 ############################
