@@ -12,10 +12,12 @@
   ],
   "name": "Wger",
   "ports": {
-    "8001/tcp": 9927
+    "8000/tcp": 9927,
+    "8001/tcp": null
   },
   "ports_description": {
-    "8001/tcp": "Web interface"
+    "8000/tcp": "Web interface",
+    "8001/tcp": "Test"
   },
   "slug": "wger",
   "startup": "services",
