@@ -12,16 +12,14 @@
   ],
   "name": "Wger",
   "ports": {
-    "8000/tcp": 9927,
-    "80/tcp": null
+    "80/tcp": 9927
   },
   "ports_description": {
-    "8000/tcp": "Web interface",
-    "80/tcp": "Test"
+    "80/tcp": "Web interface"
   },
   "slug": "wger",
   "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "test1",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8000]"
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
