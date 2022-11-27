@@ -15,7 +15,7 @@ chown -R 1000:1000 /data
 chmod -R 777 /data
 
 bashio::log.info "Starting nginx"
-sudo nginx & true
+sudo nginx || true & true
 
 ############################
 # Merge static directories #
