@@ -20,5 +20,3 @@ chmod -R 777 /data
 #cp -rnf /home/wger/src/wger/core/static/* /data/static || true
 #cp -rnf /home/wger/src/static/* /data/static || true
 #cp -rnf /home/wger/src/wger/software/static/* /data/static || true
-
-nginx & echo "Starting nginx" || true
