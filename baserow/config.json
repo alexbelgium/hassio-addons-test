@@ -1,0 +1,20 @@
+{
+  "arch": [
+    "amd64"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "open source no-code database tool and Airtable alternative",
+  "name": "Baserow (IN DEV)",
+  "ports": {
+    "80/tcp": 8042,
+    "443/tcp": 8043
+  },
+  "ports_description": {
+    "80/tcp": "Web interface",
+    "80/tcp": "Https interface"
+  },
+  "slug": "baserow",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "test",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
+}
