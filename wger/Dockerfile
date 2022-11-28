@@ -29,8 +29,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 ENV \
     SYNC_EXERCISES_ON_STARTUP=True \
     DOWNLOAD_EXERCISE_IMAGES_ON_STARTUP=True \
-    FROM_EMAIL='wger Workout Manager <wger@example.com>'
-    \
+    FROM_EMAIL='wger Workout Manager <wger@example.com>' \
     DJANGO_MEDIA_ROOT="/data/media" \
     DJANGO_STATIC_ROOT="/data/static"
 
