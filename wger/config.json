@@ -5,12 +5,14 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "manage your personal workouts, weight and diet plans",
+  "ingress": true,
   "map": [
     "share:rw",
     "config:rw",
     "ssl:ro"
   ],
   "name": "Wger",
+  "panel_icon": "mdi:Dumbbell",
   "ports": {
     "80/tcp": 9927
   },
@@ -20,6 +22,5 @@
   "slug": "wger",
   "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "test1",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
+  "version": "test1"
 }
