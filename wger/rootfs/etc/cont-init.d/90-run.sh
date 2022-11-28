@@ -10,14 +10,14 @@ sed -i "s|/home/wger/db/database.sqlite|/data/database.sqlite|g" /home/wger/src/
 # Adapt directories #
 #####################
 mkdir -p /data/static
-if [ -f /home/wger/static ]; then
+if [ -d /home/wger/static ]; then
   cp -rnf /home/wger/static/* /data/static/
   rm -r /home/wger/static
 fi
 ln -s /data/static /home/wger
 
 mkdir -p /data/media
-if [ -f /home/wger/media ]; then
+if [ -d /home/wger/media ]; then
   cp -rnf /home/wger/media/* /data/media/
   rm -r /home/wger/media
 fi
