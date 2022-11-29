@@ -21,4 +21,4 @@ ln -s /data /baserow/data || true #debug mode
 # START APP #
 #############
 
-start /./baserow.sh
+/./baserow.sh
