@@ -18,6 +18,3 @@ sed -i "s|%%ingress_entry%%|${ingress_entry}|g" /etc/nginx/servers/ssl.conf
 
 # Avoid error message
 grep -rnl "PhotoPrism has been updated…" /opt/photoprism | xargs sed -i "s|PhotoPrism has been updated…|Please click cancel|g"
-
-# Set url
-sed -i "1a export PHOTOPRISM_SITE_URL=$homeassistant_url${ingress_entry}/" /etc/cont-init.d/99-run.sh
