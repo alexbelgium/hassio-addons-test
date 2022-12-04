@@ -42,7 +42,6 @@
   "environment": {
     "PHOTOPRISM_ADMIN_PASSWORD": "please_change_password",
     "PHOTOPRISM_ADMIN_USER": "admin",
-    "PHOTOPRISM_HTTP_COMPRESSION": "none",
     "PHOTOPRISM_HTTP_PORT": "2341",
     "working_dir": "/data/photoprism"
   },
@@ -60,6 +59,7 @@
     "BACKUP_PATH": "/share/photoprism/backup",
     "CONFIG_LOCATION": "/config/addons_config/photoprism/config.yaml",
     "DB_TYPE": "sqlite",
+    "HOMEASSISTANT_URL": "null",
     "IMPORT_PATH": "/share/photoprism/import",
     "ORIGINALS_PATH": "/share/photoprism/originals",
     "STORAGE_PATH": "/share/photoprism/storage",
@@ -83,6 +83,7 @@
     "BACKUP_PATH": "str",
     "CONFIG_LOCATION": "str",
     "DB_TYPE": "list(sqlite|mariadb_addon|external)",
+    "HOMEASSISTANT_URL": "str",
     "IMPORT_PATH": "str",
     "ORIGINALS_PATH": "str",
     "STORAGE_PATH": "str",
