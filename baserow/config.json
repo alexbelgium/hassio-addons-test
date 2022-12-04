@@ -15,6 +15,6 @@
   },
   "slug": "baserow",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "test",
+  "version": "test3",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
