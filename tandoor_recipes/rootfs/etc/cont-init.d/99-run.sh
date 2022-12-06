@@ -22,7 +22,8 @@ export ALLOWED_HOSTS="*"
 # Allow ingress #
 #################
 
-sed -i "s|href=\"{% base_path request \'base\' %}\"|href=\"{% base_path request \'base\' %}/\"|g" /opt/recipes/cookbook/templates/base.html
+#sed -i "s|href=\"{% base_path request \'base\' %}\"|href=\"{% base_path request \'base\' %}/\"|g" /opt/recipes/cookbook/templates/base.html
+export SCRIPT_NAME="$(bashio::addon.ingress_entry)"
 
 ###################
 # Define database #
