@@ -30,6 +30,6 @@ echo " "
 bashio::log.info "Starting the app"
 echo " "
 
-cd "$HOME" || true
+cd "/usr/app/config" || true
 
 #/./usr/local/bin/docker-entrypoint.sh
