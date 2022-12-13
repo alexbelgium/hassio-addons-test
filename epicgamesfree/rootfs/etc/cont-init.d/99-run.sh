@@ -17,7 +17,7 @@ fi
 # Make symlink for cookies
 bashio::log.info "Copying current files"
 cd "$HOME" || true
-#cp -rnf /usr/app/* "$HOME"
+cp -rf /usr/app/* "$HOME"
 
 # Permissions
 chmod -R 777 "$HOME"
@@ -30,6 +30,6 @@ echo " "
 bashio::log.info "Starting the app"
 echo " "
 
-cd "/usr/app/config" || true
+cd "/config/addons_config/epicgamesfree/config" || true
 
 #/./usr/local/bin/docker-entrypoint.sh
