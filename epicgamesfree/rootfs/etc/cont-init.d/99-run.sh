@@ -17,7 +17,7 @@ fi
 # Make symlink for cookies
 bashio::log.info "Copying current files"
 cd "$HOME" || true
-cp -rnf /usr/app/* "$HOME"
+#cp -rnf /usr/app/* "$HOME"
 
 # Permissions
 chmod -R 777 "$HOME"
