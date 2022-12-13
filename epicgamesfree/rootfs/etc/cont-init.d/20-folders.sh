@@ -2,6 +2,6 @@
 # shellcheck shell=bash
 
 # Define home
-HOME="/config/addons_config/epicgamesfree/config"
+HOME="/config/addons_config/epicgamesfree"
 mkdir -p $HOME
 chmod -R 777 $HOME
