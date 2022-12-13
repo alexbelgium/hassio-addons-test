@@ -27,7 +27,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-RUN sed -i "1a /./entrypoint.sh" /usr/local/bin/docker-entrypoint.sh
+RUN sed -i "1a /./entrypoint.sh" /usr/local/bin/docker-entrypoint.sh && \
+    for file in $(grep -sril "/usr/app/config" /etc /defaults); do sed -i "s=/usr/app/config=$CONFIGLOCATION=g" $file; done
 
 ##################
 # 3 Install apps #
@@ -69,7 +70,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 
 #RUN chmod 777 /entrypoint.sh
-#WORKDIR /
+WORKDIR /data
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/entrypoint.sh" ]
 #SHELL ["/bin/bash", "-o", "pipefail", "-c"]
