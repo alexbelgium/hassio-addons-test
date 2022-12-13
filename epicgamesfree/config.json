@@ -5,6 +5,9 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Automatically login and redeem promotional free games from Epic Games Store",
+  "environment": {
+    "CONFIG_DIR": "/config/addons_config/epicgamesfree"
+  },
   "init": false,
   "map": [
     "config:rw"
