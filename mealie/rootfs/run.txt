@@ -1,4 +1,4 @@
-#!/usr/bin/env bashio
+1#!/usr/bin/env bashio
 # shellcheck shell=bash
 
 ####################
@@ -120,3 +120,6 @@ if bashio::config.true 'ssl'; then
    if [ -f /app/Caddyfile ]; then sed -i "7 i tls /ssl/$CERTFILE /ssl/$KEYFILE" /app/Caddyfile; fi
    if [ -f /app/frontend/Caddyfile ]; then sed -i "7 i tls /ssl/$CERTFILE /ssl/$KEYFILE" /app/frontend/Caddyfile; fi
 fi
+
+
+#base_url
