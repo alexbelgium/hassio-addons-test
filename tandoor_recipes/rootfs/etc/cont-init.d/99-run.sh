@@ -24,8 +24,8 @@ export ALLOWED_HOSTS="*"
 
 #sed -i "s|href=\"{% base_path request \'base\' %}\"|href=\"{% base_path request \'base\' %}/\"|g" /opt/recipes/cookbook/templates/base.html
 export SCRIPT_NAME="$(bashio::addon.ingress_entry)"
-export STATIC_URL="$(bashio::addon.ingress_entry)"/static/
-export STATIC_URL="$(bashio::addon.ingress_entry)"/media/
+#export STATIC_URL="$(bashio::addon.ingress_entry)"/static/
+#export STATIC_URL="$(bashio::addon.ingress_entry)"/media/
 
 ###################
 # Define database #
