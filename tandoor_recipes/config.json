@@ -18,7 +18,6 @@
   ],
   "name": "Tandoor recipes",
   "options": {
-    "ALLOWED_HOSTS": "",
     "DB_TYPE": "sqlite",
     "SECRET_KEY": "YOUR_SECRET_KEY"
   },
