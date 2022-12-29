@@ -73,13 +73,16 @@
     "8000/tcp": 8011,
     "8443/tcp": null
   },
+  "hassio_api": true,
+  "hassio_role": "default",
   "ports_description": {
     "8000/tcp": "Http web interface",
     "8443/tcp": "Https web interface"
   },
   "privileged": [
     "SYS_ADMIN",
-    "DAC_READ_SEARCH"
+    "DAC_READ_SEARCH",
+    "NET_ADMIN"
   ],
   "schema": {
     "CONFIG_LOCATION": "str",

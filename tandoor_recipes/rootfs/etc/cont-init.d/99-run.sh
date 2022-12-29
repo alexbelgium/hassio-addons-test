@@ -24,6 +24,8 @@ export ALLOWED_HOSTS="*"
 
 #sed -i "s|href=\"{% base_path request \'base\' %}\"|href=\"{% base_path request \'base\' %}/\"|g" /opt/recipes/cookbook/templates/base.html
 
+
+
 ###################
 # Define database #
 ###################
