@@ -1,0 +1,107 @@
+{
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "scan, index and archive all your physical documents",
+  "devices": [
+    "/dev/sda",
+    "/dev/sdb",
+    "/dev/sdc",
+    "/dev/sdd",
+    "/dev/sde",
+    "/dev/sdf",
+    "/dev/sdg",
+    "/dev/nvme",
+    "/dev/nvme0n1p1",
+    "/dev/nvme0n1p2",
+    "/dev/mmcblk",
+    "/dev/sda1",
+    "/dev/sdb1",
+    "/dev/sdc1",
+    "/dev/sdd1",
+    "/dev/sde1",
+    "/dev/sdf1",
+    "/dev/sdg1",
+    "/dev/sda2",
+    "/dev/sdb2",
+    "/dev/sdc2",
+    "/dev/sdd2",
+    "/dev/sde2",
+    "/dev/sdf2",
+    "/dev/sdg2",
+    "/dev/sda3",
+    "/dev/sdb3",
+    "/dev/sda4",
+    "/dev/sdb4",
+    "/dev/nvme0",
+    "/dev/nvme1",
+    "/dev/nvme2"
+  ],
+  "environment": {
+    "PAPERLESS_ADMIN_PASSWORD": "admin",
+    "PAPERLESS_ADMIN_USER": "admin",
+    "PGID": "0",
+    "PUID": "0"
+  },
+  "homeassistant": "0.92.0b2",
+  "init": false,
+  "ingress": true,
+  "ingress_stream": true,
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "config:rw",
+    "ssl"
+  ],
+  "name": "Paperless NGX",
+  "options": {
+    "CONFIG_LOCATION": "/config/addons_config/paperless_ng/config.yaml",
+    "OCRLANG": "ENG FRA GER",
+    "PAPERLESS_OCR_MODE": "skip",
+    "PGID": 0,
+    "PUID": 0,
+    "certfile": "fullchain.pem",
+    "keyfile": "privkey.pem",
+    "ssl": true
+  },
+  "panel_icon": "mdi:file-document",
+  "ports": {
+    "8000/tcp": 8011,
+    "8443/tcp": null
+  },
+  "ports_description": {
+    "8000/tcp": "Http web interface",
+    "8443/tcp": "Https web interface"
+  },
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
+  "schema": {
+    "CONFIG_LOCATION": "str",
+    "OCRLANG": "str?",
+    "PAPERLESS_URL": "str?",
+    "PAPERLESS_OCR_MODE": "list(skip|redo|force|skip_noarchive)?",
+    "PGID": "int",
+    "PUID": "int",
+    "TZ": "str?",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
+    "database": "list(|sqlite|mariadb_addon)?",
+    "localdisks": "str?",
+    "networkdisks": "str?",
+    "certfile": "str",
+    "keyfile": "str",
+    "ssl": "bool"
+  },
+  "services": [
+    "mysql:want"
+  ],
+  "slug": "paperless_ng",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "1.10.2-7"
+}
