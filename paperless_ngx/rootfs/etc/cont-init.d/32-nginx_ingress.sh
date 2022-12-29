@@ -13,7 +13,7 @@ ingress_entry=$(bashio::addon.ingress_entry)
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%ingress_entry%%|${ingress_entry}|g" /etc/nginx/servers/ingress.conf
-sed -i "s|%%ingress_entry%%|${ingress_entry}|g" /etc/nginx/servers/ssl.conf
+sed -i "s|%%ingress_entry%%|${ingress_entry}|g" /etc/nginx/servers/direct.conf
 
 # Remove CSRF validation
 find / -iname "settings.py" -exec sed -i "/django.middleware.csrf.CsrfViewMiddleware/d" {} \;
