@@ -16,4 +16,5 @@ sed -i "s|%%ingress_entry%%|${ingress_entry}|g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%ingress_entry%%|${ingress_entry}|g" /etc/nginx/servers/direct.conf
 
 # Remove CSRF validation
-find / -iname "settings.py" -exec sed -i "/django.middleware.csrf.CsrfViewMiddleware/d" {} \;
+#find / -iname "settings.py" -exec sed -i "/django.middleware.csrf.CsrfViewMiddleware/d" {} \;
+#find / -iname "index.html" -exec sed -i "s|base href=\"/\"|base href=\"./\"|g" {} \;
