@@ -60,7 +60,7 @@ case $(bashio::config 'database') in
         # Settings files & permissions
         ln -s /usr/lib/postgresql/14/bin/postgres /usr/bin || true
         ln -s /usr/lib/postgresql/14/bin/psql /usr/psql || true
-        adduser postgres || true
+        cp -rnf /var/lib/postgresql/14/main/* /data/postgresql/
         mkdir -p /data/postgresql
         chown -R postgres /data/postgresql
         chmod -R 777 /data/postgresql
