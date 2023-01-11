@@ -58,8 +58,7 @@
     "PUID": 1000,
     "JWT_SECRET": "JWT_SECRET",
     "TZ": "Europe/Paris",
-    "data_location": "/share/immich",
-    "database": "sqlite"
+    "data_location": "/share/immich"
   },
   "panel_icon": "mdi:file-search",
   "ports": {
