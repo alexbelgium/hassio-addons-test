@@ -70,7 +70,7 @@ case $(bashio::config 'database') in
 
         # Log as postgres
         su - postgres
-          psql
+        psql -U postgres
           CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'securepassword';
           CREATE DATABASE immich;
           CREATE USER immich WITH ENCRYPTED PASSWORD 'immich';
