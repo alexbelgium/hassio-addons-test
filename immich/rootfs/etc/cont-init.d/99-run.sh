@@ -65,15 +65,17 @@ case $(bashio::config 'database') in
         chown -R postgres /data/postgresql
         chmod -R 700 /data/postgresql
 
+        # Start postgresql
+        /etc/init.d/postgresql start
+
         # Log as postgres
         su - postgres
-        /etc/init.d/postgresql start
-        psql
-        CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'securepassword';
-        create database immich;
-        create user immich with encrypted password 'immich';
-        grant all privileges on database immich to immich;
-        \q
+          psql
+          CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'securepassword';
+          create database immich;
+          create user immich with encrypted password 'immich';
+          grant all privileges on database immich to immich;
+          \q
         exit
 
         # Settings parameters
