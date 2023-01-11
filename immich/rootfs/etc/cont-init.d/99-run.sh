@@ -63,7 +63,7 @@ case $(bashio::config 'database') in
         cp -rnf /var/lib/postgresql/14/main/* /data/postgresql/
         mkdir -p /data/postgresql
         chown -R postgres /data/postgresql
-        chmod -R 777 /data/postgresql
+        chmod -R 700 /data/postgresql
 
         # Log as postgres
         su - postgres
