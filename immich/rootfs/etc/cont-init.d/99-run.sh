@@ -67,12 +67,12 @@ case $(bashio::config 'database') in
 
         # Log as postgres
         su - postgres
-        /etc/init.d/postgresql start
         psql
         CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'securepassword';
         create database immich;
         create user immich with encrypted password 'immich';
         grant all privileges on database immich to immich;
+        /etc/init.d/postgresql start
         \q
         exit
 
