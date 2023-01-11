@@ -81,6 +81,7 @@ case $(bashio::config 'database') in
         export DB_PASSWORD=$(bashio::config 'DB_PASSWORD')
         export DB_DATABASE_NAME=$(bashio::config 'DB_DATABASE_NAME')
         export DB_PORT=$(bashio::config 'DB_PORT')
+        export JWT_SECRET="JWT_SECRET"
         ;;
 
 esac
