@@ -68,6 +68,7 @@ case $(bashio::config 'database') in
         export DB_PASSWORD=immich
         export DB_DATABASE_NAME=immich
         export DB_PORT=5432
+        export JWT_SECRET=$(bashio::config 'JWT_SECRET')
         ;;
 
     "external_postgresql")
@@ -81,7 +82,7 @@ case $(bashio::config 'database') in
         export DB_PASSWORD=$(bashio::config 'DB_PASSWORD')
         export DB_DATABASE_NAME=$(bashio::config 'DB_DATABASE_NAME')
         export DB_PORT=$(bashio::config 'DB_PORT')
-        export JWT_SECRET="JWT_SECRET"
+        export JWT_SECRET=$(bashio::config 'JWT_SECRET')
         ;;
 
 esac
