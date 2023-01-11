@@ -4,6 +4,6 @@
   "repository": "alexbelgium/hassio-addons",
   "slug": "immich",
   "source": "github",
-  "upstream_repo": "hurlenko/immich-docker",
-  "upstream_version": "2.23.0"
+  "upstream_repo": "immich-app/immich",
+  "upstream_version": "1.0"
 }
