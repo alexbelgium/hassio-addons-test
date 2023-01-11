@@ -81,6 +81,7 @@
     "TZ": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
+    "database": "list(internal|external_postgresql)?",
     "data_location": "str",
     "localdisks": "str?",
     "networkdisks": "str?",
