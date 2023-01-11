@@ -56,6 +56,7 @@
   "options": {
     "PGID": 1000,
     "PUID": 1000,
+    "JWT_SECRET": "JWT_SECRET"
     "TZ": "Europe/Paris",
     "data_location": "/share/immich",
     "database": "sqlite"
@@ -88,7 +89,7 @@
     "DB_PORT": "int?",
     "DB_PASSWORD": "str?",
     "DB_DATABASE_NAME": "str?",
-    "JWT_SECRET": "str?"
+    "JWT_SECRET": "str"
   },
   "slug": "immich",
   "url": "https://github.com/alexbelgium/hassio-addons",
