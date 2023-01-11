@@ -23,22 +23,23 @@ This addon is based on the [docker image](https://hub.docker.com/r/hurlenko/immi
 
 ## Configuration
 
-Webui can be found at <http://your-ip:8080>.
-Default username: "admin" and password: "admin"
-
-Network disk is mounted to /share/storagecifs
+Postgresql can be either internal or external
 
 ```yaml
-ssl: true/false
-certfile: fullchain.pem #ssl certificate
-keyfile: privkey.pem #sslkeyfile
-NoAuth: true/false #Remove password. Resets database when changed.
-smbv1: false # Should smbv1 be used instead of 2.1+?
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smbv2/3 servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password, same for all smb shares)
-base_folder: root folder # optional, default is /
+    "PGID": "int",
+    "PUID": "int",
+    "TZ": "str?",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
+    "data_location": "str",
+    "localdisks": "str?",
+    "networkdisks": "str?",
+    "DB_HOSTNAME": "str?",
+    "DB_USERNAME": "str?",
+    "DB_PORT": "int?",
+    "DB_PASSWORD": "str?",
+    "DB_DATABASE_NAME": "str?",
+    "JWT_SECRET": "str?"
 ```
 
 ## Installation
