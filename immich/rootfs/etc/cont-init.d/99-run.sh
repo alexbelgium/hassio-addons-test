@@ -38,7 +38,21 @@ bashio::log.info "-----------------"
 
 case $(bashio::config 'database') in
 
-    "internal")
+    "external_postgresql")
+
+        bashio::log.info "Using external postgresql"
+        bashio::log.info ""
+
+        # Settings parameters
+        export DB_USERNAME=$(bashio::config 'DB_USERNAME')
+        export DB_HOSTNAME=$(bashio::config 'DB_HOSTNAME')
+        export DB_PASSWORD=$(bashio::config 'DB_PASSWORD')
+        export DB_DATABASE_NAME=$(bashio::config 'DB_DATABASE_NAME')
+        export DB_PORT=$(bashio::config 'DB_PORT')
+        export JWT_SECRET=$(bashio::config 'JWT_SECRET')
+        ;;
+
+    **)
 
         bashio::log.info "Using internal postgresql"
         bashio::log.info ""
@@ -68,20 +82,6 @@ case $(bashio::config 'database') in
         export DB_PASSWORD=immich
         export DB_DATABASE_NAME=immich
         export DB_PORT=5432
-        export JWT_SECRET=$(bashio::config 'JWT_SECRET')
-        ;;
-
-    "external_postgresql")
-
-        bashio::log.info "Using external postgresql"
-        bashio::log.info ""
-
-        # Settings parameters
-        export DB_USERNAME=$(bashio::config 'DB_USERNAME')
-        export DB_HOSTNAME=$(bashio::config 'DB_HOSTNAME')
-        export DB_PASSWORD=$(bashio::config 'DB_PASSWORD')
-        export DB_DATABASE_NAME=$(bashio::config 'DB_DATABASE_NAME')
-        export DB_PORT=$(bashio::config 'DB_PORT')
         export JWT_SECRET=$(bashio::config 'JWT_SECRET')
         ;;
 
