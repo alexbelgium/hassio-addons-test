@@ -18,4 +18,4 @@ echo "... setting permissions"
 chown -R "$PUID":"$PGID" "$DATA_LOCATION"
 
 echo "... correcting official script"
-sed -i "s|/photos|$DATA_LOCATION|g" /docker_entrypoint.sh
+for file in $(grep -sril '/photos' /etc); do sed -i "s|/photos|$DATA_LOCATION|g" "$file"; done
