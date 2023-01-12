@@ -43,6 +43,17 @@ case $(bashio::config 'database') in
         bashio::log.info "Using external postgresql"
         bashio::log.info ""
 
+        # Check if values exist
+        if ! bashio::config.has_value 'DB_USERNAME' && \
+            ! bashio::config.has_value 'DB_HOSTNAME' && \
+            ! bashio::config.has_value 'DB_PASSWORD' && \
+            ! bashio::config.has_value 'DB_DATABASE_NAME' && \
+            ! bashio::config.has_value 'JWT_SECRET' && \
+            ! bashio::config.has_value 'DB_PORT'
+        then
+            ! bashio::exit.nok "Please make sure that the following options are set : DB_USERNAME, DB_HOSTNAME, DB_PASSWORD, DB_DATABASE_NAME, DB_PORT"
+        fi
+
         # Settings parameters
         export DB_USERNAME=$(bashio::config 'DB_USERNAME')
         export DB_HOSTNAME=$(bashio::config 'DB_HOSTNAME')
