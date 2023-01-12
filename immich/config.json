@@ -62,7 +62,7 @@
   },
   "panel_icon": "mdi:file-search",
   "ports": {
-    "8080/tcp": null
+    "8080/tcp": 8181
   },
   "ports_description": {
     "8080/tcp": "Web UI port"
