@@ -44,7 +44,8 @@
     "REDIS_HOSTNAME": "localhost",
     "REDIS_PORT": "6379"
   },
-  "image": "ghcr.io/alexbelgium/immich-{arch}",
+  "ingress": true,
+  "ingress_stream": true,
   "map": [
     "media:rw",
     "config:rw",
@@ -94,6 +95,5 @@
   },
   "slug": "immich",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.0",
-  "webui": "http://[HOST]:[PORT:8080]"
+  "version": "1.0"
 }
