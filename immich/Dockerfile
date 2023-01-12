@@ -31,8 +31,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 USER root
 
 # Install PostgreSQL
-ENV DEBIAN_FRONTEND=noninteractive \
-    PGUSER=postgres
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN \
     apt-get update && \
     apt-get install -y gnupg gnupg2 gnupg1 wget lsb-core && \
