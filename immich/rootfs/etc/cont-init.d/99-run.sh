@@ -68,15 +68,14 @@ case $(bashio::config 'database') in
         # Start postgresql
         /etc/init.d/postgresql start
 
-        # Log as postgres
-        su - postgres
-        psql -U postgres
-          CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'securepassword';
-          CREATE DATABASE immich;
-          CREATE USER immich WITH ENCRYPTED PASSWORD 'immich';
-          GRANT ALL PRIVILEGES ON DATABASE immich to immich;
-          \q
-        exit
+        # Create database
+        echo "CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'securepassword';
+             CREATE DATABASE immich; CREATE USER immich WITH ENCRYPTED PASSWORD 'immich';
+             GRANT ALL PRIVILEGES ON DATABASE immich to immich;
+            \q"> setup_postgres.sql            
+        chown postgres setup_postgres.sql
+        sudo -iu postgres psql < setup_postgres.sql
+        rm setup_postgres.sql
 
         # Settings parameters
         export DB_USERNAME=immich
