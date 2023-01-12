@@ -44,7 +44,7 @@
     "REDIS_HOSTNAME": "localhost",
     "REDIS_PORT": "6379"
   },
-  "image": "ghcr.io/alexbelgium/calibre-{arch}",
+  "image": "ghcr.io/alexbelgium/immich-{arch}",
   "map": [
     "media:rw",
     "config:rw",
