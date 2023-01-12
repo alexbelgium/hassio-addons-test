@@ -44,6 +44,7 @@
     "REDIS_HOSTNAME": "localhost",
     "REDIS_PORT": "6379"
   },
+  "image": "ghcr.io/alexbelgium/calibre-{arch}",
   "map": [
     "media:rw",
     "config:rw",
@@ -56,7 +57,7 @@
   "options": {
     "PGID": 1000,
     "PUID": 1000,
-    "JWT_SECRET": "JWT_SECRET",
+    "JWT_SECRET": "jt+OVWY6WqKJXw3xF5qOxN5L5/f4u2jlIlCQgWS3E4w=",
     "TZ": "Europe/Paris",
     "data_location": "/share/immich"
   },
