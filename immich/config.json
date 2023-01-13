@@ -93,7 +93,7 @@
     "DB_DATABASE_NAME": "str?",
     "JWT_SECRET": "str"
   },
-  "slug": "immich",
+  "slug": "immich_ingress",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.0"
 }
