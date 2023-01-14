@@ -80,11 +80,9 @@
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
-    "SMB mounts":{
-      "cifspassword": "str?",
-      "cifsusername": "str?",
-      "networkdisks": "str?"
-    },
+    "cifspassword": "str?",
+    "cifsusername": "str?",
+    "networkdisks": "str?",
     "database": "list(internal|external_postgresql)?",
     "data_location": "str",
     "localdisks": "str?",
