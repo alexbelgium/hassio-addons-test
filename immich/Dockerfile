@@ -34,6 +34,7 @@ USER root
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN \
+    # Install postgresql
     apt-get update && \
     apt-get install -y gnupg gnupg2 gnupg1 wget lsb-core && \
     sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
@@ -41,7 +42,9 @@ RUN \
     printf '#!/bin/sh\nexit 0' > /usr/sbin/policy-rc.d && \
     apt-get update -y && \
     apt-get install postgresql-14 libpq-dev postgresql-common -y && \
-    for file in $(grep -sril '/var/lib/postgresql/14/main' /etc); do sed -i "s=/var/lib/postgresql/14/main=/data/postgresql=g" "$file"; done
+    for file in $(grep -sril '/var/lib/postgresql/14/main' /etc); do sed -i "s=/var/lib/postgresql/14/main=/data/postgresql=g" "$file"; done && \
+    # Include ingress
+    sed -i "/http {/a include /etc/nginx/servers/*.conf;" /etc/nginx/nginx.conf
 
 ##################
 # 3 Install apps #

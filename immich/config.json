@@ -44,6 +44,8 @@
     "REDIS_HOSTNAME": "localhost",
     "REDIS_PORT": "6379"
   },
+  "ingress": true,
+  "ingress_stream": true,
   "map": [
     "media:rw",
     "config:rw",
@@ -80,20 +82,19 @@
     "TZ": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
+    "networkdisks": "str?",
     "database": "list(internal|external_postgresql)?",
     "data_location": "str",
     "localdisks": "str?",
-    "networkdisks": "str?",
     "DB_HOSTNAME": "str?",
     "DB_USERNAME": "str?",
     "DB_PORT": "int?",
     "DB_PASSWORD": "str?",
     "DB_DATABASE_NAME": "str?",
-    "UPLOAD_LOCATION": "str?",
+    "DISABLE_MACHINE_LEARNING": "bool?",
     "JWT_SECRET": "str"
   },
-  "slug": "immich",
+  "slug": "immich_ingress",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.3",
-  "webui": "http://[HOST]:[PORT:8080]"
+  "version": "1.0"
 }
