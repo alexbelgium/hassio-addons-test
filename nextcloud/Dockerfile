@@ -57,8 +57,10 @@ RUN \
     && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi
 
 RUN \
+    # Remove upstream files
+    rm -rf /etc/cont-init.d/10-adduser /etc/cont-init.d/30-keygen /etc/cont-init.d/40-config /etc/cont-init.d/50-install /etc/cont-init.d/60-memcache /etc/cont-init.d/70-aliases \
     # Correct ssl path
-    sed -i "s|/data/config/keys|/ssl/nextcloud/keys|g" /defaults/nginx/site-confs/default.conf.sample \
+    && sed -i "s|/data/config/keys|/ssl/nextcloud/keys|g" /defaults/nginx/site-confs/default.conf.sample \
     && sed -i "s|client_max_body_size 512M;|client_max_body_size 10240M;|g" /defaults/nginx/site-confs/default.conf.sample \
     \
     # Replace data
