@@ -1,9 +1,7 @@
 
 FROM forumi0721/alpine-nodejs:latest
 
-RUN \
-# Install git
-apk update && apk add -y git
+RUN apk update && apk add -y git
 RUN mkdir /src
 RUN git clone https://github.com/furier/websync \
     && mv furier/websync/* /src
