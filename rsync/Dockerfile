@@ -32,7 +32,8 @@ RUN \
     # Install php5-sqlite
     && apt-get install sqlite3 \
     # Download an empty elkarbackup sqlite file
-    cd /var/lib/elkarbackup \
+    && mkdir -p /var/lib/elkarbackup \
+    && cd /var/lib/elkarbackup \
     && wget https://raw.githubusercontent.com/xlight/elkarbackup-sqlite/master/elkarbackup-v2.1.sqlite -O elkarbackup.sqlite \
     # Create admin user
     && cd /usr/share/elkarbackup \
