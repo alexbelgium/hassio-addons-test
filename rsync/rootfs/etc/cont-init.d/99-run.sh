@@ -8,4 +8,4 @@
 exec nginx & bashio::log.info "Starting nginx..."
 
 bashio::log.info "Starting app..."
-./docker-entrypoint.sh
+/./docker-entrypoint.sh
