@@ -29,9 +29,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 RUN \
     mv /entrypoint.sh /docker-entrypoint.sh \
-    && https://raw.githubusercontent.com/xlight/elkarbackup-sqlite/master/elkarbackup-v2.1.sqlite \
     # Install php5-sqlite
-    && sudo apt-get install php5-sqlite \
+    && apt-get install sqlite3 \
     # Download an empty elkarbackup sqlite file
     cd /var/lib/elkarbackup \
     && wget https://raw.githubusercontent.com/xlight/elkarbackup-sqlite/master/elkarbackup-v2.1.sqlite -O elkarbackup.sqlite \
