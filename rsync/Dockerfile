@@ -38,7 +38,7 @@ RUN \
     && wget https://raw.githubusercontent.com/xlight/elkarbackup-sqlite/master/elkarbackup-v2.1.sqlite -O elkarbackup.sqlite \
     # Create admin user
     && cd /app/elkarbackup \
-    && php app/console elkarbackup:create_admin
+    && php bin/console elkarbackup:create_admin
 
 ENV \
     SYMFONY__DATABASE__DRIVER=pdo_sqlite \
