@@ -28,9 +28,10 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 RUN apk add --no-cache git \
-    && mkdir /src \
+    && mkdir -p /src \
     && git clone https://github.com/furier/websync \
-    && mv furier/websync/* /src \
+    && mv websync/* /src \
+    && rm -r websync \
     && cd /src; npm install
 
 ##################
