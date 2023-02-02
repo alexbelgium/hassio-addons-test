@@ -1,8 +1,8 @@
 {
     "build_from": {
-        "aarch64": "forumi0721/alpine-nodejs:latest",
-        "amd64": "forumi0721/alpine-nodejs:latest",
-        "armv7": "forumi0721/alpine-nodejs:latest"
+        "aarch64": "a00s/python-nodejs-aws:python3.9-nodejs16-aws2.2.30",
+        "amd64": "a00s/python-nodejs-aws:python3.9-nodejs16-aws2.2.30",
+        "armv7": "a00s/python-nodejs-aws:python3.9-nodejs16-aws2.2.30"
     },
     "codenotary": {
         "signer": "alexandrep.github@gmail.com"
