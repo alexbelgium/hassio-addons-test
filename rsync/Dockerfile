@@ -31,7 +31,7 @@ RUN \
     mv /entrypoint.sh /docker-entrypoint.sh \
     # Install php5-sqlite
     && apt-get update \
-    && apt-get install sqlite3 -yqq \
+    && apt-get install sqlite3 wget -yqq \
     # Download an empty elkarbackup sqlite file
     && mkdir -p /var/lib/elkarbackup \
     && cd /var/lib/elkarbackup \
