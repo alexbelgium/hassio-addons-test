@@ -52,7 +52,7 @@
     "share:rw",
     "ssl:rw"
   ],
-  "name": "Filebrowser",
+  "name": "Rsync",
   "panel_icon": "mdi:file-search",
   "ports": {
     "3000/tcp": null
