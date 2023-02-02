@@ -27,7 +27,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-RUN apk add --no-cache git \
+RUN apt-get update && apt-get install -yqq git \
     && mkdir -p /src \
     && git clone https://github.com/furier/websync \
     && mv websync/* /src \
