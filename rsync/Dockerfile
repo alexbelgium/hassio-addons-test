@@ -35,14 +35,14 @@ RUN \
     # Download an empty elkarbackup sqlite file
     && mkdir -p /var/lib/elkarbackup \
     && cd /var/lib/elkarbackup \
-    && wget https://raw.githubusercontent.com/xlight/elkarbackup-sqlite/master/elkarbackup-v2.1.sqlite -O elkarbackup.sqlite \
+    && wget https://raw.githubusercontent.com/xlight/elkarbackup-sqlite/master/elkarbackup-v2.1.sqlite -O /data/elkarbackup.sqlite \
     # Create admin user
-    && cd /usr/share/elkarbackup \
+    && cd /app/elkarbackup \
     && php app/console elkarbackup:create_admin
 
 ENV \
     SYMFONY__DATABASE__DRIVER=pdo_sqlite \
-    SYMFONY__DATABASE__PATH=/usr/share/elkarbackup/elkarbackup.sqlite
+    SYMFONY__DATABASE__PATH=/data/elkarbackup.sqlite
 
 ##################
 # 3 Install apps #
