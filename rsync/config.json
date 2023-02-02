@@ -55,10 +55,10 @@
   "name": "Rsync",
   "panel_icon": "mdi:file-search",
   "ports": {
-    "3000/tcp": null
+    "80/tcp": null
   },
   "ports_description": {
-    "3000/tcp": "Web UI port"
+    "80/tcp": "Web UI port"
   },
   "privileged": [
     "SYS_ADMIN",
