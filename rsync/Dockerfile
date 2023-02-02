@@ -35,7 +35,7 @@ RUN \
     # Download an empty elkarbackup sqlite file
     && mkdir -p /var/lib/elkarbackup \
     && cd /var/lib/elkarbackup \
-    && wget https://raw.githubusercontent.com/xlight/elkarbackup-sqlite/master/elkarbackup-v2.1.sqlite -O /data/elkarbackup.sqlite \
+    && wget https://raw.githubusercontent.com/xlight/elkarbackup-sqlite/master/elkarbackup-v2.1.sqlite -O elkarbackup.sqlite \
     # Create admin user
     && cd /app/elkarbackup \
     && php app/console elkarbackup:create_admin
