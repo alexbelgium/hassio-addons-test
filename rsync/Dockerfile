@@ -27,6 +27,10 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+ENV \
+    SYMFONY__DATABASE__DRIVER=pdo_sqlite \
+    SYMFONY__DATABASE__PATH=/data/elkarbackup.sqlite
+
 RUN \
     mv /entrypoint.sh /docker-entrypoint.sh \
     # Install php5-sqlite
@@ -39,10 +43,6 @@ RUN \
     # Create admin user
     && cd /app/elkarbackup \
     && php bin/console elkarbackup:create_admin
-
-ENV \
-    SYMFONY__DATABASE__DRIVER=pdo_sqlite \
-    SYMFONY__DATABASE__PATH=/data/elkarbackup.sqlite
 
 ##################
 # 3 Install apps #
