@@ -29,7 +29,12 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 ENV \
     SYMFONY__DATABASE__DRIVER=pdo_sqlite \
-    SYMFONY__DATABASE__PATH=/data/elkarbackup.sqlite
+    SYMFONY__DATABASE__PATH=/data/elkarbackup.sqlite \
+    SYMFONY__DATABASE__HOST=127.0.0.1 \
+    SYMFONY__DATABASE__NAME=symfony \
+    SYMFONY__DATABASE__PASSWORD=root \
+    SYMFONY__DATABASE__PORT=3667 \
+    SYMFONY__DATABASE__USER=root
 
 RUN \
     mv /entrypoint.sh /docker-entrypoint.sh \
