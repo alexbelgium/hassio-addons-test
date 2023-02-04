@@ -73,7 +73,7 @@ case $(bashio::config 'database') in
 
 esac
 
-for file in /etc/s6-overlay/s6-rc.d/svc-server/run /etc/s6-overlay/s6-rc.d/svc-web/run;
+for file in /etc/s6-overlay/s6-rc.d/svc-server/run /etc/s6-overlay/s6-rc.d/svc-web/run; do
 
   sed -i "1a export DB_USERNAME=$DB_USERNAME" "$file"
   sed -i "1a export DB_PASSWORD=$DB_PASSWORD" "$file"
