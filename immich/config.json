@@ -42,6 +42,7 @@
     "/dev/nvme2"
   ],
   "environment": {
+    "DOCKER_MODS": "imagegenius/mods:universal-redis",
     "REDIS_HOSTNAME": "localhost",
     "REDIS_PORT": "6379"
   },
