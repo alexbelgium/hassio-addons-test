@@ -2,33 +2,6 @@
 # shellcheck shell=bash
 # shellcheck disable=SC2155,SC2016
 
-###################################
-# Export all addon options as env #
-###################################
-
-bashio::log.info "Setting variables"
-
-# For all keys in options.json
-JSONSOURCE="/data/options.json"
-
-# Export keys as env variables
-# echo "All addon options were exported as variables"
-mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
-
-for KEYS in "${arr[@]}"; do
-    # export key
-    VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
-    line="${KEYS}='${VALUE//[\"\']/}'"
-    # text
-    if bashio::config.false "verbose" || [[ "${KEYS}" == *"PASS"* ]]; then
-        bashio::log.blue "${KEYS}=******"
-    else
-        bashio::log.blue "$line"
-    fi
-    # Use locally
-    export "${KEYS}=${VALUE//[\"\']/}"
-done
-
 ###################
 # Define database #
 ###################
