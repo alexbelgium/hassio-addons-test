@@ -46,6 +46,7 @@
     "REDIS_HOSTNAME": "localhost",
     "REDIS_PORT": "6379"
   },
+  "init": false,
   "map": [
     "media:rw",
     "config:rw",
