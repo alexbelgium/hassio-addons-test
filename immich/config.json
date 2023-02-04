@@ -18,6 +18,7 @@
     "/dev/nvme0n1p1",
     "/dev/nvme0n1p2",
     "/dev/mmcblk",
+    "/dev/fuse",
     "/dev/sda1",
     "/dev/sdb1",
     "/dev/sdc1",
@@ -44,8 +45,6 @@
     "REDIS_HOSTNAME": "localhost",
     "REDIS_PORT": "6379"
   },
-  "ingress": true,
-  "ingress_stream": true,
   "map": [
     "media:rw",
     "config:rw",
@@ -56,9 +55,9 @@
   ],
   "name": "Immich",
   "options": {
+    "JWT_SECRET": "jt+OVWY6WqKJXw3xF5qOxN5L5/f4u2jlIlCQgWS3E4w=",
     "PGID": 1000,
     "PUID": 1000,
-    "JWT_SECRET": "jt+OVWY6WqKJXw3xF5qOxN5L5/f4u2jlIlCQgWS3E4w=",
     "TZ": "Europe/Paris",
     "data_location": "/share/immich"
   },
@@ -73,28 +72,29 @@
     "SYS_ADMIN",
     "DAC_READ_SEARCH"
   ],
-  "services": [
-    "mysql:want"
-  ],
   "schema": {
+    "DB_DATABASE_NAME": "str?",
+    "DB_HOSTNAME": "str?",
+    "DB_PASSWORD": "str?",
+    "DB_PORT": "int?",
+    "DB_USERNAME": "str?",
+    "DISABLE_MACHINE_LEARNING": "bool?",
+    "JWT_SECRET": "str",
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
-    "networkdisks": "str?",
-    "database": "list(internal|external_postgresql)?",
     "data_location": "str",
+    "database": "list(internal|external_postgresql)?",
     "localdisks": "str?",
-    "DB_HOSTNAME": "str?",
-    "DB_USERNAME": "str?",
-    "DB_PORT": "int?",
-    "DB_PASSWORD": "str?",
-    "DB_DATABASE_NAME": "str?",
-    "DISABLE_MACHINE_LEARNING": "bool?",
-    "JWT_SECRET": "str"
+    "networkdisks": "str?"
   },
-  "slug": "immich_ingress",
+  "services": [
+    "mysql:want"
+  ],
+  "slug": "immich_test",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.0"
+  "version": "1.4",
+  "webui": "http://[HOST]:[PORT:8080]"
 }

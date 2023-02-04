@@ -16,7 +16,7 @@
 
 ARG BUILD_VERSION
 ARG BUILD_FROM
-ARG BUILD_UPSTREAM="1.0"
+ARG BUILD_UPSTREAM="1.45.0"
 FROM ${BUILD_FROM}
 
 ##################
@@ -33,18 +33,19 @@ USER root
 # Install PostgreSQL
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# hadolint ignore=SC2013,DL3015
 RUN \
-    # Install postgresql
     apt-get update && \
     apt-get install -y gnupg gnupg2 gnupg1 wget lsb-core && \
     sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
-    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+    curl -s -S https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
     printf '#!/bin/sh\nexit 0' > /usr/sbin/policy-rc.d && \
     apt-get update -y && \
     apt-get install postgresql-14 libpq-dev postgresql-common -y && \
-    for file in $(grep -sril '/var/lib/postgresql/14/main' /etc); do sed -i "s=/var/lib/postgresql/14/main=/data/postgresql=g" "$file"; done && \
-    # Include ingress
-    sed -i "/http {/a include /etc/nginx/servers/*.conf;" /etc/nginx/nginx.conf
+    for file in $(grep -sril '/var/lib/postgresql/14/main' /etc); do sed -i "s=/var/lib/postgresql/14/main=/data/postgresql=g" "$file"; done
 
 ##################
 # 3 Install apps #

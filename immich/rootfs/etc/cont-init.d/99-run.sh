@@ -83,8 +83,9 @@ case $(bashio::config 'database') in
         echo "CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'securepassword';
              CREATE DATABASE immich; CREATE USER immich WITH ENCRYPTED PASSWORD 'immich';
              GRANT ALL PRIVILEGES ON DATABASE immich to immich;
-            \q"> setup_postgres.sql            
+        \q"> setup_postgres.sql
         chown postgres setup_postgres.sql
+        # shellcheck disable=SC2024
         sudo -iu postgres psql < setup_postgres.sql
         rm setup_postgres.sql
 
