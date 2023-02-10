@@ -1,0 +1,14 @@
+#!/bin/bash
+echo "Starting..."
+
+if [ -d /etc/services.d ]; then
+    for SCRIPTS in /etc/services.d/*; do
+        [ -e "$SCRIPTS"/run ] || continue
+        echo "$SCRIPTS/run: executing"
+        chown "$(id -u)":"$(id -g)" "$SCRIPTS"/run
+        chmod a+x "$SCRIPTS"/run
+        # Change shebang if no s6 supervision
+        sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' "$SCRIPTS"
+        exec s6-setuidgid abc "$SCRIPTS"/run || echo "$SCRIPTS/run: exiting $?"
+    done
+fi
