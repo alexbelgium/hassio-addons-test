@@ -12,6 +12,3 @@ chmod 755 -R "$datadirectory"
 chmod 755 -R /data/config
 chown -R "$PUID:$PGID" "$datadirectory"
 chown -R "$PUID:$PGID" "/data/config"
-
-
-    "data_directory": "/share/nextcloud",
