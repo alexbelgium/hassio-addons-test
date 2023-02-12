@@ -60,7 +60,6 @@
     "PUID": 1000,
     "additional_apps": "inotify-tools",
     "certfile": "fullchain.pem",
-    "data_directory": "/share/nextcloud",
     "elasticsearch_server": "<ip:port>",
     "keyfile": "privkey.pem",
     "trusted_domains": "your-domain, your-domain2",
@@ -90,7 +89,6 @@
     "certfile": "str",
     "cifspassword": "str?",
     "cifsusername": "str?",
-    "data_directory": "str",
     "elasticsearch_server": "str?",
     "keyfile": "str",
     "localdisks": "str?",
@@ -104,6 +102,6 @@
   "slug": "nextcloud_ocr",
   "uart": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/nextcloud",
-  "version": "25.0.0-11",
+  "version": "25.0.3",
   "webui": "https://[HOST]:[PORT:443]"
 }
