@@ -68,6 +68,12 @@ RUN \
     # Replace lsiown if not found
     && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi
 
+# Correct modifications
+ARG CONFIGLOCATION="/www/nextcloud/config"
+# hadolint ignore=SC2015, SC2013, SC2086
+RUN \
+    for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done
+
 ##################
 # 3 Install apps #
 ##################
