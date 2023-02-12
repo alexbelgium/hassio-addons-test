@@ -1,6 +1,10 @@
 #!/bin/bash
 echo "Starting..."
 
+echo "list"
+le /etc/s6-rc/compiled
+
+echo "scripts"
 for SCRIPTS in /etc/cont-init.d/*; do
     [ -e "$SCRIPTS" ] || continue
     echo "$SCRIPTS: executing"
