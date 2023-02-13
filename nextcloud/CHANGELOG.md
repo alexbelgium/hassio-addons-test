@@ -1,5 +1,6 @@
 ## 25.0.3 (12-02-2023)
 
+- WARNING! : this is a major code update. Make sure to have a full update of /config, /share and your nextcloud addon before updating. I take no responsibility for lost data!
 - Update to latest version from linuxserver/docker-nextcloud
 - WARNING : update to supervisor 2022.11 before installing
 

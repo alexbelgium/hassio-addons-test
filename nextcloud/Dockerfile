@@ -29,10 +29,9 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
-
 # Specific modifications
 ARG CONFIGLOCATION="/share/nextcloud"
+# hadolint ignore=SC2015
 RUN \
     # Change default data location
     for file in $(grep -Esril "/data" /etc /defaults); do sed -Ei "s=(/data)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
