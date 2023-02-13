@@ -14,7 +14,7 @@ sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%ingress_entry%%|${ingress_entry}|g" /etc/nginx/servers/ingress.conf
 
 # Move file
-mv /etc/nginx/servers/ingress.conf /data/config/nginx/site-confs/
+mv /etc/nginx/servers/ingress.conf /data/config/nginx/site-confs/ingress.conf
 
 # Correct nginx.conf
 if [ -f /data/config/nginx/nginx.conf ]; then
