@@ -31,3 +31,6 @@ if [ -f /defaults/nginx.conf ]; then
     sed -i "/env HASSIO_TOKEN/d" /data/config/nginx/nginx.conf
     sed -i "1a env HASSIO_TOKEN;" /defaults/nginx.conf
 fi
+
+# Allow manifest.json
+grep -rl 'rel="manifest"' /data | xargs sed -i 's|rel="manifest"|rel="manifest" crossorigin="use-credentials"|g'
