@@ -22,3 +22,10 @@ if [ -f /data/config/nginx/nginx.conf ]; then
     sed -i "s|pid /run/nginx.pid|pid /var/run/nginx.pid|g" /data/config/nginx/nginx.conf
     sed -i "1a env HASSIO_TOKEN;" /data/config/nginx/nginx.conf
 fi
+
+# Correct nginx.conf
+if [ -f /defaults/nginx.conf ]; then
+    sed -i "s|error_log /config/log/nginx/error.log|error_log /proc/1/fd/1 error|g" /defaults/nginx.conf
+    sed -i "s|pid /run/nginx.pid|pid /var/run/nginx.pid|g" /defaults/nginx.conf
+    sed -i "1a env HASSIO_TOKEN;" /defaults/nginx.conf
+fi
