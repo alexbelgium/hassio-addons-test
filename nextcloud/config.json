@@ -47,6 +47,7 @@
   },
   "hassio_api": true,
   "ingress": true,
+  "ingress_entry": "index.php",
   "ingress_stream": true,
   "init": false,
   "map": [
