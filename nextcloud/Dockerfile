@@ -34,9 +34,7 @@ ARG CONFIGLOCATION="/share/nextcloud"
 # hadolint ignore=SC2015
 RUN \
     # Change default data location
-    for file in $(grep -Esril "/data" /etc /defaults); do sed -Ei "s=(/data)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
-    \
-    sed -i "1a include /etc/nginx/servers/*.conf;" /etc/nginx/nginx.conf
+    for file in $(grep -Esril "/data" /etc /defaults); do sed -Ei "s=(/data)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
