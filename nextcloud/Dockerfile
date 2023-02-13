@@ -36,11 +36,7 @@ RUN \
     # Change default data location
     for file in $(grep -Esril "/data" /etc /defaults); do sed -Ei "s=(/data)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
     \
-    # modify data limits file
-    sed -i \
-    -e 's/upload_max_fileize=1024M/upload_max_fileize=10240M/g' \
-    -e 's/post_max_size=1024M/post_max_size=10240M/g' \
-    /etc/php*/php.ini || true
+    sed -i "1a include /etc/nginx/servers/*.conf;" /etc/nginx/nginx.conf
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
