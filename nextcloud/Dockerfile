@@ -35,6 +35,7 @@ ARG CONFIGLOCATION="/share/nextcloud"
 RUN \
     # Change default data location
     for file in $(grep -Esril "/data" /etc /defaults); do sed -Ei "s=(/data)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
+    sed -i "s|user abc|user root|g" /defaults/nginx/nginx.conf.sample && \
     sed -i "s|error_log /config/log/nginx/error.log|error_log /proc/1/fd/1 error|g" /defaults/nginx/nginx.conf.sample && \
     sed -i "s|pid /run/nginx.pid|pid /var/run/nginx.pid|g" /defaults/nginx/nginx.conf.sample && \
     sed -i "1a env HASSIO_TOKEN;" /defaults/nginx/nginx.conf.sample
