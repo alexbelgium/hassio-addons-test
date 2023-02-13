@@ -33,4 +33,4 @@ if [ -f /defaults/nginx.conf ]; then
 fi
 
 # Allow manifest.json
-grep -rl 'rel="manifest"' /data | xargs sed -i 's|rel="manifest"|rel="manifest" crossorigin="use-credentials"|g'
+grep -rl 'rel="manifest"' /data | xargs sed -i 's|rel="manifest"|rel="manifest" crossorigin="use-credentials"|g' || true
