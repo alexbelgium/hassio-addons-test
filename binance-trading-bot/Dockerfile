@@ -49,6 +49,13 @@ RUN \
     && pip install -r requirements.txt \
     && rm requirements.txt
 
+# Installing mongodb
+RUN \
+    echo 'http://dl-cdn.alpinelinux.org/alpine/v3.9/main' >> /etc/apk/repositories \
+    && echo 'http://dl-cdn.alpinelinux.org/alpine/v3.9/community' >> /etc/apk/repositories \
+    && apk add mongodb mongodb-tools --no-cache >/dev/null \
+    && sed -i "/v3.9/d" /etc/apk/repositories
+
 # Modules
 ARG MODULES="00-banner.sh 01-custom_script.sh 92-local_mounts.sh 92-smb_mounts.sh"
 

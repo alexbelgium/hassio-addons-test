@@ -9,6 +9,7 @@ exec redis-server & bashio::log.info "Starting redis"
 ####################
 # Starting mongodb #
 ####################
+mkdir -p /data/db
 exec mongod & bashio::log.info "Starting mongod"
 
 ################
@@ -21,5 +22,5 @@ npm start /./docker-entrypoint.sh & bashio::log.info "Starting binance bot"
 # Starting Trading View #
 #########################
 bashio::log.info "Starting trading view"
-cd /app || true
+curl -o /srv/main.py https://raw.githubusercontent.com/chrisleekr/binance-trading-bot/master/tradingview/main.py
 python main.py || python3 main.py
