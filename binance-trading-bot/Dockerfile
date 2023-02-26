@@ -60,7 +60,7 @@ RUN \
     && sed -i "/v3.9/d" /etc/apk/repositories
 
 # Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh 90-config_yaml.sh"
+ARG MODULES="00-banner.sh 01-custom_script.sh 00-global_var.sh"
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
