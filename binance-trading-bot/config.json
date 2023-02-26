@@ -54,7 +54,7 @@
   "name": "binance-trading-bot",
   "options": {
     "BINANCE_MODE": "test",
-    "BINANCE_SLACK_ENABLED": false,
+    "BINANCE_SLACK_ENABLED": false
   },
   "ports": {
     "8080/tcp": 8081,
