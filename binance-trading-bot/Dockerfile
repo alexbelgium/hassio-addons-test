@@ -44,8 +44,8 @@ RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
 ENV FLASK_APP=main.py
 ENV FLASK_ENV=production
 RUN \
-    apk add --no-cache --quiet python3 py3-pip \
-    && curl https://raw.githubusercontent.com/chrisleekr/binance-trading-bot/master/tradingview/requirements.txt > requirements.txt \
+    apk add --no-cache --quiet python3 py3-pip curl \
+    && curl -o requirements.txt https://raw.githubusercontent.com/chrisleekr/binance-trading-bot/master/tradingview/requirements.txt \
     && pip install -r requirements.txt \
     && rm requirements.txt
 
