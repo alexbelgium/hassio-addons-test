@@ -1,6 +1,10 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
 
+##############
+# Export env #
+##############
+
 ##################
 # Starting redis #
 ##################
