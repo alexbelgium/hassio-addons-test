@@ -49,7 +49,7 @@
     "TRADINGVIEW_LOG_LEVEL": "INFO"
   },
   "map": [
-    "config:rw",
+    "config:rw"
   ],
   "name": "binance-trading-bot",
   "options": {
