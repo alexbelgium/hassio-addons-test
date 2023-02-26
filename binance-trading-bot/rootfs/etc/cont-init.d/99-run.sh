@@ -30,4 +30,4 @@ python main.py & bashio::log.info "Starting trading view"
 ##################
 # Starting nginx #
 ##################
-nginx & bashio::log.info "Starting ingress"
+nginx
