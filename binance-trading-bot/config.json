@@ -59,12 +59,12 @@
     "BINANCE_AUTHENTICATION_PASSWORD": null
   },
   "ports": {
-    "8080/tcp": 8081,
-    "8082/tcp": 8082
+    "80/tcp": 8081,
+    "8080/tcp": 8082
   },
   "ports_description": {
-    "8080/tcp": "Bot port",
-    "8082/tcp": "Web UI port"
+    "80/tcp": "Bot port",
+    "8080/tcp": "Web UI port"
   },
   "privileged": [
     "SYS_ADMIN",
@@ -87,5 +87,6 @@
   },
   "slug": "binance-trading-bot",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.23.0-5"
+  "version": "2.23.0-5",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
