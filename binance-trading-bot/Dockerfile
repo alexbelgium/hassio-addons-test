@@ -40,6 +40,15 @@ RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
     if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi
 
+# Install trading view
+ENV FLASK_APP=main.py
+ENV FLASK_ENV=production
+RUN \
+    apk add --no-cache --quiet python3 py3-pip \
+    && curl https://raw.githubusercontent.com/chrisleekr/binance-trading-bot/master/tradingview/requirements.txt > requirements.txt \
+    && pip install -r requirements.txt \
+    && rm requirements.txt
+
 # Modules
 ARG MODULES="00-banner.sh 01-custom_script.sh 92-local_mounts.sh 92-smb_mounts.sh"
 
@@ -52,7 +61,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && chmod -R 755 /etc/cont-init.d
 
 # Manual apps
-ENV PACKAGES="sudo redis python3"
+ENV PACKAGES="sudo redis"
 
 # Automatic apps & bashio
 # hadolint ignore=SC2015

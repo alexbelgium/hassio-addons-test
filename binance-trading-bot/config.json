@@ -54,7 +54,9 @@
   "name": "binance-trading-bot",
   "options": {
     "BINANCE_MODE": "test",
-    "BINANCE_SLACK_ENABLED": false
+    "BINANCE_SLACK_ENABLED": false,
+    "BINANCE_AUTHENTICATION_ENABLED": true,
+    "BINANCE_AUTHENTICATION_PASSWORD": null
   },
   "ports": {
     "8080/tcp": 8081,
@@ -70,8 +72,8 @@
   ],
   "schema": {
     "BINANCE_MODE": "list(live|test)",
-    "BINANCE_LIVE_API_KEY": "str",
-    "BINANCE_LIVE_SECRET_KEY": "str",
+    "BINANCE_LIVE_API_KEY": "str?",
+    "BINANCE_LIVE_SECRET_KEY": "str?",
     "BINANCE_TEST_API_KEY": "str?",
     "BINANCE_TEST_SECRET_KEY": "str?",
     "BINANCE_SLACK_ENABLED": "bool?",
