@@ -52,7 +52,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && chmod -R 755 /etc/cont-init.d
 
 # Manual apps
-ENV PACKAGES="sudo redis-server python3"
+ENV PACKAGES="sudo redis python3"
 
 # Automatic apps & bashio
 # hadolint ignore=SC2015

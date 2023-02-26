@@ -53,7 +53,8 @@
   ],
   "name": "binance-trading-bot",
   "options": {
-    "BINANCE_MODE": "test"
+    "BINANCE_MODE": "test",
+    "BINANCE_SLACK_ENABLED": false,
   },
   "ports": {
     "8080/tcp": 8081,
@@ -68,7 +69,19 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "BINANCE_MODE": "list(live|test)"
+    "BINANCE_MODE": "list(live|test)",
+    "BINANCE_LIVE_API_KEY": "str",
+    "BINANCE_LIVE_SECRET_KEY": "str",
+    "BINANCE_TEST_API_KEY": "str?",
+    "BINANCE_TEST_SECRET_KEY": "str?",
+    "BINANCE_SLACK_ENABLED": "bool?",
+    "BINANCE_SLACK_WEBHOOK_URL": "str?",
+    "BINANCE_SLACK_CHANNEL": "str?",
+    "BINANCE_SLACK_USERNAME": "str?",
+    "BINANCE_LOCAL_TUNNEL_ENABLED": "bool?",
+    "BINANCE_LOCAL_TUNNEL_SUBDOMAIN": "str?",
+    "BINANCE_AUTHENTICATION_ENABLED": "bool",
+    "BINANCE_AUTHENTICATION_PASSWORD": "str"
   },
   "slug": "binance-trading-bot",
   "url": "https://github.com/alexbelgium/hassio-addons",
