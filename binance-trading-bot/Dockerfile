@@ -47,7 +47,8 @@ RUN \
     apk add --no-cache --quiet python3 py3-pip curl \
     && curl -o requirements.txt https://raw.githubusercontent.com/chrisleekr/binance-trading-bot/master/tradingview/requirements.txt \
     && pip install -r requirements.txt \
-    && rm requirements.txt
+    && rm requirements.txt \
+    && curl -o /srv/main.py https://raw.githubusercontent.com/chrisleekr/binance-trading-bot/master/tradingview/main.py
 
 # Installing mongodb
 ENV ME_CONFIG_MONGODB_SERVER=localhost \

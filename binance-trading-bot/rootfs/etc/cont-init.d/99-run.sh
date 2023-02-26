@@ -20,11 +20,10 @@ exec mongod --bind_ip 127.0.0.1 & bashio::log.info "Starting mongod"
 # Starting app #
 ################
 cd /srv || true
-npm start /./docker-entrypoint.sh & bashio::log.info "Starting binance bot"
+npm start docker-entrypoint.sh & bashio::log.info "Starting binance bot"
 
 #########################
 # Starting Trading View #
 #########################
 bashio::log.info "Starting trading view"
-curl -o /srv/main.py https://raw.githubusercontent.com/chrisleekr/binance-trading-bot/master/tradingview/main.py
-python main.py || python3 main.py
+python main.py
