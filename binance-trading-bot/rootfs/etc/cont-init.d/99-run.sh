@@ -10,7 +10,7 @@ exec redis-server & bashio::log.info "Starting redis"
 # Starting mongodb #
 ####################
 mkdir -p /data/db
-exec mongod & bashio::log.info "Starting mongod"
+exec mongod --bind_ip 127.0.0.1 & bashio::log.info "Starting mongod"
 
 ################
 # Starting app #
