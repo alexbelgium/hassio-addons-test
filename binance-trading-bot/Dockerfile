@@ -50,6 +50,7 @@ RUN \
     && rm requirements.txt
 
 # Installing mongodb
+ENV ME_CONFIG_MONGODB_SERVER=localhost
 RUN \
     echo 'http://dl-cdn.alpinelinux.org/alpine/v3.9/main' >> /etc/apk/repositories \
     && echo 'http://dl-cdn.alpinelinux.org/alpine/v3.9/community' >> /etc/apk/repositories \
