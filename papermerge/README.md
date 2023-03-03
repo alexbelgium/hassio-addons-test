@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] Switch to papermerge:papermerge (opened 2023-02-19)](https://github.com/alexbelgium/hassio-addons/issues/720) by [@kolossboss](https://github.com/kolossboss)
+
 # Home assistant add-on: Papermerge
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -14,7 +15,6 @@
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
-
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
@@ -39,7 +39,10 @@ comparison to installing any other Hass.io add-on.
 
 Webui can be found at `<your-ip>:8000`.
 
-Default name `admin` password `admin`
+Credentials are:
+
+- username: admin
+- password: admin
 
 Options can be configured through two ways :
 

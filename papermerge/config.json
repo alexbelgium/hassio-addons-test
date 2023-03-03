@@ -15,6 +15,8 @@
   "name": "Papermerge",
   "options": {
     "CONFIG_LOCATION": "/config/addons_config/papermerge",
+    "PAPERMERGE__MAIN__SECRET_KEY": "please_change",
+    "DJANGO_SUPERUSER_PASSWORD": "admin",
     "PGID": 0,
     "PUID": 0,
     "import_dir": "/share/papermerge/import",
@@ -32,6 +34,8 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
+    "PAPERMERGE__MAIN__SECRET_KEY": "str",
+    "DJANGO_SUPERUSER_PASSWORD": "str",
     "CONFIG_LOCATION": "str",
     "PGID": "int",
     "PUID": "int",

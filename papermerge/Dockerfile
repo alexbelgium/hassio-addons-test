@@ -28,14 +28,14 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Image specific
-RUN \
-    # Change config path
-    sed -i 's|papermerge/config|papermerge/confi|g' /etc/cont-init.d/* \
-    && sed -i 's|/config|/data/config|g' /etc/cont-init.d/* \
-    && sed -i 's|papermerge/confi|papermerge/config|g' /etc/cont-init.d/*
+#RUN \
+#    # Change config path
+#    sed -i 's|papermerge/config|papermerge/confi|g' /etc/cont-init.d/* \
+#    && sed -i 's|/config|/data/config|g' /etc/cont-init.d/* \
+#    && sed -i 's|papermerge/confi|papermerge/config|g' /etc/cont-init.d/*
 
 # Global LSIO modifications
-ARG CONFIGLOCATION="/config"
+#ARG CONFIGLOCATION="/config"
 # hadolint ignore=SC2015, SC2013, SC2086
 RUN \
     # Avoid custom-init.d duplications
@@ -72,7 +72,7 @@ RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi
 
 # Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh 92-smb_mounts.sh"
+ARG MODULES="00-banner.sh 00-global_var.sh 01-custom_script.sh 92-smb_mounts.sh"
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
