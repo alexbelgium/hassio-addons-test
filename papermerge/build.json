@@ -1,0 +1,9 @@
+{
+  "build_from": {
+    "aarch64": "papermerge/papermerge:latest",
+    "amd64": "papermerge/papermerge:latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}
