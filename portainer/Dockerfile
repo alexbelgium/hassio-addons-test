@@ -131,7 +131,7 @@ LABEL \
 #################
 
 ENV HEALTH_PORT="9000"
-ENV HEALTH_URL="/system/status"
+ENV HEALTH_URL="/api/system/status"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
