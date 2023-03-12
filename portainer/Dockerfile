@@ -130,7 +130,6 @@ LABEL \
 # 6 Healthcheck #
 #################
 
-ARG HEALTH_TEST="aaa"
 ENV HEALTH_PORT="9000"
 ENV HEALTH_URL="/api/system/status"
 HEALTHCHECK \
@@ -138,4 +137,4 @@ HEALTHCHECK \
     --retries=5 \
     --start-period=30s \
     --timeout=25s \
-    CMD echo "curl --fail http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL} and $HEALTH_TEST and ${HEALTH_TEST}" >/proc/1/fd/1 && curl --fail http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL} || exit 1
+    CMD curl --fail "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1
