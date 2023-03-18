@@ -48,7 +48,6 @@
     "BASE_DOCKER_DATA_PATH": "/data/autobrr"
   },
   "ingress": "true",
-  "ingress_entry": "hassioautobrr",
   "init": false,
   "map": [
     "config:rw",
