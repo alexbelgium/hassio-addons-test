@@ -13,8 +13,8 @@
 #  bashio::addon.restart
 #fi
 
-#bashio::log.info "Starting NGinx..."
-#nginx & true
+bashio::log.info "Starting NGinx..."
+nginx & true
 
 #############
 # Start app #
