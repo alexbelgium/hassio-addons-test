@@ -1,13 +1,11 @@
 #!/usr/bin/bashio
 # shellcheck shell=bash
 
-##################
-# ADAPT SETTINGS #
-##################
-
-#sed -i "/SECURE_CROSS_ORIGIN_OPENER_POLICY/d" /opt/recipes/recipes/settings.py
-#sed -i "/CsrfViewMiddleware/d" /opt/recipes/recipes/settings.py
-#sed -i "/CROS_ORIGIN_ALLOW_ALL/a SECURE_CROSS_ORIGIN_OPENER_POLICY = None" /opt/recipes/recipes/settings.py
+if [[ -n "${DISABLE_INGRESS}" ]]; then
+    bashio::log.info "Ingress disabled"
+    sed -i "/nginx/d" /etc/cont-init.d/99-run.sh
+    exit 0
+fi
 
 #################
 # NGINX SETTING #
@@ -21,5 +19,3 @@ ingress_entry=$(bashio::addon.ingress_entry)
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%ingress_entry%%|${ingress_entry}|g" /etc/nginx/servers/ingress.conf
-
-#sed -i "1a export SCRIPT_NAME=${ingress_entry}" /etc/cont-init.d/99-run.sh

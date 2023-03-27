@@ -9,6 +9,7 @@
   "environment": {
     "DB_ENGINE": "django.db.backends.sqlite3",
     "DEBUG": "1",
+    "DISABLE_INGRESS": "true",
     "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db",
     "TRUSTED_PROXIES": "**"
   },
@@ -18,6 +19,7 @@
   ],
   "name": "Tandoor recipes",
   "options": {
+    "ALLOWED_HOSTS": "",
     "DB_TYPE": "sqlite",
     "SECRET_KEY": "YOUR_SECRET_KEY"
   },
@@ -31,7 +33,7 @@
   },
   "schema": {
     "ALLOWED_HOSTS": "str?",
-    "DB_TYPE": "list(sqlite|postgresql_external|mariadb_addon)",
+    "DB_TYPE": "list(sqlite|postgresql_external)",
     "POSTGRES_DB": "str?",
     "POSTGRES_HOST": "str?",
     "POSTGRES_PASSWORD": "str?",
@@ -44,5 +46,5 @@
   ],
   "slug": "tandoor_recipes_test",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.4.3"
+  "version": "test"
 }

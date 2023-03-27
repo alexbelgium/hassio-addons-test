@@ -24,8 +24,6 @@ export ALLOWED_HOSTS="*"
 
 #sed -i "s|href=\"{% base_path request \'base\' %}\"|href=\"{% base_path request \'base\' %}/\"|g" /opt/recipes/cookbook/templates/base.html
 
-
-
 ###################
 # Define database #
 ###################
@@ -78,9 +76,9 @@ case $(bashio::config 'DB_TYPE') in
         bashio::log.info "Creating database if required"
 
         mysql \
-          -u "${POSTGRES_USER}" -p"${POSTGRES_PASSWORD}" \
-          -h "${POSTGRES_HOST}" -P "${POSTGRES_PORT}" \
-          -e "CREATE DATABASE IF NOT EXISTS \`${POSTGRES_DB}\` ;"
+            -u "${POSTGRES_USER}" -p"${POSTGRES_PASSWORD}" \
+            -h "${POSTGRES_HOST}" -P "${POSTGRES_PORT}" \
+            -e "CREATE DATABASE IF NOT EXISTS \`${POSTGRES_DB}\` ;"
         ;;
 
     postgresql_external)
