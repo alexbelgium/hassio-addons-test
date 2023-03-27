@@ -1,6 +1,9 @@
 #!/usr/bin/bashio
 # shellcheck shell=bash
 
+sed -i -e "/SECURE_CROSS_ORIGIN_OPENER_POLICY/d" \
+    -e "1a SECURE_CROSS_ORIGIN_OPENER_POLICY = None" /opt/recipes/recipes/settings.py
+
 #################
 # NGINX SETTING #
 #################
