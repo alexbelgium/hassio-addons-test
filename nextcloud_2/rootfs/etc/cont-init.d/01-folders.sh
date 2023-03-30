@@ -5,8 +5,8 @@ PUID=$(bashio::config "PUID")
 PGID=$(bashio::config "PGID")
 
 # Check current version
-if [ -f /data/config/www/nextcloud/version.php ]; then
-    datadirectory="$(sed -n "s|.*\datadirectory = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/version.php)"
+if [ -f /data/config/www/nextcloud/config/config.php ]; then
+    datadirectory="$(sed -n "s|.*datadirectory' => '*\(.*[^ ]\) *',.*|\1|p" /data/config/www/nextcloud/config/config.php)"
 else
     datadirectory=/share/nextcloud
 fi
