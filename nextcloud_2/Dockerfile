@@ -43,8 +43,8 @@ RUN \
     /etc/php*/php.ini || true && \
     \
     # Change location of executable
-    sed -i "s|/config|/data/config|g" /usr/bin/occ && \
-    sed -i "s|/config|/data/config|g" /usr/bin/updater.phar && \
+    sed -i "s|/config|/data/config|g" /usr/bin/occ || true && \
+    sed -i "s|/config|/data/config|g" /usr/bin/updater.phar || true && \
     \
     # Change location of log
     sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root && \
