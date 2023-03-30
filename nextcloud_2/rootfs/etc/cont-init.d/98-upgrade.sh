@@ -20,14 +20,14 @@ function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4
 # Updater code
 if ! bashio::config.true "disable_updates"; then
     bashio::log.green "Auto_updater set, checking for updates"
-    updater.phar --no-interaction
-    occ upgrade
+    sudo -u abc -s /bin/bash -c "php /config/www/nextcloud/updater/updater.phar --no-interaction"
+    sudo -u abc -s /bin/bash -c "php /config/www/nextcloud/occ upgrade"
     while [[ $(occ update:check 2>&1) == *"update available"* ]]; do
         bashio::log.yellow "-----------------------------------------------------------------------"
         bashio::log.yellow "  new version available, updating. Please do not turn off your addon!  "
         bashio::log.yellow "-----------------------------------------------------------------------"
-        updater.phar --no-interaction
-        occ upgrade
+        sudo -u abc -s /bin/bash -c "php /config/www/nextcloud/updater/updater.phar --no-interaction"
+        sudo -u abc -s /bin/bash -c "php /config/www/nextcloud/occ upgrade"
     done
 elif bashio::config.true "disable_updates" && [ "$(version "$CONTAINERVERSION")" -gt "$(version "$CURRENTVERSION")" ]; then
     bashio::log.yellow " "
