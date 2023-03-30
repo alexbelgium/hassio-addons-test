@@ -11,12 +11,16 @@ else
     datadirectory=/share/nextcloud
 fi
 
-echo "Checking permissions"
+echo "Updating permissions..."
+echo "... Config directory : /data"
 mkdir -p /data/config
+chmod 755 -R /data/config
+chown -R "$PUID:$PGID" "/data/config"
+
+echo "... Data directory detected : $datadirectory"
 mkdir -p "$datadirectory"
 chmod 755 -R "$datadirectory"
-chmod 755 -R /data/config
 chown -R "$PUID:$PGID" "$datadirectory"
-chown -R "$PUID:$PGID" "/data/config"
+
 echo "...done"
 echo " "
