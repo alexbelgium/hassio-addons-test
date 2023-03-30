@@ -62,23 +62,31 @@ if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]] || [ ! -f /data/config/www/ne
     exit 0
     # Is there an error
 elif [[ $($LAUNCHER -V 2>&1) == *"Composer autoloader not found"* ]]; then
-    bashio::log.red "--------------------------------------------------------"
-    bashio::log.red "Issue in installation detected, Nextcloud will reinstall"
-    bashio::log.red "--------------------------------------------------------"
+    bashio::log.red "--------------------------------------------------"
+    bashio::log.red " Missing files detected, Nextcloud will reinstall "
+    bashio::log.red "--------------------------------------------------"
     touch /reinstall
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
 elif [[ $($LAUNCHER -V 2>&1) == *"Nextcloud"* ]] || grep -q "/mnt/" /data/config/www/nextcloud/config/config.php &>/dev/null; then
     # Log
-    bashio::log.green "--------------------------------------"
-    bashio::log.green "Nextcloud $CURRENTVERSION is installed"
-    bashio::log.green "--------------------------------------"
+    bashio::log.green "----------------------------------------"
+    bashio::log.green " Nextcloud $CURRENTVERSION is installed "
+    bashio::log.green "----------------------------------------"
 elif ! grep -q "/mnt/" /data/config/www/nextcloud/config/config.php; then
-    bashio::log.red "------------------------------------------------------------------"
-    bashio::log.red "Unknown error detected, please create issue in github or reinstall"
-    bashio::log.red "------------------------------------------------------------------"
+    bashio::log.red "-------------------------------------------------"
+    bashio::log.red " Unknown error detected, auto-repair will launch "
+    bashio::log.red "-------------------------------------------------"
     bashio::log.red "Error message:"
     bashio::log.red "$($LAUNCHER -V 2>&1)"
     bashio::log.red "------------------------------------------------------------------"
     bashio::exit.nok
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
 fi
 
 echo " "
@@ -102,9 +110,12 @@ if [ -f /reinstall ]; then
     # Reinstall
     bashio::log.green "... reinstall ongoing, please wait"
     if [ -f /data/config/www/nextcloud/index.php ]; then rm /data/config/www/nextcloud/index.php; fi && \
-        /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
-        occ upgrade &>/proc/1/fd/1 || true
-
+    # INSTALL
+    /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
     # RESET PERMISSIONS
     /./etc/cont-init.d/01-folders.sh
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
 fi
