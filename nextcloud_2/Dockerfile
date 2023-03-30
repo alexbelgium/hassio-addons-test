@@ -124,12 +124,12 @@ VOLUME ["/share", "/ssl", "/data", "/media"]
 ARG CONFIGLOCATION="/www/nextcloud/config"
 # hadolint ignore=SC2015, SC2013, SC2086, SC2016
 RUN \
-    for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
-    \
+    for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done
+RUN \
     # Correct nginx files
     sed -i "/Strict-Transport-Security/d" /defaults/nginx/site-confs/default.conf.sample && \
     sed -i '1h;1!H;$!d;g;s/\(.*\)}/\1/' /defaults/nginx/site-confs/default.conf.sample && \
-    cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample
+    cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample || true
 
 #RUN chmod 777 /entrypoint.sh
 #WORKDIR /
