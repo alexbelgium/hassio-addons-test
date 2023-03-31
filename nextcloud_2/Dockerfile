@@ -43,8 +43,8 @@ RUN \
     /etc/php*/php.ini || true && \
     \
     # Change location of executable
-    sed -i "s|/config|/data/config|g" /usr/bin/occ || true && \
-    sed -i "s|/config|/data/config|g" /usr/bin/updater.phar || true && \
+    sed -i "s|/config|/data/config|g" /usr/bin/occ && \
+    sed -i "s|/config|/data/config|g" /usr/bin/updater.phar && \
     \
     # Change location of log
     sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root && \
@@ -124,12 +124,16 @@ VOLUME ["/share", "/ssl", "/data", "/media"]
 ARG CONFIGLOCATION="/www/nextcloud/config"
 # hadolint ignore=SC2015, SC2013, SC2086, SC2016
 RUN \
-    for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done
-RUN \
+    for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
+    \
     # Correct nginx files
     sed -i "/Strict-Transport-Security/d" /defaults/nginx/site-confs/default.conf.sample && \
     sed -i '1h;1!H;$!d;g;s/\(.*\)}/\1/' /defaults/nginx/site-confs/default.conf.sample && \
-    cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample || true
+    cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample && \
+    \
+    # Rename smb files
+    mv 92-local_mounts.sh 00-local_mounts.sh && \
+    mv 92-smb_mounts.sh 00-smb_mounts.sh 
 
 #RUN chmod 777 /entrypoint.sh
 #WORKDIR /

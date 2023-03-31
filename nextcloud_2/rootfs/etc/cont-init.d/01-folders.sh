@@ -4,20 +4,26 @@
 PUID=$(bashio::config "PUID")
 PGID=$(bashio::config "PGID")
 
-# Check current version
-if [ -f /data/config/www/nextcloud/config/config.php ]; then
-    datadirectory="$(sed -n "s|.*datadirectory' => '*\(.*[^ ]\) *',.*|\1|p" /data/config/www/nextcloud/config/config.php)"
-else
-    datadirectory=/share/nextcloud
-fi
-
 echo "Updating permissions..."
 echo "... Config directory : /data"
 mkdir -p /data/config
 chmod 755 -R /data/config
 chown -R "$PUID:$PGID" "/data/config"
 
-echo "... Data directory detected : $datadirectory"
+# Check current version
+if [ -f /data/config/www/nextcloud/config/config.php ]; then
+    datadirectory="$(sed -n "s|.*datadirectory' => '*\(.*[^ ]\) *',.*|\1|p" /data/config/www/nextcloud/config/config.php)"
+    echo "... Data directory detected : $datadirectory"
+else
+    datadirectory=/share/nextcloud
+fi
+
+# Is the directory valid
+if [[ "$datadirectory" == *"/mnt/"* ]] && [ ! -f "$datadirectory"/index.html ]; then
+    bashio::log.fatal "Data directory does not seem to be valid. Is your drive connected? Stopping to avoid corrupting the data directory."
+    bashio::addon.stop
+fi
+
 mkdir -p "$datadirectory"
 chmod 755 -R "$datadirectory"
 chown -R "$PUID:$PGID" "$datadirectory"
