@@ -33,7 +33,8 @@ if [ -f /notinstalled ]; then
     rm /notinstalled
 fi
 
-# Get launcher
+# Specify launcher
+PUID=$(bashio::config "PUID")
 LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
 
 # Inform if new version available
@@ -41,7 +42,7 @@ function nextcloud_download {
     mkdir -p /app
     if [ -f /app/nextcloud.tar.bz2 ]; then rm /app/nextcloud.tar.bz2; fi
     curl -o /app/nextcloud.tar.bz2 -L "https://download.nextcloud.com/server/releases/$1.tar.bz2"
-    }
+}
 
 # Check current version
 if [ -f /data/config/www/nextcloud/version.php ]; then
@@ -70,7 +71,7 @@ elif [[ $($LAUNCHER -V 2>&1) == *"Composer autoloader not found"* ]]; then
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner"
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
-elif [[ $($LAUNCHER -V 2>&1) == *"Nextcloud"* ]] || grep -q "/mnt/" /data/config/www/nextcloud/config/config.php &>/dev/null; then
+elif [[ $($LAUNCHER -V 2>&1) == *"Nextcloud"* ]]; then
     # Log
     bashio::log.green "----------------------------------------"
     bashio::log.green " Nextcloud $CURRENTVERSION is installed "
@@ -113,7 +114,7 @@ if [ -f /reinstall ]; then
     # Reinstall
     bashio::log.green "... reinstall ongoing, please wait"
     if [ -f /data/config/www/nextcloud/index.php ]; then rm /data/config/www/nextcloud/index.php; fi && \
-    # INSTALL
+        # INSTALL
     /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
     # RESET PERMISSIONS
     /./etc/cont-init.d/01-folders.sh

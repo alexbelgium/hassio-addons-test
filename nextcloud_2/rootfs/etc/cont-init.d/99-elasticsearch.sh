@@ -6,6 +6,8 @@
 if [ -f /notinstalled ]; then exit 0; fi
 
 # Specify launcher
+PUID=$(bashio::config "PUID")
+PGID=$(bashio::config "PGID")
 LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
 
 if $LAUNCHER fulltextsearch:test &>/dev/null; then
@@ -28,7 +30,7 @@ if $LAUNCHER fulltextsearch:test &>/dev/null; then
             $LAUNCHER app:install $app >/dev/null
             $LAUNCHER app:enable $app >/dev/null
         done
-        chown -R abc:abc $NEXTCLOUD_PATH/apps
+        chown -R "$PUID":"$PGID" $NEXTCLOUD_PATH/apps
 
         if bashio::config.has_value 'elasticsearch_server'; then
             HOST=$(bashio::config 'elasticsearch_server')

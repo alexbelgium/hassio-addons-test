@@ -4,6 +4,9 @@
 # Only execute if installed
 if [ -f /notinstalled ]; then exit 0; fi
 
+# Specify launcher
+PUID=$(bashio::config "PUID")
+
 # Check current version
 if [ -f /data/config/www/nextcloud/version.php ]; then
     CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/version.php)"
@@ -32,7 +35,7 @@ if ! bashio::config.true "disable_updates"; then
         sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
     done
     # Reset permissions
-    /./01-folders.sh
+    /./etc/cont-init.d/01-folders.sh
 elif bashio::config.true "disable_updates" && [ "$(version "$CONTAINERVERSION")" -gt "$(version "$CURRENTVERSION")" ]; then
     bashio::log.yellow " "
     bashio::log.yellow "New version available : $CONTAINERVERSION"
