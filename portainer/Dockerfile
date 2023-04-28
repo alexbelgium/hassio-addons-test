@@ -50,7 +50,7 @@ RUN \
     "https://github.com/portainer/portainer/releases/download/${BUILD_UPSTREAM}/portainer-${BUILD_UPSTREAM}-linux-${ARCH}.tar.gz" \
     | tar zxvf - -C /opt/
 
-FROM portainer/agent:2.6.3 as agent
+FROM portainer/agent:latest as agent
 ENV PORTAINER_AGENT_ARGS=""
 # Copy Portainer agent binaries
 COPY --from=agent / /agent
