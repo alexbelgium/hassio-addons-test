@@ -58,6 +58,7 @@
     "WEB_GUNICORN": "true"
   },
   "ingress": true,
+  "ingress_entry": "login",
   "ingress_stream": true,
   "map": [
     "config:rw",
