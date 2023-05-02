@@ -1,5 +1,9 @@
-1#!/usr/bin/env bashio
+#!/usr/bin/env bashio
 # shellcheck shell=bash
+
+if [ ! -f /started ]; then
+
+touch /started
 
 ####################
 # Starting scripts #
@@ -14,22 +18,6 @@ for SCRIPTS in /etc/cont-init.d/*; do
     sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' "$SCRIPTS"
     /."$SCRIPTS" || echo "$SCRIPTS: exiting $?"
 done
-
-################
-# MODIFY IMAGE #
-################
-
-#Sets caddyfile to 9925 as default port
-if [ -f /app/Caddyfile ]; then
-    sed -i "s/80/9925/g" /app/Caddyfile
-    echo "Caddyfile adapted"
-fi
-
-#Sets caddyfile to 9925 as default port
-if [ -f /app/frontend/Caddyfile ]; then
-    sed -i "s/3000/9925/g" /app/frontend/Caddyfile
-    echo "Caddyfile adapted"
-fi
 
 ####################
 # Export variables #
@@ -108,18 +96,19 @@ fi
 echo "Permissions adapted"
 chmod -R 777 /data
 
-#######
-# SSL #
-#######
+################
+# MIGRATE DATA #
+################
 
-bashio::config.require.ssl
-if bashio::config.true 'ssl'; then
-   bashio::log.info "Configuring ssl"
-   CERTFILE=$(bashio::config 'certfile')
-   KEYFILE=$(bashio::config 'keyfile')
-   if [ -f /app/Caddyfile ]; then sed -i "7 i tls /ssl/$CERTFILE /ssl/$KEYFILE" /app/Caddyfile; fi
-   if [ -f /app/frontend/Caddyfile ]; then sed -i "7 i tls /ssl/$CERTFILE /ssl/$KEYFILE" /app/frontend/Caddyfile; fi
+bashio::log.warning "Data migration for amd64"
+bashio::log.warning "Data migrated to /config/addons_config/mealie_data ; you can now use the new addons. For aarch64, you need to do a manual backup and restore"
+mkdir -p /config/addons_config/mealie_data
+touch /config/addons_config/mealie_data/.secret
+chmod -R 777 /config/addons_config/mealie_data
+cp -r /data/* /config/addons_config/mealie_data/
+
+bashio::log.info "Starting app"
+nginx & true
+
+bashio::log.info "Starting app"
 fi
-
-
-#base_url

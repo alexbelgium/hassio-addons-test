@@ -27,11 +27,13 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-
+ENV FRONTEND_PORT=9925
 
 # Correct data path
 # hadolint ignore=DL4006
-RUN grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g'
+RUN grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/config/addons_config/mealie_data|g' && \
+    # Sets port to 9925 as default port
+    sed -i "s|yarn start -p 3000|yarn start -p 9925|g" /app/run.sh
 
 ##################
 # 3 Install apps #
@@ -46,7 +48,7 @@ RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi
 
 # Modules
-ARG MODULES="00-banner.sh"
+ARG MODULES="00-banner.sh 01-custom_script.sh"
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
@@ -54,10 +56,10 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && apt-get update && apt-get install -yqq --no-install-recommends ca-certificates || apk add --no-cache ca-certificates >/dev/null || true \
     && mkdir -p /etc/cont-init.d \
     && for scripts in $MODULES; do echo "$scripts" && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" && [ "$(sed -n '/\/bin/p;q' /etc/cont-init.d/"$scripts")" != "" ] || (echo "script failed to install $scripts" && exit 1); done \
-    && chmod -R 755 /etc/cont-init.d || printf '%s\n' "${MODULES}" >/MODULESFILE
+    && chmod -R 755 /etc/cont-init.d
 
 # Manual apps
-ENV PACKAGES="jq curl bash"
+ENV PACKAGES="nginx"
 
 # Automatic apps & bashio
 # hadolint ignore=SC2015
@@ -66,8 +68,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/automatic_packages.sh" --output /automatic_packages.sh \
     && chmod 777 /automatic_packages.sh \
     && eval /./automatic_packages.sh "${PACKAGES:-}" \
-    && rm /automatic_packages.sh || (printf '%s\n' "${PACKAGES:-}" > /ENVFILE; \
-    if [ -f /etc/s6-overlay/s6-rc.d/init-migrations/run ]; then chmod +x /etc/cont-init.d/00-aaa_dockerfile_backup.sh && sed -i "1a /./etc/cont-init.d/00-aaa_dockerfile_backup.sh" /etc/s6-overlay/s6-rc.d/init-migrations/run;fi)
+    && rm /automatic_packages.sh
 
 ################
 # 4 Entrypoint #
@@ -75,17 +76,10 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 
 RUN \
     # Add custom instructions to run.sh on armv7
-    if [ -f /app/run.sh ]; then \
     sed -i '1d' /app/run.sh \
     && cat /app/run.sh >> /run.txt \
     && cat /run.txt > /app/run.sh \
-    && chmod +x /app/run.sh; \
-    # Add custom instructions to run.sh on other aarch
-    elif [ -f /app/mealie/run.sh ]; then \
-    sed -i '1d' /app/mealie/run.sh \
-    && cat /app/mealie/run.sh >> /run.txt \
-    && cat /run.txt > /app/mealie/run.sh \
-    && chmod +x /app/mealie/run.sh; fi
+    && chmod +x /app/run.sh
 
 ############
 # 5 Labels #
@@ -116,3 +110,16 @@ LABEL \
     org.opencontainers.image.created=${BUILD_DATE} \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
+
+#################
+# 6 Healthcheck #
+#################
+
+ENV HEALTH_PORT="" \
+    HEALTH_URL=""
+HEALTHCHECK \
+    --interval=5s \
+    --retries=5 \
+    --start-period=30s \
+    --timeout=25s \
+    CMD python $MEALIE_HOME/mealie/scripts/healthcheck.py || exit 1
