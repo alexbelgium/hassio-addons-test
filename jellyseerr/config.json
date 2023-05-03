@@ -61,9 +61,8 @@
   ],
   "name": "Jellyseerr",
   "options": {
-    "CONFIG_LOCATION": "/config/addons_config/jellyseerr",
-    "PGID": "0",
-    "PUID": "0"
+    "TYPE": "emby",
+    "TZ": "Europe/Paris"
   },
   "ports": {
     "5055/tcp": 5055
@@ -73,9 +72,7 @@
   },
   "privileged": [],
   "schema": {
-    "CONFIG_LOCATION": "str",
-    "PGID": "int",
-    "PUID": "int",
+    "TYPE": "list(emby|jellyfin)",
     "TZ": "str?"
   },
   "slug": "jellyseerr",
