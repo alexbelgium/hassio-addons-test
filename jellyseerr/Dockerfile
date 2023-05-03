@@ -28,6 +28,10 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+RUN \
+    # Avoid custom-init.d duplications
+    for file in $(grep -sril "/app/config" /); do sed -i "s=/app/config=/config/addons_config/jellyseerr=g" $file; done
+
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/jellyseerr"
 # hadolint ignore=SC2015, SC2013, SC2086
