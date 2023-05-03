@@ -22,8 +22,8 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ---
 
-[Jellyseerr](https://jellyseerr.dev/) is a request management and media discovery tool built to work with your existing Plex ecosystem
-This addon is based on the docker image https://github.com/linuxserver/docker-jellyseerr
+[Jellyseerr](https://hub.docker.com/r/fallenbagel/jellyseerr) is a request management and media discovery tool built to work with your existing Plex ecosystem
+This addon is based on the docker image [https://github.com/linuxserver/docker-jellyseerr](https://github.com/Fallenbagel/jellyseerr)
 
 ## Installation
 
