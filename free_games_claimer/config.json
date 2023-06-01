@@ -10,7 +10,6 @@
   "environment": {
     "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1"
   },
-  "image": "ghcr.io/alexbelgium/addons_updater-{arch}",
   "init": false,
   "name": "Repository Updater",
   "options": {
@@ -27,7 +26,7 @@
     "repository": "str",
     "verbose": "bool?"
   },
-  "slug": "updater",
+  "slug": "free_games_claimer_test",
   "startup": "once",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/addons_updater",
   "version": "3.14"
