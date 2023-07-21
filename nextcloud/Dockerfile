@@ -34,7 +34,7 @@ ARG CONFIGLOCATION="/share/nextcloud"
 # hadolint ignore=SC2015,SC2086
 RUN \
     # Change default apps location
-    for file in $(grep -Esril "/apps" /etc /defaults); do sed -Ei "s=(/apps)+(/| |$|\"|\')=/data/apps\2=g" $file; done && \
+    for file in $(grep -Esril "/app" /etc /defaults); do sed -Ei "s=(/app)+(/| |$|\"|\')=/data/app\2=g" $file; done && \
     \
     # Change default themes location
     for file in $(grep -Esril "/themes" /etc /defaults); do sed -Ei "s=(/themes)+(/| |$|\"|\')=/data/themes\2=g" $file; done && \
