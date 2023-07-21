@@ -33,11 +33,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 ARG CONFIGLOCATION="/share/nextcloud"
 # hadolint ignore=SC2015,SC2086
 RUN \
-    # Change default apps location
-    for file in $(grep -Esril "/app" /etc /defaults); do sed -Ei "s=(/app)+(/| |$|\"|\')=/data/app\2=g" $file; done && \
-    \
-    # Change default themes location
-    for file in $(grep -Esril "/themes" /etc /defaults); do sed -Ei "s=(/themes)+(/| |$|\"|\')=/data/themes\2=g" $file; done && \
+    # Change default data location
+    for file in $(grep -Esril "/data" /etc /defaults); do sed -Ei "s=(/data)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
     \
     # modify data limits file
     sed -i \
@@ -51,7 +48,12 @@ RUN \
     sed -i "s|client_body_timeout 300s;|client_body_timeout 900s;|g" /defaults/nginx/site-confs/default.conf.sample && \
     \
     # Change location of log
-    sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root
+    sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root && \
+    \
+    # Run custom scripts after installation
+    sed -i "s|contenv bash|contenv bashio|g" /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
+    echo "touch /runfile" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
+    echo "/./etc/entrypoint.sh" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
@@ -116,7 +118,12 @@ VOLUME ["/share", "/ssl", "/data", "/media"]
 # 4 Entrypoint #
 ################
 
+# Correct modifications
+ARG CONFIGLOCATION="/www/nextcloud/config"
+# hadolint ignore=SC2015, SC2013, SC2086, SC2016
 RUN \
+    for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
+    \
     # Correct nginx files
     sed -i "/Strict-Transport-Security/d" /defaults/nginx/site-confs/default.conf.sample && \
     sed -i '1h;1!H;$!d;g;s/\(.*\)}/\1/' /defaults/nginx/site-confs/default.conf.sample && \

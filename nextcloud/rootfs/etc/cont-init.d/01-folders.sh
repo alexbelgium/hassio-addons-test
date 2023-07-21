@@ -1,6 +1,8 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+if [ ! -f /runfile ]; then exit 0; fi
+
 if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
     PUID="$(bashio::config "PUID")"
     PGID="$(bashio::config "PGID")"

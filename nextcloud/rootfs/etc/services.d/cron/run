@@ -1,4 +1,0 @@
-#!/usr/bin/with-contenv bash
-
-# log errors in addon logs in foreground
-/usr/sbin/crond -f -L /cron.log -c /etc/crontabs
