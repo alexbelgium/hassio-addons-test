@@ -33,8 +33,11 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 ARG CONFIGLOCATION="/share/nextcloud"
 # hadolint ignore=SC2015,SC2086
 RUN \
-    # Change default data location
-    for file in $(grep -Esril "/data" /etc /defaults); do sed -Ei "s=(/data)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
+    # Change default apps location
+    for file in $(grep -Esril "/apps" /etc /defaults); do sed -Ei "s=(/apps)+(/| |$|\"|\')=/data/apps\2=g" $file; done && \
+    \
+    # Change default themes location
+    for file in $(grep -Esril "/themes" /etc /defaults); do sed -Ei "s=(/themes)+(/| |$|\"|\')=/data/themes\2=g" $file; done && \
     \
     # modify data limits file
     sed -i \
@@ -47,9 +50,6 @@ RUN \
     sed -i "s|client_max_body_size 512M;|client_max_body_size 8192M;|g" /defaults/nginx/site-confs/default.conf.sample && \
     sed -i "s|client_body_timeout 300s;|client_body_timeout 900s;|g" /defaults/nginx/site-confs/default.conf.sample && \
     \
-    # Change location of executable
-    #sed -i "s|/config|/data/config|g" /usr/bin/occ && \
-    #\
     # Change location of log
     sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root
 
@@ -71,9 +71,6 @@ RUN \
     \
     # Avoid chmod /config
     && for file in /etc/services.d/*/* /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/*;do if [ -f $file ] && [[ ! -z $(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' $file) ]] ; then sed -i "s|/config$|/data|g" $file; fi ;done \
-    \
-    # Docker mods addition
-    #&& if [ -f /docker-mods ]; then sed -i 's|bash|bashio|g' /docker-mods && sed -i "1a if bashio::config.has_value \"DOCKER_MODS\"; then DOCKER_MODS=\$(bashio::config \"DOCKER_MODS\"); fi" /docker-mods; fi \
     \
     # Replace lsiown if not found
     && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi
@@ -119,12 +116,7 @@ VOLUME ["/share", "/ssl", "/data", "/media"]
 # 4 Entrypoint #
 ################
 
-# Correct modifications
-ARG CONFIGLOCATION="/www/nextcloud/config"
-# hadolint ignore=SC2015, SC2013, SC2086, SC2016
 RUN \
-    for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
-    \
     # Correct nginx files
     sed -i "/Strict-Transport-Security/d" /defaults/nginx/site-confs/default.conf.sample && \
     sed -i '1h;1!H;$!d;g;s/\(.*\)}/\1/' /defaults/nginx/site-confs/default.conf.sample && \
