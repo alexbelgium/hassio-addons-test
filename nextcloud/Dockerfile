@@ -54,7 +54,7 @@ RUN \
     sed -i "s|contenv bash|contenv bashio|g" /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
     echo "touch /runfile" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
     echo "/./etc/entrypoint.sh" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
-    sed -i "1a /./defaults/nextcloud-perms.sh" /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
+    sed -i "1a /./defaults/nextcloud-perms.sh" /migrations/02-default-location
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
