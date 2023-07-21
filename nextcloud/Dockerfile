@@ -129,6 +129,7 @@ RUN \
     \
     # Correct erroneous modifications
     for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
+    for file in $(grep -Esril "/data/data" /etc /defaults); do sed -Ei "s=(/data/data)+(/| |$|\"|\')=/data\2=g" $file; done && \
     \
     # Correct nginx files
     sed -i "/Strict-Transport-Security/d" /defaults/nginx/site-confs/default.conf.sample && \

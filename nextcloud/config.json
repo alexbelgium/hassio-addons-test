@@ -123,6 +123,6 @@
   "slug": "nextcloud_test",
   "uart": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/nextcloud",
-  "version": "test-4",
+  "version": "test-5",
   "webui": "https://[HOST]:[PORT:443]"
 }
