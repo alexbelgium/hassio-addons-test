@@ -123,6 +123,11 @@ VOLUME ["/share", "/ssl", "/data", "/media"]
 ARG CONFIGLOCATION="/www/nextcloud/config"
 # hadolint ignore=SC2015, SC2013, SC2086, SC2016
 RUN \
+    # Avoid using legacy cont-init.d
+    mkdir -p /scripts && mv /etc/cont-init.d/* /scripts && \
+    sed -i "s|/etc/cont-init.d|/scripts|g" /etc/entrypoint.sh && \
+    \
+    # Correct erroneous modifications
     for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
     \
     # Correct nginx files

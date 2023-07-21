@@ -2,7 +2,6 @@
 # shellcheck shell=bash
 # shellcheck disable=SC2086
 
-if [ ! -f /runfile ]; then exit 0; fi
 
 # Only execute if installed
 if [ -f /notinstalled ]; then exit 0; fi

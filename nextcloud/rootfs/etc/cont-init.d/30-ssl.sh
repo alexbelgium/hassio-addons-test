@@ -1,7 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-if [ ! -f /runfile ]; then exit 0; fi
 
 if bashio::config.true 'use_own_certs'; then
 
