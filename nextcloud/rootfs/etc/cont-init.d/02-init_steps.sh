@@ -1,15 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-####################################
-# Clean nginx files at each reboot #
-####################################
-
-echo "Cleaning files"
-for var in /data/config/nginx /data/config/crontabs /data/config/logs; do
-    if [ -d "$var" ]; then rm -r "$var"; fi
-done
-
 ######################################
 # Make links between logs and docker #
 ######################################
@@ -28,17 +19,15 @@ done
 # CHECK STATUS #
 ################
 
-# Clean remnant files
-if [ -f /notinstalled ]; then
-    rm /notinstalled
-fi
-
 # Specify launcher
 LAUNCHER="sudo -u abc php /app/www/public/occ"
 
+# Only execute if installed
+if [ -f /notinstalled ]; then exit 0; fi
+
 # Check current version
-if [ -f /app/www/public/version.php ]; then
-    CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/version.php)"
+if [ -f /data/config/www/nextcloud/config/config.php ]; then
+    CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/config/config.php)"
 else
     CURRENTVERSION="Not found"
 fi
@@ -46,7 +35,7 @@ fi
 echo " "
 
 # If not installed, or files not available
-if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]] || [ ! -f /app/www/public/version.php ]; then
+if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]] || [ ! -f /data/config/www/nextcloud/config/config.php ]; then
     bashio::log.green "--------------------------------------------------------------------------------------------------------------"
     bashio::log.yellow "Nextcloud not installed, please wait for addon startup, login Webui, install Nextcloud, then restart the addon"
     bashio::log.green "--------------------------------------------------------------------------------------------------------------"
