@@ -51,7 +51,6 @@ RUN \
     sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root && \
     \
     # Run custom scripts after installation
-    chmod 777 /etc/entrypoint.sh /defaults/nextcloud-perms.sh && \
     echo "touch /runfile" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
     echo "/./etc/entrypoint.sh" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
     chmod 777 /migrations/02-default-location && \
@@ -127,6 +126,9 @@ RUN \
     # Avoid using legacy cont-init.d
     mkdir -p /scripts && mv /etc/cont-init.d/* /scripts && \
     sed -i "s|/etc/cont-init.d|/scripts|g" /etc/entrypoint.sh && \
+    \
+    # Give permissions
+    chmod 777 /etc/entrypoint.sh /defaults/nextcloud-perms.sh && \
     \
     # Correct erroneous modifications
     for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
