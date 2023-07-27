@@ -26,9 +26,6 @@ FROM ${BUILD_FROM}
 # 3 Install apps #
 ##################
 
-# Add rootfs
-COPY rootfs/ /
-
 # Modules
 ARG MODULES=""
 
