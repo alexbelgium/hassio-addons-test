@@ -61,7 +61,6 @@
     "PUID": "0"
   },
   "homeassistant": "0.92.0b2",
-  "image": "ghcr.io/alexbelgium/paperless_ng-{arch}",
   "init": false,
   "map": [
     "config:rw",
