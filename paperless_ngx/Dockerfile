@@ -56,7 +56,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && chmod -R 755 /etc/cont-init.d
 
 # Manual apps
-ENV PACKAGES="redis-server yamllint pip libxml2-dev libxslt-dev python-dev libjpeg-dev zlib1g-dev python3-dev build-essential nginx"
+ENV PACKAGES="redis-server nginx"
 
 # Automatic apps & bashio
 # hadolint ignore=SC2015
