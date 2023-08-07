@@ -1,0 +1,112 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+# shellcheck disable=SC2155
+
+####################
+# Define variables #
+####################
+
+bashio::log.info "Defining variables"
+
+if bashio::config.has_value "PUID"; then export USERMAP_UID=$(bashio::config "PUID"); fi
+if bashio::config.has_value "PGID"; then export USERMAP_GID=$(bashio::config "PGID"); fi
+if bashio::config.has_value "TZ"; then export PAPERLESS_TIME_ZONE=$(bashio::config "TZ"); fi
+if bashio::config.has_value "PAPERLESS_URL"; then export PAPERLESS_URL=$(bashio::config "PAPERLESS_URL"); fi
+if bashio::config.has_value "OCRLANG"; then
+    PAPERLESS_OCR_LANGUAGES="$(bashio::config "OCRLANG")"
+    export PAPERLESS_OCR_LANGUAGES=${PAPERLESS_OCR_LANGUAGES,,}
+fi
+if bashio::config.has_value "PAPERLESS_OCR_MODE"; then export PAPERLESS_OCR_MODE=$(bashio::config "PAPERLESS_OCR_MODE"); fi
+
+export PAPERLESS_ADMIN_PASSWORD="admin"
+export PAPERLESS_ADMIN_USER="admin"
+export PAPERLESS_ALLOWED_HOSTS="*"
+
+export PAPERLESS_DATA_DIR="/config/addons_config/paperless_ng"
+export PAPERLESS_MEDIA_ROOT="/config/addons_config/paperless_ng/media"
+export PAPERLESS_CONSUMPTION_DIR="/config/addons_config/paperless_ng/consume"
+
+if bashio::config.has_value "PAPERLESS_DATA_DIR"; then export PAPERLESS_DATA_DIR=$(bashio::config "PAPERLESS_DATA_DIR"); fi
+if bashio::config.has_value "PAPERLESS_MEDIA_ROOT"; then export PAPERLESS_MEDIA_ROOT=$(bashio::config "PAPERLESS_MEDIA_ROOT"); fi
+if bashio::config.has_value "PAPERLESS_CONSUMPTION_DIR"; then export PAPERLESS_CONSUMPTION_DIR=$(bashio::config "PAPERLESS_CONSUMPTION_DIR"); fi
+
+for folder in "$PAPERLESS_DATA_DIR" "$PAPERLESS_MEDIA_ROOT" "$PAPERLESS_CONSUMPTION_DIR"; do
+    mkdir -p "$folder"
+    chmod -R 755 "$folder"
+    chown -R paperless:paperless "$folder"
+done
+
+###################
+# Define database #
+###################
+
+bashio::log.info "Defining database"
+
+case $(bashio::config 'database') in
+
+        # Use mariadb
+    mariadb_addon)
+        bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Discovering values..."
+        if ! bashio::services.available 'mysql'; then
+            bashio::log.fatal \
+                "Local database access should be provided by the MariaDB addon"
+            bashio::exit.nok \
+                "Please ensure it is installed and started"
+        fi
+
+        # Use values
+        export PAPERLESS_DBENGINE=mariadb
+        export PAPERLESS_DBHOST="$(bashio::services 'mysql' 'host')"
+        export PAPERLESS_DBPORT="$(bashio::services 'mysql' 'port')"
+        export PAPERLESS_DBNAME=paperless
+        export PAPERLESS_DBUSER="$(bashio::services "mysql" "username")"
+        export PAPERLESS_DBPASS="$(bashio::services "mysql" "password")"
+
+        # Create database
+        mysql --host="$PAPERLESS_DBHOST" --port="$PAPERLESS_DBPORT" --user="$PAPERLESS_DBUSER" --password="$PAPERLESS_DBPASS" -e"CREATE DATABASE IF NOT EXISTS $PAPERLESS_DBNAME;"
+
+        # Informations
+        bashio::log.warning "This addon is using the Maria DB addon"
+        bashio::log.warning "Please ensure this is included in your backups"
+        bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
+        ;;
+
+
+        # Use sqlite
+    *)
+        bashio::log.info "Using sqlite as database driver"
+        ;;
+esac
+
+set +u
+# For all relevant variables
+for variable in USERMAP_UID USERMAP_GID PAPERLESS_TIME_ZONE PAPERLESS_URL PAPERLESS_OCR_LANGUAGES PAPERLESS_OCR_MODE PAPERLESS_ADMIN_PASSWORD PAPERLESS_ADMIN_USER PAPERLESS_ALLOWED_HOSTS PAPERLESS_DATA_DIR PAPERLESS_MEDIA_ROOT PAPERLESS_CONSUMPTION_DIR PAPERLESS_DBENGINE PAPERLESS_DBHOST PAPERLESS_DBPORT PAPERLESS_DBNAME PAPERLESS_DBUSER PAPERLESS_DBPASS; do
+
+    # Variable content
+    variablecontent="$(eval echo "\$$variable")"
+
+    # Skip if variable content empty
+    if [ ${#variablecontent} -le 2 ]; then
+        continue
+    fi
+
+    # Add to bashrc
+    eval echo "$variable=\"$variablecontent\"" >> ~/.bashrc
+done
+
+#################
+# Staring redis #
+#################
+exec redis-server & bashio::log.info "Starting redis"
+
+#################
+# Staring nginx #
+#################
+exec nginx & bashio::log.info "Starting nginx"
+
+###############
+# Staring app #
+###############
+bashio::log.info "Initial username and password are admin. Please change in the administration panel of the webUI after login."
+
+/./usr/local/bin/paperless_cmd.sh /sbin/docker-entrypoint.sh 
