@@ -29,8 +29,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Add custom scripts
-#RUN \
-#    sed -i '/Paperless-ngx docker container starting/a /./entrypoint.sh' /sbin/docker-entrypoint.sh
+RUN \
+    sed -i '/Paperless-ngx docker container starting/a source /entrypoint.sh' /sbin/docker-entrypoint.sh
 
 ##################
 # 3 Install apps #
@@ -73,8 +73,8 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 
 RUN chmod 777 /entrypoint.sh
 #WORKDIR /
-ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/entrypoint.sh" ]
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/entrypoint.sh" ]
 #SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############
