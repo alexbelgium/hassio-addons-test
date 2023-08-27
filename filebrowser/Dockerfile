@@ -14,6 +14,7 @@
 # 1 Build Image #
 #################
 
+ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="2.23.0"
 FROM ${BUILD_FROM}
