@@ -17,7 +17,7 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="1.17.0"
-FROM ${BUILD_FROM}:${BUILD_UPSTREAM}
+FROM ${BUILD_FROM}
 
 ##################
 # 2 Modify Image #
@@ -29,8 +29,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Add custom scripts
-#RUN \
-#    sed -i '/Paperless-ngx docker container starting/a source /entrypoint.sh' /sbin/docker-entrypoint.sh
+RUN \
+    sed -i '/Paperless-ngx docker container starting/a source /entrypoint.sh' /sbin/docker-entrypoint.sh
 
 ##################
 # 3 Install apps #
