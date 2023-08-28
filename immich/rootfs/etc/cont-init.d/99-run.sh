@@ -36,10 +36,6 @@ done
 bashio::log.info "Defining database"
 bashio::log.info "-----------------"
 
-case $(bashio::config 'database') in
-
-    "external_postgresql")
-
         bashio::log.info "Using external postgresql"
         bashio::log.info ""
 
@@ -60,45 +56,7 @@ case $(bashio::config 'database') in
         export DB_PASSWORD=$(bashio::config 'DB_PASSWORD')
         export DB_DATABASE_NAME=$(bashio::config 'DB_DATABASE_NAME')
         export DB_PORT=$(bashio::config 'DB_PORT')
-        export JWT_SECRET=$(bashio::config 'JWT_SECRET')
-        ;;
-
-    **)
-
-        bashio::log.info "Using internal postgresql"
-        bashio::log.info ""
-
-        # Settings files & permissions
-        ln -s /usr/lib/postgresql/14/bin/postgres /usr/bin || true
-        ln -s /usr/lib/postgresql/14/bin/psql /usr/psql || true
-        mkdir -p /data/postgresql
-        cp -rnf /var/lib/postgresql/14/main/* /data/postgresql/
-        chown -R postgres /data/postgresql
-        chmod -R 700 /data/postgresql
-
-        # Start postgresql
-        /etc/init.d/postgresql start
-
-        # Create database
-        echo "CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'securepassword';
-             CREATE DATABASE immich; CREATE USER immich WITH ENCRYPTED PASSWORD 'immich';
-             GRANT ALL PRIVILEGES ON DATABASE immich to immich;
-        \q"> setup_postgres.sql
-        chown postgres setup_postgres.sql
-        # shellcheck disable=SC2024
-        sudo -iu postgres psql < setup_postgres.sql
-        rm setup_postgres.sql
-
-        # Settings parameters
-        export DB_USERNAME=immich
-        export DB_HOSTNAME=localhost
-        export DB_PASSWORD=immich
-        export DB_DATABASE_NAME=immich
-        export DB_PORT=5432
-        export JWT_SECRET=$(bashio::config 'JWT_SECRET')
-        ;;
-
-esac
+        export JWT_SECRET=$(bashio::config 'JWT_
 
 ##################
 # Starting redis #
