@@ -58,6 +58,17 @@ bashio::log.info "-----------------"
         export DB_PORT=$(bashio::config 'DB_PORT')
         export JWT_SECRET=$(bashio::config 'JWT_
 
+        # Create database
+        echo "CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'securepassword';
+             CREATE DATABASE immich; CREATE USER immich WITH ENCRYPTED PASSWORD 'immich';
+             GRANT ALL PRIVILEGES ON DATABASE immich to immich;
+        \q"> setup_postgres.sql
+        chown postgres setup_postgres.sql
+        # shellcheck disable=SC2024
+        sudo -iu postgres psql < setup_postgres.sql
+        rm setup_postgres.sql
+
+
 ##################
 # Starting redis #
 ##################
