@@ -94,15 +94,11 @@ fi
 # Create database #
 ###################
 
-# Install client
-apt-get update && apt-get install -yqq --no-install-recommends postgresql-client
-
-# Create database
+# Create database if does not exist
 echo "CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'securepassword';
-     CREATE DATABASE immich; CREATE USER immich WITH ENCRYPTED PASSWORD 'immich';
-     GRANT ALL PRIVILEGES ON DATABASE immich to immich;
+     CREATE DATABASE immich; CREATE USER immich WITH ENCRYPTED PASSWORD 'immich'; GRANT ALL PRIVILEGES ON DATABASE immich to immich;
 \q"> setup_postgres.sql
-psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" < setup_postgres.sql
+psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" < setup_postgres.sql || true
 
 # Clean
 rm setup_postgres.sql
