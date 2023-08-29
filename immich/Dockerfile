@@ -57,8 +57,10 @@ RUN \
 # Install REDIS
 ENV DOCKER_MODS="imagegenius/mods:universal-redis"
 ARG MODS_VERSION="v3"
-RUN curl -f -L -s -S "https://raw.githubusercontent.com/linuxserver/docker-mods/mod-scripts/docker-mods.${MODS_VERSION}" -o /docker-mods/docker-mods."${MODS_VERSION}" \
+RUN mkdir -p /docker-mods \
+    && curl -f -L -s -S "https://raw.githubusercontent.com/linuxserver/docker-mods/mod-scripts/docker-mods.${MODS_VERSION}" -o /docker-mods/docker-mods."${MODS_VERSION}" \
     && chmod 644 /docker-mods/docker-mods."${MODS_VERSION}" \
+    && chmod +x /docker-mods/docker-mods."${MODS_VERSION}" \
     && /./docker-mods/docker-mods."${MODS_VERSION}"
 ENV DOCKER_MODS=""
 
