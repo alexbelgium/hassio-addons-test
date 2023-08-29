@@ -59,6 +59,7 @@ ENV DOCKER_MODS="imagegenius/mods:universal-redis"
 ARG MODS_VERSION="v3"
 RUN rm -r /docker-mods \
     && mkdir -p /docker-mods \
+    && mkdir -p /run/s6/container_environment \
     && curl -f -L -s -S "https://raw.githubusercontent.com/linuxserver/docker-mods/mod-scripts/docker-mods.${MODS_VERSION}" -o /docker-mods/docker-mods."${MODS_VERSION}" \
     && chmod 644 /docker-mods/docker-mods."${MODS_VERSION}" \
     && chmod +x /docker-mods/docker-mods."${MODS_VERSION}" \
