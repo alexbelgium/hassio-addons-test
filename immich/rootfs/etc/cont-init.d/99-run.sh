@@ -71,16 +71,6 @@ export DB_DATABASE_NAME=$(bashio::config 'DB_DATABASE_NAME')
 export DB_PORT=$(bashio::config 'DB_PORT')
 export JWT_SECRET=$(bashio::config 'JWT_SECRET')
 
-# Create database
-echo "CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'securepassword';
-     CREATE DATABASE immich; CREATE USER immich WITH ENCRYPTED PASSWORD 'immich';
-     GRANT ALL PRIVILEGES ON DATABASE immich to immich;
-\q"> setup_postgres.sql
-chown postgres setup_postgres.sql
-# shellcheck disable=SC2024
-sudo -iu postgres psql < setup_postgres.sql
-rm setup_postgres.sql
-
 # Export variables
 if [ -d /var/run/s6/container_environment ]; then
     printf "%s" "$DB_USERNAME" > /var/run/s6/container_environment/DB_USERNAME
@@ -99,6 +89,12 @@ fi
     printf "%s" "DB_HOSTNAME=\"$DB_HOSTNAME\""
     printf "%s" "JWT_SECRET=\"$JWT_SECRET\""
 } >> ~/.bashrc
+
+###################
+# Create database #
+###################
+apt-get update && apt-get install -yqq --no-install-recommends mysql-client
+mysql --host="$DB_HOSTNAME" --port="$DB_PORT" --user="$DB_USERNAME" --password="$DB_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $DB_DATABASE_NAME;"
 
 ##################
 # Starting redis #
