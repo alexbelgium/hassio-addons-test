@@ -93,8 +93,19 @@ fi
 ###################
 # Create database #
 ###################
-apt-get update && apt-get install -yqq --no-install-recommends mysql-client
-mysql --host="$DB_HOSTNAME" --port="$DB_PORT" --user="$DB_USERNAME" --password="$DB_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $DB_DATABASE_NAME;"
+
+# Install client
+apt-get update && apt-get install -yqq --no-install-recommends postgresql-client
+
+# Create database
+echo "CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'securepassword';
+     CREATE DATABASE immich; CREATE USER immich WITH ENCRYPTED PASSWORD 'immich';
+     GRANT ALL PRIVILEGES ON DATABASE immich to immich;
+\q"> setup_postgres.sql
+psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" < setup_postgres.sql
+
+# Clean
+rm setup_postgres.sql
 
 ##################
 # Starting redis #
