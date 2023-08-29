@@ -27,6 +27,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+USER root
+
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/immich"
 # hadolint ignore=SC2015, SC2013, SC2086, SC2016
@@ -59,8 +61,6 @@ RUN curl -f -L -s -S "https://raw.githubusercontent.com/linuxserver/docker-mods/
     && chmod 644 /docker-mods/docker-mods."${MODS_VERSION}" \
     && /./docker-mods/docker-mods."${MODS_VERSION}"
 ENV DOCKER_MODS=""
-
-USER root
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
