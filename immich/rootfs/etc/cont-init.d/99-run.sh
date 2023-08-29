@@ -106,8 +106,3 @@ psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" < setup_postgr
 
 # Clean
 rm setup_postgres.sql
-
-##################
-# Starting redis #
-##################
-exec redis-server & bashio::log.info "Starting redis"
