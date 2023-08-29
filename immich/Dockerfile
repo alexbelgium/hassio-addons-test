@@ -52,10 +52,12 @@ RUN \
     # Replace lsiown if not found
     && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi
 
-USER root
+# Install REDIS
+ENV DOCKER_MODS="imagegenius/mods:universal-redis"
+RUN /./docker-mods/docker-mods.*
+ENV DOCKER_MODS=""
 
-# Install PostgreSQL
-ENV DEBIAN_FRONTEND=noninteractive
+USER root
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
