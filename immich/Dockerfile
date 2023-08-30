@@ -55,7 +55,6 @@ RUN \
     && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi
 
 # Install REDIS
-ENV DOCKER_MODS="imagegenius/mods:universal-redis"
 ARG MODS_VERSION="v3"
 RUN rm -r /docker-mods \
     && mkdir -p /docker-mods \
@@ -63,8 +62,9 @@ RUN rm -r /docker-mods \
     && curl -f -L -s -S "https://raw.githubusercontent.com/linuxserver/docker-mods/mod-scripts/docker-mods.${MODS_VERSION}" -o /docker-mods/docker-mods."${MODS_VERSION}" \
     && chmod 644 /docker-mods/docker-mods."${MODS_VERSION}" \
     && chmod +x /docker-mods/docker-mods."${MODS_VERSION}" \
-    && /./docker-mods/docker-mods."${MODS_VERSION}"
-ENV DOCKER_MODS=""
+    && sed -i "1a DOCKER_MODS=\"imagegenius/mods:universal-redis\"" /docker-mods/docker-mods."${MODS_VERSION}" \
+    && /./docker-mods/docker-mods."${MODS_VERSION}" \
+    && sed -i "/imagegenius/d" /docker-mods/docker-mods."${MODS_VERSION}"
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
