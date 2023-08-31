@@ -54,6 +54,9 @@ RUN \
     # Replace lsiown if not found
     && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi
 
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 # Install REDIS
 ENV DOCKER_MODS="imagegenius/mods:universal-redis"
 RUN \
@@ -61,9 +64,6 @@ RUN \
     && /./docker-mods/* \
     && if [ !-f /defaults/redis.conf ]; then echo "Not installed" && exit 1; fi
 ENV DOCKER_MODS=""
-
-# Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ##################
 # 3 Install apps #
