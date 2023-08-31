@@ -62,7 +62,7 @@ ENV DOCKER_MODS="imagegenius/mods:universal-redis"
 RUN \
     echo "Installing REDIS" \
     && chmod 777 -R /docker-mods \ 
-    && /./docker-mods/* \
+    && /./docker-mods/* || ls / \
     && if [ !-f /defaults/redis.conf ]; then echo "Not installed" && exit 1; fi
 ENV DOCKER_MODS=""
 
