@@ -55,16 +55,12 @@ RUN \
     && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi
 
 # Install REDIS
-ARG MODS_VERSION="v3"
-RUN rm -r /docker-mods \
-    && mkdir -p /docker-mods \
-    && mkdir -p /run/s6/container_environment \
-    && curl -f -L -s -S "https://raw.githubusercontent.com/linuxserver/docker-mods/mod-scripts/docker-mods.${MODS_VERSION}" -o /docker-mods/docker-mods."${MODS_VERSION}" \
-    && chmod 644 /docker-mods/docker-mods."${MODS_VERSION}" \
-    && chmod +x /docker-mods/docker-mods."${MODS_VERSION}" \
-    && sed -i "1a DOCKER_MODS=\"imagegenius/mods:universal-redis\"" /docker-mods/docker-mods."${MODS_VERSION}" \
-    && /./docker-mods/docker-mods."${MODS_VERSION}" \
-    && sed -i "/imagegenius/d" /docker-mods/docker-mods."${MODS_VERSION}"
+ENV DOCKER_MODS="imagegenius/mods:universal-redis"
+RUN \
+    echo "Installing REDIS" \
+    && /./docker-mods/* \
+    && if [ !-f /defaults/redis.conf ]; then echo "Not installed" && exit 1; fi
+ENV DOCKER_MODS=""
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
