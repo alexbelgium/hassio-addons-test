@@ -1,8 +1,7 @@
 {
   "arch": [
     "aarch64",
-    "amd64",
-    "armv7"
+    "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "scan, index and archive all your physical documents",
@@ -60,8 +59,6 @@
     "PGID": "0",
     "PUID": "0"
   },
-  "homeassistant": "0.92.0b2",
-  "image": "ghcr.io/alexbelgium/paperless_ng-{arch}",
   "init": false,
   "map": [
     "config:rw",
