@@ -61,6 +61,7 @@
     "PUID": "0"
   },
   "homeassistant": "0.92.0b2",
+  "image": "ghcr.io/alexbelgium/paperless_ng-{arch}",
   "init": false,
   "map": [
     "config:rw",
@@ -117,6 +118,6 @@
   ],
   "slug": "paperless_ng",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "test3",
+  "version": "1.15.1",
   "webui": "http://[HOST]:[PORT:8000]"
 }

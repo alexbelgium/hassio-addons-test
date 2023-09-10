@@ -16,7 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="1.17.0"
+ARG BUILD_UPSTREAM="1.17.1"
 FROM ${BUILD_FROM}
 
 ##################
@@ -28,9 +28,10 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+
 # Add custom scripts
-RUN \
-    sed -i '/Paperless-ngx docker container starting/a source /entrypoint.sh' /sbin/docker-entrypoint.sh
+#RUN \
+#    sed -i '/Paperless-ngx docker container starting/a /./ha_entrypoint.sh' /sbin/docker-entrypoint.sh
 
 ##################
 # 3 Install apps #
@@ -39,42 +40,36 @@ RUN \
 # Add rootfs
 COPY rootfs/ /
 
-# Corrects permissions for s6 v3
-RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
-    if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
-    if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi
-
 # Modules
 ARG MODULES="00-banner.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh 90-config_yaml.sh"
 
 # Automatic modules download
-RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
-    && if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null; fi \
-    && apt-get update && apt-get install -yqq --no-install-recommends ca-certificates || apk add --no-cache ca-certificates >/dev/null || true \
-    && mkdir -p /etc/cont-init.d \
-    && for scripts in $MODULES; do echo "$scripts" && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" && [ "$(sed -n '/\/bin/p;q' /etc/cont-init.d/"$scripts")" != "" ] || (echo "script failed to install $scripts" && exit 1); done \
-    && chmod -R 755 /etc/cont-init.d
+ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
+RUN /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="redis-server nginx"
+ENV PACKAGES="redis-server yamllint pip libxml2-dev libxslt-dev python-dev libjpeg-dev zlib1g-dev python3-dev build-essential nginx"
 
 # Automatic apps & bashio
-# hadolint ignore=SC2015
-RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
-    && if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null; fi \
-    && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/automatic_packages.sh" --output /automatic_packages.sh \
-    && chmod 777 /automatic_packages.sh \
-    && eval /./automatic_packages.sh "${PACKAGES:-}" \
-    && rm /automatic_packages.sh
+ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
+RUN /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
 
 ################
 # 4 Entrypoint #
 ################
 
-RUN chmod 777 /entrypoint.sh
+# Add entrypoint
+ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
+ADD --chmod=777 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
+
+# Entrypoint modifications
+ADD --chmod=777 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
+RUN /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
+
+
 #WORKDIR /
-#ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/entrypoint.sh" ]
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/ha_entrypoint.sh" ]
 #SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############
