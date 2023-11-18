@@ -28,10 +28,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-
 # Add custom scripts
-#RUN \
-#    sed -i '/Paperless-ngx docker container starting/a /./ha_entrypoint.sh' /sbin/docker-entrypoint.sh
+RUN sed -i "2a /./ha_entrypoint.sh" /sbin/docker-entrypoint.sh
 
 ##################
 # 3 Install apps #
@@ -65,8 +63,6 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 # Entrypoint modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
-
-RUN sed -i "2a /./ha_entrypoint.sh" /sbin/docker-entrypoint.sh
 
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/ha_entrypoint.sh" ]
