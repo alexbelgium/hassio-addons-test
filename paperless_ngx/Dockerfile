@@ -29,10 +29,10 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Add custom scripts
-RUN sed -i "2a /./ha_entrypoint.sh" /sbin/docker-entrypoint.sh && \
+RUN sed -i "2a /./ha_entrypoint.sh" /sbin/docker-entrypoint.sh
     # Correct config location
-    for file in $(grep -sril "/usr/src/paperless" / 2>/dev/null); do sed -Ei "s=/usr/src/paperless=/config=g" "$file"; done && \
-    usermod -d /config paperless
+    # for file in $(grep -sril "/usr/src/paperless" / 2>/dev/null); do sed -Ei "s=/usr/src/paperless=/config=g" "$file"; done && \
+    # usermod -d /config paperless
 
 ENV HOME="/config"
 
