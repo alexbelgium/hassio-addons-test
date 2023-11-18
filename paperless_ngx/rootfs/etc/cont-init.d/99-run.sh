@@ -2,6 +2,12 @@
 # shellcheck shell=bash
 # shellcheck disable=SC2155
 
+##############
+# Copy files #
+##############
+
+cp -nr /usr/src/paperless/* /config/
+
 ####################
 # Define variables #
 ####################

@@ -62,6 +62,7 @@
   "init": false,
   "map": [
     "addon_config:rw",
+    "homeassistant_config:rw",
     "share:rw",
     "media:rw",
     "ssl"
@@ -115,6 +116,6 @@
   ],
   "slug": "paperless_ng",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.0-2",
+  "version": "2.0-3",
   "webui": "http://[HOST]:[PORT:8000]"
 }
