@@ -7,6 +7,7 @@
 ##############
 
 cp -nr /usr/src/paperless/* /config/
+chown -R paperless:paperless /config
 
 ####################
 # Define variables #
