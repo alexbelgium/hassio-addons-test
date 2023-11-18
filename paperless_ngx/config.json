@@ -61,7 +61,7 @@
   },
   "init": false,
   "map": [
-    "addon_configs:rw",
+    "addon_config:rw",
     "share:rw",
     "media:rw",
     "ssl"
