@@ -29,11 +29,10 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Add custom scripts
-RUN sed -i "2a /./ha_entrypoint.sh" /sbin/docker-entrypoint.sh
-
-# Global LSIO modifications
-# Correct config location
-RUN for file in $(grep -sril "/usr/src/paperless" /etc /defaults); do sed -Ei "s=/usr/src/paperless=/config=g" "$file"; done
+RUN sed -i "2a /./ha_entrypoint.sh" /sbin/docker-entrypoint.sh && \
+    # Correct config location
+    for file in $(grep -sril "/usr/src/paperless" /etc /defaults); do sed -Ei "s=/usr/src/paperless=/config=g" "$file"; done && \
+    usermod -d /config paperless
 
 ##################
 # 3 Install apps #
