@@ -7,7 +7,8 @@
 ##############
 
 cp -nr /usr/src/paperless/* /config/
-ln -s /config/manage.py /usr/src/paperless/
+rm -r /usr/src/paperless
+ln -s  /config /usr/src/paperless
 chown -R paperless:paperless /config
 
 ####################
