@@ -1,21 +1,5 @@
-
-## 1.17.1 (19-08-2023)
-- Update to latest version from paperless-ngx/paperless-ngx
-
-## 1.17.0 (05-08-2023)
-- Update to latest version from paperless-ngx/paperless-ngx
-
-## 1.16.5 (01-07-2023)
-- Update to latest version from paperless-ngx/paperless-ngx
-
-## 1.16.3 (24-06-2023)
-- Update to latest version from paperless-ngx/paperless-ngx
-
-## 1.16.1 (17-06-2023)
-- Update to latest version from paperless-ngx/paperless-ngx
-
-## 1.15.1 (10-06-2023)
-- Update to latest version from paperless-ngx/paperless-ngx
+- Update to new official image
+- Align to new config logic : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 
 ## 1.14.5 (19-05-2023)
 - Update to latest version from paperless-ngx/paperless-ngx
