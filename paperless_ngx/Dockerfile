@@ -34,6 +34,8 @@ RUN sed -i "2a /./ha_entrypoint.sh" /sbin/docker-entrypoint.sh && \
     for file in $(grep -sril "/usr/src/paperless" /etc /defaults); do sed -Ei "s=/usr/src/paperless=/config=g" "$file"; done && \
     usermod -d /config paperless
 
+ENV HOME="/config"
+
 ##################
 # 3 Install apps #
 ##################
