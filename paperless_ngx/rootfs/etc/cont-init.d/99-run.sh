@@ -91,8 +91,17 @@ for variable in USERMAP_UID USERMAP_GID PAPERLESS_TIME_ZONE PAPERLESS_URL PAPERL
         continue
     fi
 
+    # Export
+    export "$variable=$variablecontent"
     # Add to bashrc
     eval echo "$variable=\"$variablecontent\"" >> ~/.bashrc
+    # set .env
+    echo "$variable=\"$variablecontent\"" >> /.env || true
+    # set /etc/environmemt
+    mkdir -p /etc
+    echo "$variable=\"$variablecontent\"" >> /etc/environmemt
+    # For s6
+    if [ -d /var/run/s6/container_environment ]; then printf "%s" "${variablecontent}" > /var/run/s6/container_environment/"${variable}"; fi
 done
 
 #################
@@ -109,5 +118,3 @@ exec nginx & bashio::log.info "Starting nginx"
 # Staring app #
 ###############
 bashio::log.info "Initial username and password are admin. Please change in the administration panel of the webUI after login."
-
-#/./usr/local/bin/paperless_cmd.sh /sbin/docker-entrypoint.sh
