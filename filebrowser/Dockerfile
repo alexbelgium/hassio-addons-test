@@ -28,6 +28,10 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+# Correct healthcheck
+RUN sed -i "/json/d" /healthcheck.sh && \
+    sed -i "s=\$port=8080=g" /healthcheck.sh
+
 ##################
 # 3 Install apps #
 ##################
