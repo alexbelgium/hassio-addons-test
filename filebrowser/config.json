@@ -66,6 +66,7 @@
   "ingress": true,
   "ingress_stream": true,
   "map": [
+    "addon_config:rw",
     "media:rw",
     "all_addon_configs:rw",
     "homeassistant_config:rw",
