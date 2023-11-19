@@ -29,13 +29,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Add custom scripts
-RUN sed -i "2a /./ha_entrypoint.sh" /sbin/docker-entrypoint.sh && \
-    sed -i "s=python3 manage.py=python3 /usr/src/paperless/manage.py=g" /sbin/docker-entrypoint.sh && \
-    # Correct config location
-    for file in $(grep -sril "/usr/src/paperless" / 2>/dev/null); do sed -Ei "s=/usr/src/paperless=/config=g" "$file"; done && \
-    usermod -d /config paperless
-
-ENV HOME="/config"
+RUN sed -i "2a /./ha_entrypoint.sh" /sbin/docker-entrypoint.sh
 
 ##################
 # 3 Install apps #
@@ -70,7 +64,6 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
-WORKDIR "/config"
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/ha_entrypoint.sh" ]
 #SHELL ["/bin/bash", "-o", "pipefail", "-c"]
