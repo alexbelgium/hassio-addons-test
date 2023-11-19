@@ -2,16 +2,6 @@
 # shellcheck shell=bash
 # shellcheck disable=SC2155
 
-##############
-# Copy files #
-##############
-
-cp -nr /usr/src/paperless/* /config/
-# rm /usr/src/paperless/manage.py || true
-# touch /config/manage.py
-# ln -s  /config/manage.py /usr/src/paperless
-chown -R paperless:paperless /config
-
 ####################
 # Define variables #
 ####################
@@ -32,18 +22,19 @@ export PAPERLESS_ADMIN_PASSWORD="admin"
 export PAPERLESS_ADMIN_USER="admin"
 export PAPERLESS_ALLOWED_HOSTS="*"
 
-export PAPERLESS_DATA_DIR="/config"
+export PAPERLESS_DATA_DIR="/config/data"
 export PAPERLESS_MEDIA_ROOT="/config/media"
 export PAPERLESS_CONSUMPTION_DIR="/config/consume"
+export PAPERLESS_EXPORT_DIR="/config/export"
+chown -R paperless:paperless /config
 
-if bashio::config.has_value "PAPERLESS_DATA_DIR"; then export PAPERLESS_DATA_DIR=$(bashio::config "PAPERLESS_DATA_DIR"); fi
-if bashio::config.has_value "PAPERLESS_MEDIA_ROOT"; then export PAPERLESS_MEDIA_ROOT=$(bashio::config "PAPERLESS_MEDIA_ROOT"); fi
-if bashio::config.has_value "PAPERLESS_CONSUMPTION_DIR"; then export PAPERLESS_CONSUMPTION_DIR=$(bashio::config "PAPERLESS_CONSUMPTION_DIR"); fi
-
-for folder in "$PAPERLESS_DATA_DIR" "$PAPERLESS_MEDIA_ROOT" "$PAPERLESS_CONSUMPTION_DIR"; do
-    mkdir -p "$folder"
-    chmod -R 755 "$folder"
-    chown -R paperless:paperless "$folder"
+for variable in "PAPERLESS_DATA_DIR" "PAPERLESS_MEDIA_ROOT" "PAPERLESS_CONSUMPTION_DIR" "PAPERLESS_EXPORT_DIR"; do
+    # Import new variable if set in options
+    if bashio::config.has_value "$variable"; then export "$variable"=$(bashio::config "$variable"); fi
+    # Create folder and permissions if needed
+    mkdir -p "$variable"
+    chmod -R 755 "$variable"
+    chown -R paperless:paperless "$variable"
 done
 
 ###################
