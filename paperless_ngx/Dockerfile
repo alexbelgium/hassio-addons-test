@@ -28,10 +28,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-# Add custom scripts
-RUN sed -i "2a source /ha_entrypoint.sh" /sbin/docker-entrypoint.sh && \
-    sed -i "s=/./=source /=g" /ha_entrypoint.sh && \
-    sed -i "s=env bash=env bashio=g" /sbin/docker-entrypoint.sh
 #&& \
     # Correct pre-encoded paths
  #   for file in $(grep -sril "/usr/src/paperless/" /sbin /usr); do sed -i "s=/usr/src/paperless/=/config/=g" "$file"; done
@@ -68,6 +64,11 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 # Entrypoint modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
+
+# Add custom scripts
+RUN sed -i "2a source /ha_entrypoint.sh" /sbin/docker-entrypoint.sh && \
+    sed -i "s=/./=source /=g" /ha_entrypoint.sh && \
+    sed -i "s=env bash=env bashio=g" /sbin/docker-entrypoint.sh
 
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/ha_entrypoint.sh" ]
