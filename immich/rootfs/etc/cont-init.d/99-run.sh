@@ -1,6 +1,7 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
 # shellcheck disable=SC2155,SC2016
+set -e
 
 ###################################
 # Export all addon options as env #
@@ -60,7 +61,7 @@ if ! bashio::config.has_value 'DB_USERNAME' && \
     ! bashio::config.has_value 'DB_DATABASE_NAME' && \
     ! bashio::config.has_value 'JWT_SECRET' && \
     ! bashio::config.has_value 'DB_PORT'; then
-    ! bashio::exit.nok "Please make sure that the following options are set : DB_USERNAME, DB_HOSTNAME, DB_PASSWORD, DB_DATABASE_NAME, DB_PORT"
+    bashio::exit.nok "Please make sure that the following options are set : DB_USERNAME, DB_HOSTNAME, DB_PASSWORD, DB_DATABASE_NAME, DB_PORT"
 fi
 
 # Settings parameters

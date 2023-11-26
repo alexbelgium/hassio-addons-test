@@ -1,6 +1,53 @@
-## NOT PUSHED YET
+
+## 1.88.2 (25-11-2023)
+- Update to latest version from imagegenius/docker-immich
+### 1.88.1-7 (24-11-2023)
+- Minor bugs fixed
+### 1.88.1-6 (23-11-2023)
+- Minor bugs fixed
+### 1.88.1-5 (23-11-2023)
+- Minor bugs fixed
+- Fixed REDIS error
+
+## 1.88.1 (21-11-2023)
+- Update to latest version from imagegenius/docker-immich
+
+## 1.87.0 (19-11-2023)
+- Update to latest version from imagegenius/docker-immich
+
+## 1.86.0 (18-11-2023)
+- Update to latest version from imagegenius/docker-immich
+
+## 1.85.0 (11-11-2023)
+- Update to latest version from imagegenius/docker-immich
+
+## 1.84.0 (04-11-2023)
+- Update to latest version from imagegenius/docker-immich
+
+## 1.82.1 (20-10-2023)
+- Update to latest version from imagegenius/docker-immich
+
+## 1.81.1 (07-10-2023)
+- Update to latest version from imagegenius/docker-immich
+### 1.79.1-2 (24-09-2023)
+- Minor bugs fixed
+- Feat : new optional settings for ML workers and timeout https://github.com/alexbelgium/hassio-addons/issues/996
+
+## 1.79.1 (23-09-2023)
+- Update to latest version from imagegenius/docker-immich
+### 1.78.1-6 (22-09-2023)
+- Minor bugs fixed
+### 1.78.1-5 (21-09-2023)
+- Minor bugs fixed
 - YOU WILL LOSE DATA : the upstream container has removed the embedded postgres (read more https://github.com/imagegenius/docker-immich/issues/90). You now need to install and configure the postgress add-on from this same repo, and reference it in the addon options. This means you will lose your current database, and will need to recreate it from scratch. Your previous database will still be exported to the file /config/addons_config/immich/old_database.gzip. However exporting it to the postgres container is quite complex and not supported.
-- BREAKING CHANGE : referencing the postgres options is now required
+- BREAKING CHANGE : referencing the postgres options is now required. You can either install the postgres add-on from my repo, or this one for example : https://github.com/Expaso/hassos-addons/tree/master/timescaledb
+- Switch from jammy branch to latest due to deprecation
+
+## 1.78.1 (16-09-2023)
+- Update to latest version from imagegenius/docker-immich
+
+## 1.77.0 (09-09-2023)
+- Update to latest version from imagegenius/docker-immich
 
 ## 1.75.2 (27-08-2023)
 - Update to latest version from imagegenius/docker-immich

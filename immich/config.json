@@ -49,13 +49,23 @@
     "/dev/sdb3",
     "/dev/sda4",
     "/dev/sdb4",
+    "/dev/sda5",
+    "/dev/sda6",
+    "/dev/sda7",
+    "/dev/sda8",
     "/dev/nvme0",
     "/dev/nvme1",
     "/dev/nvme2"
   ],
   "environment": {
-    "REDIS_HOSTNAME": "localhost",
+    "CI_PORT": "8080",
+    "DOCKER_MODS": "imagegenius/mods:universal-redis",
     "MACHINE_LEARNING_CACHE_FOLDER": "/data/machine-learning",
+    "MACHINE_LEARNING_WORKERS": "1",
+    "MACHINE_LEARNING_WORKER_TIMEOUT": "120",
+    "REDIS_HOSTNAME": "localhost",
+    "REDIS_PORT": "6379",
+    "TRANSFORMERS_CACHE": "/data/machine-learning",
     "TYPESENSE_DATA_DIR": "/data/typesense"
   },
   "init": false,
@@ -74,10 +84,11 @@
     "DB_PASSWORD": "homeassistant",
     "DB_PORT": "5432",
     "DB_USERNAME": "postgres",
+    "DISABLE_MACHINE_LEARNING": false,
     "JWT_SECRET": "jt+OVWY6WqKJXw3xF5qOxN5L5/f4u2jlIlCQgWS3E4w=",
     "PGID": 1000,
     "PUID": 1000,
-    "TYPESENSE_ENABLED": false,
+    "TYPESENSE_ENABLED": true,
     "TZ": "Europe/Paris",
     "data_location": "/share/immich"
   },
@@ -100,6 +111,8 @@
     "DB_USERNAME": "str",
     "DISABLE_MACHINE_LEARNING": "bool?",
     "JWT_SECRET": "str",
+    "MACHINE_LEARNING_WORKERS": "int?",
+    "MACHINE_LEARNING_WORKER_TIMEOUT": "int?",
     "PGID": "int",
     "PUID": "int",
     "TYPESENSE_ENABLED": "bool",
@@ -115,7 +128,8 @@
     "mysql:want"
   ],
   "slug": "immich",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.75.2",
+  "version": "1.88.2",
   "webui": "http://[HOST]:[PORT:8080]"
 }
