@@ -1,0 +1,30 @@
+name: Weekly bash beautify
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
+      
+jobs:
+  beautify:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-python@v3
+      - name: "Install beautify"
+        uses: BSFishy/pip-action@v1
+        with:
+          packages: |
+            beautysh
+      - name: "Run beautify"
+        run: |
+          find . -name '*.sh' -print0 | xargs -0 beautysh --indent-size 4
+      - name: Commit if needed
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "Github bot : script beautyshied"
+          default_author: github_actions
