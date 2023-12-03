@@ -1,0 +1,10 @@
+{
+  "build_from": {
+    "aarch64": "trigus42/qbittorrentvpn:latest",
+    "amd64": "trigus42/qbittorrentvpn:latest",
+    "armv7": "trigus42/qbittorrentvpn:latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}

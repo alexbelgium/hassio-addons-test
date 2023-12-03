@@ -16,7 +16,6 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="4.6.1"
 FROM ${BUILD_FROM}
 
 ##################
@@ -27,19 +26,6 @@ FROM ${BUILD_FROM}
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
-
-
-# Environment variables
-ENV \
-    DEBIAN_FRONTEND="noninteractive"\
-    LANG="C.UTF-8" \
-    PS1="$(whoami)@$(hostname):$(pwd)$ " \
-    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
-    S6_CMD_WAIT_FOR_SERVICES=1 \
-    TERM="xterm-256color" \
-    HOME="/config/addons_config" \
-    XDG_CONFIG_HOME="/config/addons_config" \
-    XDG_DATA_HOME="/config/addons_config"
 
 # Image specific modifications
 # hadolint ignore=DL4006
@@ -56,11 +42,6 @@ RUN \
     && curl -f -s -S -O -J -L "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null \
     && unzip -o vuetorrent.zip -d / >/dev/null \
     && rm vuetorrent.zip >/dev/null
-
-# Global LSIO modifications
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
-ARG CONFIGLOCATION="/config/addons_config/qBittorrent"
-RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
 ##################
 # 3 Install apps #
