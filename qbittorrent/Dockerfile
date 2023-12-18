@@ -83,7 +83,7 @@ RUN \
     if [[ "${BUILD_ARCH}" != *amd64* ]]; then apk add python3-dev; else apk add python3; fi && \
     ln -sf python3 /usr/bin/python && \
     apk add --no-cache py3-pip gcc musl-dev && \
-    pip3 install --no-cache-dir --upgrade --requirement /qbit_manage/requirements.txt --ignore-installed
+    pip3 install --break-system-packages --no-cache-dir --ignore-installed --upgrade --requirement /qbit_manage/requirements.txt
 
 ##################
 # 3 Install apps #
