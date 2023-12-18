@@ -7,6 +7,7 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "qBittorrent is a bittorrent client",
   "devices": [
+    "/dev/net/tun",
     "/dev/dri",
     "/dev/dri/card0",
     "/dev/dri/card1",
@@ -62,21 +63,19 @@
   "environment": {
     "PGID": "0",
     "PUID": "0",
-    "WEBUI_PORT": "8080",
-    "ADDITIONAL_PORTS": "59595,6882",
-    "DOWNLOAD_DIR_CHOWN": "true",
-    "SET_FWMARK": "true"
+    "WEBUI_PORT": "8080"
   },
-  "image": "ghcr.io/alexbelgium/qbittorrent-{arch}",
+  "homeassistant": "2023.12.0",
   "ingress": true,
   "init": false,
   "map": [
     "media:rw",
     "addon_config:rw",
+    "homeassistant_config:rw",
     "share:rw",
     "ssl"
   ],
-  "name": "Qbittorrent New",
+  "name": "Qbittorrent",
   "options": {
     "DNS_server": "8.8.8.8,1.1.1.1",
     "PGID": "0",
@@ -86,6 +85,7 @@
     "certfile": "fullchain.pem",
     "customUI": "vuetorrent",
     "keyfile": "privkey.pem",
+    "qbit_manage": false,
     "ssl": false,
     "whitelist": "localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16"
   },
@@ -106,7 +106,6 @@
   },
   "privileged": [
     "SYS_ADMIN",
-    "SYS_MODULE",
     "DAC_READ_SEARCH",
     "NET_ADMIN"
   ],
@@ -125,19 +124,20 @@
     "keyfile": "str",
     "localdisks": "str?",
     "networkdisks": "str?",
-    "LAN_NETWORK": "str",
-    "VPN_ENABLED": "bool",
-    "VPN_PASSWORD": "str?",
-    "VPN_USERNAME": "str?",
-    "VPN_TYPE": "list(openvpn|wireguard)?",
+    "openvpn_alt_mode": "bool?",
+    "openvpn_config": "str?",
+    "openvpn_enabled": "bool?",
+    "openvpn_password": "str?",
+    "openvpn_username": "str?",
+    "qbit_manage": "bool?",
     "run_duration": "str?",
     "silent": "bool?",
     "smbv1": "bool?",
     "ssl": "bool",
     "whitelist": "str?"
   },
-  "slug": "qbittorrent_new",
+  "slug": "qbittorrent",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.6.2"
+  "version": "4.6.2_test"
 }

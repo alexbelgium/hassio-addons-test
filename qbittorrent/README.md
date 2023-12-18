@@ -23,9 +23,20 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 ---
 
 [Qbittorrent](https://github.com/qbittorrent/qBittorrent) is a cross-platform free and open-source BitTorrent client.
-This addon is based on the docker image from [trigus42](trigus42/qbittorrentvpn).
+This addon is based on the docker image from [linuxserver.io](https://www.linuxserver.io/).
+
+This addons has several configurable options :
+
+- allowing to mount local external drive, or smb share from the addon
+- [alternative webUI](https://github.com/qbittorrent/qBittorrent/wiki/List-of-known-alternate-WebUIs)
+- usage of ssl
+- ingress
+- optional openvpn support
+- allow setting specific DNS servers
 
 ## Configuration
+
+---
 
 Webui can be found at <http://homeassistant:8080>, or in your sidebar using Ingress.
 The default username/password : described in the startup log.
@@ -35,17 +46,13 @@ Network disk is mounted to /mnt/share name
 
 You need to map the exposed port in your router if you want the best speed and connectivity.
 
-Options can be configured through two ways :
-
-- Addon options
-
 ```yaml
 PGID: user
 GPID: user
 ssl: true/false
 certfile: fullchain.pem #ssl certificate, must be located in /ssl
 keyfile: privkey.pem #sslkeyfile, must be located in /ssl
-whitelist: "localhost,192.168.0.0/16" # list ip subnets that won't need a password (optional)
+whitelist: "localhost,192.168.0.0/16" # Type `null` to disable. List ip subnets that won't need a password (optional)
 customUI: selection from list # alternative webUI can be set here. Latest version set at each addon start. Select 'custom' to fill it yourself in the webui
 DNS_servers: 8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to avoid spamming in case of local DNS ad-remover
 SavePath: "/share/qbittorrent" # Define the download directory
@@ -62,12 +69,6 @@ openvpn_alt_mode: bind at container level and not app level
 run_duration: 12h #for how long should the addon run. Must be formatted as number + time unit (ex : 5s, or 2m, or 12h, or 5d...)
 silent: true #suppresses debug messages
 ```
-
-- Config.yaml (advanced usage)
-
-Additional variables can be set as ENV variables by adding them in the config.yaml in the location defined in your addon options according to this guide : https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-add-env-variables
-
-The complete list of ENV variables can be seen here : https://github.com/Trigus42/alpine-qbittorrentvpn#environment-variables
 
 ## Installation
 
@@ -118,7 +119,6 @@ pull-filter ignore "dhcp-option DNS6"
 pull-filter ignore "tun-ipv6"
 pull-filter ignore "ifconfig-ipv6"
 ```
-
 </details>
 
 <details>
@@ -130,28 +130,28 @@ pull-filter ignore "ifconfig-ipv6"
 
 ```json
 {
-  "folder/to/watch": {
-    "add_torrent_params": {
-      "category": "",
-      "content_layout": "Original",
-      "download_limit": -1,
-      "download_path": "[folder/for/INCOMPLETE_downloads]",
-      "operating_mode": "AutoManaged",
-      "ratio_limit": -2,
-      "save_path": "[folder/for/COMPLETED_downloads]",
-      "seeding_time_limit": -2,
-      "skip_checking": false,
-      "stopped": false,
-      "tags": [],
-      "upload_limit": -1,
-      "use_auto_tmm": false,
-      "use_download_path": true
-    },
-    "recursive": false
-  }
+    "folder/to/watch": {
+        "add_torrent_params": {
+            "category": "",
+            "content_layout": "Original",
+            "download_limit": -1,
+            "download_path": "[folder/for/INCOMPLETE_downloads]",
+            "operating_mode": "AutoManaged",
+            "ratio_limit": -2,
+            "save_path": "[folder/for/COMPLETED_downloads]",
+            "seeding_time_limit": -2,
+            "skip_checking": false,
+            "stopped": false,
+            "tags": [
+            ],
+            "upload_limit": -1,
+            "use_auto_tmm": false,
+            "use_download_path": true
+        },
+        "recursive": false
+    }
 }
 ```
-
 </details>
 
 <details>
@@ -171,14 +171,12 @@ Wait a couple minutes and restart addon, it could be a temporary unavailability 
 > [cont-init.d] 00-local_mounts.sh: exited 0.
 
 Try to mount by putting the partition label in the "localdisks" options instead of the hardware name
-
 </details>
 
 <details>
   <summary>### Loss of metadata fetching with openvpn after several days (@almico)</summary>
 
 Add `ping-restart 60` to your config.ovpn
-
 </details>
 
 <details>
@@ -186,7 +184,6 @@ Add `ping-restart 60` to your config.ovpn
 
 When my window size width is lower than 960 pixels my downloads are empty.
 Solution is to reset the Vuetorrent settings.
-
 </details>
 
 ## Support
