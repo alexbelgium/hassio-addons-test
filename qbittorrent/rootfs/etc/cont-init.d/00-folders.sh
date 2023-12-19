@@ -4,7 +4,6 @@
 mkdir -p /config/qBittorrent
 mkdir -p /config/wireguard
 mkdir -p /config/openvpn
-mkdir -p /config/qBittorrent/data
 
 MIGRATED=""
 
