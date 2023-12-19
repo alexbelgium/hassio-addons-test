@@ -41,7 +41,6 @@ fi
 if [ -f /homeassistant/addons_config/qbittorrent/config.yaml ] && [ ! -f /homeassistant/addons_config/qbittorrent/migrated ]; then
     cp -rnf /homeassistant/addons_config/qbittorrent/* /config/
     rm -r /homeassistant/addons_config/qbittorrent
-    touch /homeassistant/addons_config/qbittorrent/migrated
     bashio::log.yellow "... moved config.yaml from /config/addons_config/qbittorrent to /addon_configs/$HOSTNAME"
 fi
 
