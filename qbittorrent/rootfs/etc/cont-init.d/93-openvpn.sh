@@ -16,6 +16,19 @@ if bashio::config.true 'openvpn_enabled'; then
     # Get current ip
     curl -s ipecho.net/plain > /currentip
 
+    # Sanitize files
+    for file in /config/openvpn/*; do 
+        if [ -f "$file" ]; then
+            # Correct paths
+            sed -i "s=/etc/openvpn=/config/openvpn=g" "$file"
+
+            # Remove blank characters and add a trailing blank line
+            sed -i '/^[[:space:]]*$/d' "$file"
+            echo "" >> "$file"            
+        fi
+        done
+    fi
+
     #####################
     # CONFIGURE OPENVPN #
     #####################
@@ -37,19 +50,6 @@ if bashio::config.true 'openvpn_enabled'; then
     chmod 755 /etc/openvpn/up-qbittorrent.sh
     chmod +x /etc/openvpn/up.sh
     chmod +x /etc/openvpn/up-qbittorrent.sh
-
-    # Sanitize files
-    for file in /config/openvpn/*; do 
-        if [ -f "$file" ]; then
-            # Correct paths
-            sed -i "s=/etc/openvpn=/config/openvpn=g" "$file"
-
-            # Remove blank characters and add a trailing blank line
-            sed -i '/^[[:space:]]*$/d' "$file"
-            echo "" >> "$file"            
-        fi
-        done
-    fi
 
     bashio::log.info "openvpn correctly set, qbittorrent will run tunnelled through openvpn"
 
