@@ -132,7 +132,6 @@
     "qbit_manage": "bool?",
     "run_duration": "str?",
     "silent": "bool?",
-    "smbv1": "bool?",
     "ssl": "bool",
     "whitelist": "str?"
   },
