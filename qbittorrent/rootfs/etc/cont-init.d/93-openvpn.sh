@@ -30,9 +30,9 @@ if bashio::config.true 'openvpn_enabled'; then
             if [[ "$openvpn_config" == *".ovpn" ]] || [[ "$openvpn_config" == *".conf" ]]; then
                 echo "... configured ovpn file : using /addon_configs/$HOSTNAME/openvpn/$openvpn_config"
                 # Copy potential additional files
-                cp "/config/openvpn/*" /etc/openvpn/
+                cp /config/openvpn/* /etc/openvpn/
                 # Standardize file                
-                cp "/config/openvpn/${openvpn_config}" /etc/openvpn/config.ovpn
+                cp /config/openvpn/"${openvpn_config}" /etc/openvpn/config.ovpn
             # Not correct type
             else
                 bashio::exit.nok "Configured ovpn file : $openvpn_config is set but does not end by .ovpn ; it can't be used!"
@@ -53,9 +53,9 @@ if bashio::config.true 'openvpn_enabled'; then
             openvpn_config="${VPN_CONFIG##*/}"
             echo "... Openvpn enabled, but openvpn_config option empty. Selecting a random ovpn file : ${openvpn_config}"
             # Copy potential additional files
-            cp "/config/openvpn/*" /etc/openvpn/
+            cp /config/openvpn/* /etc/openvpn/
             # Standardize file
-            cp "/config/openvpn/${openvpn_config}" /etc/openvpn/config.ovpn
+            cp /config/openvpn/"${openvpn_config}" /etc/openvpn/config.ovpn
     
     # If openvpn_config not set, and folder is empty
     else
