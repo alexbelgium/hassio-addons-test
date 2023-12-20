@@ -12,7 +12,7 @@ if [ -f /homeassistant/addons_config/qBittorrent/qBittorrent.conf ] && [ ! -f /h
     bashio::log.warning "----------------------------------------"
     bashio::log.warning "Migrating configuration to the new addon"
     bashio::log.warning "----------------------------------------"
-    cp -rnp /homeassistant/addons_config/qBittorrent/* /config/qBittorrent/
+    cp -rnp /homeassistant/addons_config/qBittorrent/* /config/qBittorrent/ &>/dev/null || true
     if [ -d /config/qBittorrent/addons_config ]; then rm -r /config/qBittorrent/addons_config; fi
     if [ -d /config/qBittorrent/qBittorrent ]; then rm -r /config/qBittorrent/qBittorrent; fi
     echo "Files moved to /addon_configs/$HOSTNAME/openvpn" > /homeassistant/addons_config/qBittorrent/migrated
@@ -39,14 +39,14 @@ fi
 
 # Move config.yaml
 if [ -f /homeassistant/addons_config/qbittorrent/config.yaml ] && [ ! -f /homeassistant/addons_config/qbittorrent/migrated ]; then
-    cp -rnf /homeassistant/addons_config/qbittorrent/* /config/
+    cp -rnf /homeassistant/addons_config/qbittorrent/* /config/ &>/dev/null || true
     rm -r /homeassistant/addons_config/qbittorrent
     bashio::log.yellow "... moved config.yaml from /config/addons_config/qbittorrent to /addon_configs/$HOSTNAME"
 fi
 
 # Move autoscript
 if [ -f /homeassistant/addons_autoscrips/qbittorrent.sh ]; then
-    cp -rnf /homeassistant/addons_autoscrips/qbittorrent.sh /config/
+    cp -rnf /homeassistant/addons_autoscrips/qbittorrent.sh /config/ &>/dev/null || true
     mv /homeassistant/addons_autoscrips/qbittorrent.sh /homeassistant/addons_autoscrips/qbittorrent.sh.bak
     bashio::log.yellow "... moved qbittorrent.sh from /config/addons_autoscripts to /addon_configs/$HOSTNAME"
 fi
