@@ -32,7 +32,7 @@ fi
 # Move openvpn
 if [ -d /homeassistant/openvpn ]; then
     if [ ! -f /homeassistant/openvpn/migrated ] && [ "$(ls -A /homeassistant/openvpn)" ]; then
-        cp -rnf /homeassistant/openvpn/* /config/openvpn
+        cp -rnf /homeassistant/openvpn/* /config/openvpn &>/dev/null || true
         echo "Files moved to /addon_configs/$HOSTNAME/openvpn" > /homeassistant/openvpn/migrated
     fi
 fi
