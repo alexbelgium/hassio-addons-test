@@ -11,41 +11,36 @@ QBT_CONFIG_FILE="/config/qBittorrent/qBittorrent.conf"
 
 if bashio::config.true 'openvpn_enabled'; then
 
-    bashio::log.info "Configuring openvpn"
+    bashio::log.info "----------------------------"
+    bashio::log.info "Openvpn enabled, configuring"
+    bashio::log.info "----------------------------"
 
     # Get current ip
     curl -s ipecho.net/plain > /currentip
-
-    # Sanitize files
-    for file in /config/openvpn/*; do 
-        if [ -f "$file" ]; then
-            # Correct paths
-            sed -i "s=/etc/openvpn=/config/openvpn=g" "$file"
-
-            # Remove blank characters and add a trailing blank line
-            sed -i '/^[[:space:]]*$/d' "$file"
-            echo "" >> "$file"            
-        fi
-        done
-    fi
 
     #####################
     # CONFIGURE OPENVPN #
     #####################
 
-    openvpn_config=$(bashio::config 'openvpn_config')
-
-    if [[ "$openvpn_config" == *".ovpn" ]] || [[ "$openvpn_config" == *".conf" ]]; then
-        # Used specified openvpn file
+    # If openvpn_config option used
+    if bashio::config.has_value "$openvpn_config"; then
+        openvpn_config="$(bashio::config 'openvpn_config')"
+        # If file found
         if [ -f /config/openvpn/"$openvpn_config" ]; then
-            bashio::log.info "Configured ovpn file : using /addon_configs/$HOSTNAME/openvpn/$openvpn_config"
-            cp "/config/openvpn/${openvpn_config}" /etc/openvpn/config.ovpn || bashio::log.error "openvpn config file not found in /config/openvpn/${openvpn_config}"
+            # If correct type
+            if [[ "$openvpn_config" == *".ovpn" ]] || [[ "$openvpn_config" == *".conf" ]]; then
+                echo "... configured ovpn file : using /addon_configs/$HOSTNAME/openvpn/$openvpn_config"
+                cp "/config/openvpn/${openvpn_config}" /etc/openvpn/config.ovpn
+            # Not correct type
+            else
+                bashio::exit.nok "Configured ovpn file : $openvpn_config is set but does not end by .ovpn ; it can't be used!"
+            fi
+        # File not found
         else
             bashio::exit.nok "Configured ovpn file : $openvpn_config not found! Are you sure you added it in /addon_configs/$HOSTNAME/openvpn using the Filebrowser addon ?"
         fi
 
-    elif [ ! -n "$openvpn_config" ]; then
-            bashio::exit.nok "Configured ovpn file : $openvpn_config is set but does not end by .ovpn ; it can't be used!"
+    # If openvpn_config not set, but folder is not empty
     elif [ "$(ls -A /config/openvpn/*.ovpn 2>/dev/null)" ]; then
             # Look for openvpn files
             # Wildcard search for openvpn config files and store results in array
@@ -55,16 +50,34 @@ if bashio::config.true 'openvpn_enabled'; then
             # Get the VPN_CONFIG name without the path and extension
             VPN_CONFIG_BASENAME="${VPN_CONFIG##*/}"
             VPN_CONFIG_NAME="${VPN_CONFIG_BASENAME%.*}"
-            bashio::log.info "Openvpn enabled, but openvpn_config option empty. Selecting a random ovpn file : ${VPN_CONFIG_BASENAME}"
+            echo "... Openvpn enabled, but openvpn_config option empty. Selecting a random ovpn file : ${VPN_CONFIG_BASENAME}"
+            cp "/config/openvpn/${VPN_CONFIG_BASENAME}" /etc/openvpn/config.ovpn
+    
+    # If openvpn_config not set, and folder is empty
     else
             bashio::exit.nok "Openvpn enabled, but no .ovpn files in the /addon_configs/$HOSTNAME/openvpn folder ! Exiting"        
     fi
 
+    # Correct paths
+    sed -i "s=/etc/openvpn=/config/openvpn=g" /etc/openvpn/config.ovpn
+
+    # Remove blank characters and add a trailing blank line
+    sed -i '/^[[:space:]]*$/d' /etc/openvpn/config.ovpn
+    echo "" >> /etc/openvpn/config.ovpn
+
     # Set credentials
-    openvpn_username=$(bashio::config 'openvpn_username')
-    echo "${openvpn_username}" >/etc/openvpn/credentials
-    openvpn_password=$(bashio::config 'openvpn_password')
-    echo "${openvpn_password}" >>/etc/openvpn/credentials
+    if bashio::config.has_value "$openvpn_username"; then
+        openvpn_username=$(bashio::config 'openvpn_username')
+        echo "${openvpn_username}" >/etc/openvpn/credentials
+    else
+        bashio::exit.nok "Openvpn is enabled, but openvpn_username option is empty! Exiting"
+    fi
+    if bashio::config.has_value "$openvpn_password"; then
+        openvpn_password=$(bashio::config 'openvpn_password')
+        echo "${openvpn_password}" >/etc/openvpn/credentials
+    else
+        bashio::exit.nok "Openvpn is enabled, but openvpn_password option is empty! Exiting"
+    fi
     sed -i 's/auth-user-pass.*/auth-user-pass \/etc\/openvpn\/credentials/g' /etc/openvpn/config.ovpn
 
     # Permissions
@@ -75,7 +88,7 @@ if bashio::config.true 'openvpn_enabled'; then
     chmod +x /etc/openvpn/up.sh
     chmod +x /etc/openvpn/up-qbittorrent.sh
 
-    bashio::log.info "openvpn correctly set, qbittorrent will run tunnelled through openvpn"
+    echo "... openvpn correctly set, qbittorrent will run tunnelled through openvpn"
 
     #########################
     # CONFIGURE QBITTORRENT #
