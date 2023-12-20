@@ -35,7 +35,30 @@ if bashio::config.true 'openvpn_enabled'; then
 
     openvpn_config=$(bashio::config 'openvpn_config')
 
-    cp "/config/openvpn/${openvpn_config}" /etc/openvpn/config.ovpn || bashio::log.error "openvpn config file not found in /config/openvpn/${openvpn_config}"
+    if [[ "$openvpn_config" == *".ovpn" ]] || [[ "$openvpn_config" == *".conf" ]]; then
+        # Used specified openvpn file
+        if [ -f /config/openvpn/"$openvpn_config" ]; then
+            bashio::log.info "Configured ovpn file : using /addon_configs/$HOSTNAME/openvpn/$openvpn_config"
+            cp "/config/openvpn/${openvpn_config}" /etc/openvpn/config.ovpn || bashio::log.error "openvpn config file not found in /config/openvpn/${openvpn_config}"
+        else
+            bashio::exit.nok "Configured ovpn file : $openvpn_config not found! Are you sure you added it in /addon_configs/$HOSTNAME/openvpn using the Filebrowser addon ?"
+        fi
+
+    elif [ ! -n "$openvpn_config" ]; then
+            bashio::exit.nok "Configured ovpn file : $openvpn_config is set but does not end by .ovpn ; it can't be used!"
+    elif [ "$(ls -A /config/openvpn/*.ovpn)" ]; then
+            # Look for openvpn files
+            # Wildcard search for openvpn config files and store results in array
+            mapfile -t VPN_CONFIGS < <( find /config/openvpn -maxdepth 1 -name "*.ovpn" -print )
+            # Choose random config
+            VPN_CONFIG="${VPN_CONFIGS[$RANDOM % ${#VPN_CONFIGS[@]}]}"
+            # Get the VPN_CONFIG name without the path and extension
+            VPN_CONFIG_BASENAME="${VPN_CONFIG##*/}"
+            VPN_CONFIG_NAME="${VPN_CONFIG_BASENAME%.*}"
+            bashio::log.info "Openvpn enabled, but openvpn_config option empty. Selecting a random ovpn file : ${VPN_CONFIG_BASENAME}"
+    else
+            bashio::exit.nok "Openvpn enabled, but no .ovpn files in the /addon_configs/$HOSTNAME/openvpn folder ! Exiting"        
+    fi
 
     openvpn_username=$(bashio::config 'openvpn_username')
     echo "${openvpn_username}" >/etc/openvpn/credentials
