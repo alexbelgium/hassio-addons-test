@@ -46,7 +46,7 @@ if bashio::config.true 'openvpn_enabled'; then
 
     elif [ ! -n "$openvpn_config" ]; then
             bashio::exit.nok "Configured ovpn file : $openvpn_config is set but does not end by .ovpn ; it can't be used!"
-    elif [ "$(ls -A /config/openvpn/*.ovpn)" ]; then
+    elif [ "$(ls -A /config/openvpn/*.ovpn 2>/dev/null)" ]; then
             # Look for openvpn files
             # Wildcard search for openvpn config files and store results in array
             mapfile -t VPN_CONFIGS < <( find /config/openvpn -maxdepth 1 -name "*.ovpn" -print )
@@ -60,6 +60,7 @@ if bashio::config.true 'openvpn_enabled'; then
             bashio::exit.nok "Openvpn enabled, but no .ovpn files in the /addon_configs/$HOSTNAME/openvpn folder ! Exiting"        
     fi
 
+    # Set credentials
     openvpn_username=$(bashio::config 'openvpn_username')
     echo "${openvpn_username}" >/etc/openvpn/credentials
     openvpn_password=$(bashio::config 'openvpn_password')
