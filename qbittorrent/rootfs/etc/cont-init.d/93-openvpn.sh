@@ -22,7 +22,7 @@ if bashio::config.true 'openvpn_enabled'; then
     #####################
 
     # If openvpn_config option used
-    if bashio::config.has_value "$openvpn_config"; then
+    if bashio::config.has_value "openvpn_config"; then
         openvpn_config="$(bashio::config 'openvpn_config')"
         # If file found
         if [ -f /config/openvpn/"$openvpn_config" ]; then
