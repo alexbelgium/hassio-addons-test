@@ -48,10 +48,9 @@ if bashio::config.true 'openvpn_enabled'; then
             # Choose random config
             VPN_CONFIG="${VPN_CONFIGS[$RANDOM % ${#VPN_CONFIGS[@]}]}"
             # Get the VPN_CONFIG name without the path and extension
-            VPN_CONFIG_BASENAME="${VPN_CONFIG##*/}"
-            VPN_CONFIG_NAME="${VPN_CONFIG_BASENAME%.*}"
-            echo "... Openvpn enabled, but openvpn_config option empty. Selecting a random ovpn file : ${VPN_CONFIG_BASENAME}"
-            cp "/config/openvpn/${VPN_CONFIG_BASENAME}" /etc/openvpn/config.ovpn
+            openvpn_config="${VPN_CONFIG##*/}"
+            echo "... Openvpn enabled, but openvpn_config option empty. Selecting a random ovpn file : ${openvpn_config}"
+            cp "/config/openvpn/${openvpn_config}" /etc/openvpn/config.ovpn
     
     # If openvpn_config not set, and folder is empty
     else
