@@ -12,7 +12,7 @@ if [ -f /homeassistant/addons_config/qBittorrent/qBittorrent.conf ] && [ ! -f /h
     bashio::log.warning "----------------------------------------"
     bashio::log.warning "Migrating configuration to the new addon"
     bashio::log.warning "----------------------------------------"
-    cp -rnf /homeassistant/addons_config/qBittorrent/* /config/qBittorrent/
+    cp -rnp /homeassistant/addons_config/qBittorrent/* /config/qBittorrent/
     if [ -d /config/qBittorrent/addons_config ]; then rm -r /config/qBittorrent/addons_config; fi
     if [ -d /config/qBittorrent/qBittorrent ]; then rm -r /config/qBittorrent/qBittorrent; fi
     echo "Files moved to /addon_configs/$HOSTNAME/openvpn" > /homeassistant/addons_config/qBittorrent/migrated
