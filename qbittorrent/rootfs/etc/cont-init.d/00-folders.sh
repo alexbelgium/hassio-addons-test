@@ -22,10 +22,10 @@ fi
 
 # Move config
 if [ -f /config/qBittorrent/config/qBittorrent.conf ]; then
-    mv /config/qBittorrent/config/* /config/qBittorrent/
-    mv /config/qBittorrent/data/* /config/qBittorrent/
-    rm -r /config/qBittorrent/config
-    rm -r /config/qBittorrent/data
+    mv /config/qBittorrent/config/* /config/qBittorrent/ || true
+    mv /config/qBittorrent/data/* /config/qBittorrent/ || true
+    rm -r /config/qBittorrent/config || true
+    rm -r /config/qBittorrent/data || true
     MIGRATED=true
 fi
 
