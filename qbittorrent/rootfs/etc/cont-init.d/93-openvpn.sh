@@ -64,13 +64,13 @@ if bashio::config.true 'openvpn_enabled'; then
     echo "" >> /etc/openvpn/config.ovpn
 
     # Set credentials
-    if bashio::config.has_value "$openvpn_username"; then
+    if bashio::config.has_value "openvpn_username"; then
         openvpn_username=$(bashio::config 'openvpn_username')
         echo "${openvpn_username}" >/etc/openvpn/credentials
     else
         bashio::exit.nok "Openvpn is enabled, but openvpn_username option is empty! Exiting"
     fi
-    if bashio::config.has_value "$openvpn_password"; then
+    if bashio::config.has_value "openvpn_password"; then
         openvpn_password=$(bashio::config 'openvpn_password')
         echo "${openvpn_password}" >/etc/openvpn/credentials
     else
