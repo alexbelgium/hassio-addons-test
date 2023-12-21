@@ -73,7 +73,7 @@ chown -R "$PUID:$PGID" "$DOWNLOADS" || bashio::log.fatal "Error, please check de
 sed -i -e '/CSRFProtection/d' \
     -e '/ClickjackingProtection/d' \
     -e '/HostHeaderValidation/d' \
-    -e '/Address/d' \
+    -e '/WebUI\Address/d' \
     -e "$LINE i\WebUI\\\CSRFProtection=false" \
     -e "$LINE i\WebUI\\\ClickjackingProtection=false" \
     -e "$LINE i\WebUI\\\HostHeaderValidation=false" \
@@ -135,20 +135,18 @@ fi
 
 cd "$CONFIG_LOCATION"/ || true
 if bashio::config.has_value 'Username'; then
-    USERNAME=$(bashio::config 'Username')
-    #clean data
-    sed -i '/WebUI\\\Username/d' qBittorrent.conf
-    #add data
-    sed -i "/\[Preferences\]/a\WebUI\\\Username=$USERNAME" qBittorrent.conf
-    bashio::log.info "WEBUI username set to $USERNAME"
+    USERNAME="$(bashio::config 'Username')"
 else
-    if ! grep -q Username qBittorrent.conf; then
-        sed -i "/\[Preferences\]/a\WebUI\\\Username=admin" qBittorrent.conf
-    fi
+    USERNAME=admin
 fi
 
-LINE2="$(sed -n '/Password_PBKDF2/=' qBittorrent.conf)"
-if [[ "$LINE" -gt "$LINE2" ]]; then sed -i '/Password_PBKDF2/d' qBittorrent.conf; fi
+#clean data
+sed -i '/WebUI\\\Username/d' qBittorrent.conf
+#add data
+sed -i "/\[Preferences\]/a\WebUI\\\Username=$USERNAME" qBittorrent.conf
+bashio::log.info "WEBUI username set to $USERNAME"
+
+# Add default password if not existing
 if ! grep -q Password_PBKDF2 qBittorrent.conf; then
     sed -i "/\[Preferences\]/a\WebUI\\\Password_PBKDF2=\"@ByteArray(cps93Gf8ma8EM3QRon+spg==:wYFoMNVmdiqzWYQ6mFrvET+RRbBSIPVfXFFeEy0ZEagxvNuEF7uGVnG5iq8oeu38kGLtmJqCM2w8cTdtORDP2A==)\"" qBittorrent.conf
 fi
