@@ -70,10 +70,10 @@ chown -R "$PUID:$PGID" "$DOWNLOADS" || bashio::log.fatal "Error, please check de
 # Avoid bugs #
 ##############
 
-sed -i -e '/CSRFProtection/d' \
-    -e '/ClickjackingProtection/d' \
-    -e '/HostHeaderValidation/d' \
-    -e '/WebUI\Address/d' \
+sed -i -e "/CSRFProtection/d" \
+    -e "/ClickjackingProtection/d" \
+    -e "/HostHeaderValidation/d" \
+    -e "/WebUI\\\Address/d" \
     -e "/\[Preferences\]/a \WebUI\\\CSRFProtection=false" \
     -e "/\[Preferences\]/a \WebUI\\\ClickjackingProtection=false" \
     -e "/\[Preferences\]/a \WebUI\\\HostHeaderValidation=false" \
