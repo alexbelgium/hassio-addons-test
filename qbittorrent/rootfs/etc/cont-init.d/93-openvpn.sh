@@ -67,8 +67,7 @@ if bashio::config.true 'openvpn_enabled'; then
 
     # Remove ipv6
     if grep -q "ipv6" /etc/openvpn/config.ovpn; then
-      bashio::log.warning "ipv6 configured in the ovpn file but not compatible with the addon. It will be removed."
-      sed -i "/ipv6/d" /etc/openvpn/config.ovpn
+      bashio::log.warning "ipv6 configured in the ovpn file but not compatible with the addon. You should remove it."
     fi
     
     # Set credentials
