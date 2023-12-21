@@ -78,11 +78,11 @@ if bashio::config.true 'openvpn_enabled'; then
     fi
     if bashio::config.has_value "openvpn_password"; then
         openvpn_password=$(bashio::config 'openvpn_password')
-        echo "${openvpn_password}" >/etc/openvpn/credentials
+        echo "${openvpn_password}" >>/etc/openvpn/credentials
     else
         bashio::exit.nok "Openvpn is enabled, but openvpn_password option is empty! Exiting"
     fi
-    sed -i 's/auth-user-pass.*/auth-user-pass \/etc\/openvpn\/credentials/g' /etc/openvpn/config.ovpn
+    sed -i '/auth-user-pass/d' /etc/openvpn/config.ovpn
 
     # Permissions
     chmod 600 /etc/openvpn/credentials
