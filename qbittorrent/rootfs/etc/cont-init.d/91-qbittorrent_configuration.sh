@@ -74,10 +74,10 @@ sed -i -e '/CSRFProtection/d' \
     -e '/ClickjackingProtection/d' \
     -e '/HostHeaderValidation/d' \
     -e '/WebUI\Address/d' \
-    -e "$LINE i\WebUI\\\CSRFProtection=false" \
-    -e "$LINE i\WebUI\\\ClickjackingProtection=false" \
-    -e "$LINE i\WebUI\\\HostHeaderValidation=false" \
-    -e "$LINE i\WebUI\\\Address=\*" qBittorrent.conf
+    -e "/\[Preferences\]/a \WebUI\\\CSRFProtection=false" \
+    -e "/\[Preferences\]/a \WebUI\\\ClickjackingProtection=false" \
+    -e "/\[Preferences\]/a \WebUI\\\HostHeaderValidation=false" \
+    -e "/\[Preferences\]/a \WebUI\\\Address=\*" qBittorrent.conf
 
 #sed -i '/WebUI\ReverseProxySupportEnabled/d' qBittorrent.conf
 #sed -i "$LINE i\WebUI\\\ReverseProxySupportEnabled=true" qBittorrent.conf
