@@ -92,6 +92,7 @@ if bashio::config.true 'openvpn_enabled'; then
     fi
 
     # Permissions
+    chmod 755 /etc/openvpn/*
     chmod 600 /etc/openvpn/credentials
     chmod 755 /etc/openvpn/up.sh
     chmod 755 /etc/openvpn/down.sh
