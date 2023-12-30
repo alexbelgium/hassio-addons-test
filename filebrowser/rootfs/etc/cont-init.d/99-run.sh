@@ -93,7 +93,7 @@ fi
 bashio::log.info "Starting..."
 
 # shellcheck disable=SC2086
-/./filebrowser $CERTFILE $KEYFILE --port --root="$BASE_FOLDER" --address=0.0.0.0 --database=/config/addons_config/filebrowser/filebrowser.dB "$NOAUTH" &
+/./filebrowser $CERTFILE $KEYFILE --port 8080 --root="$BASE_FOLDER" --address=0.0.0.0 --database=/config/addons_config/filebrowser/filebrowser.dB "$NOAUTH" &
 bashio::net.wait_for 8080 localhost 900 || true
 bashio::log.info "Started !"
 exec nginx
