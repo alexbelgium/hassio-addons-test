@@ -35,7 +35,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 USER root
 
 # Correct config location
-RUN for file in $(grep -srl "/2fauth" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's|/2fauth|/config|g' "$file"; done
+RUN for file in $(grep -srl "/2fauth" /usr /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's|/2fauth|/config|g' "$file"; done
 
 ##################
 # 3 Install apps #
