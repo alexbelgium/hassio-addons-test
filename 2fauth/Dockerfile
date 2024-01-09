@@ -32,6 +32,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 #ARG CONFIGLOCATION="/config/addons_config/2fauth"
 #RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
+USER root
+
 # Correct config location
 RUN for file in $(grep -srl "/2fauth" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's|/2fauth|/config|g' "$file"; done
 
