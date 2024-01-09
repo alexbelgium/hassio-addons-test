@@ -36,7 +36,8 @@ USER root
 
 # Correct config location
 RUN for file in $(grep -srl "/2fauth" /usr /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's|/2fauth|/config|g' "$file"; done && \
-    sed -i "1a /./ha_entrypoint.sh" /usr/local/bin/entrypoint.sh
+    sed -i "1a /./ha_entrypoint.sh" /usr/local/bin/entrypoint.sh && \
+    sed -i "s|/bin/sh|/usr/bin/env bashio|g" /usr/local/bin/entrypoint.sh
 
 ##################
 # 3 Install apps #
