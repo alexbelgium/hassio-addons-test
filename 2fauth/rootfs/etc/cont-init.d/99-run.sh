@@ -6,4 +6,4 @@ bashio::log.info "---"
 bashio::log.info "Starting app"
 bashio::log.info "---"
 
-/./usr/local/bin/entrypoint.sh
+#/./usr/local/bin/entrypoint.sh
