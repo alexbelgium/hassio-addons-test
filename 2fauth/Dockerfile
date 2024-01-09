@@ -69,8 +69,8 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 RUN sed -i 's|{LOG_LEVEL:|{8:|g' /usr/lib/bashio/bashio.sh
 
 # Use custom entrypoint
-# ENTRYPOINT [ "/usr/bin/env" ]
-# CMD [ "/ha_entrypoint.sh" ]
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/ha_entrypoint.sh" ]
 
 ############
 # 5 Labels #
