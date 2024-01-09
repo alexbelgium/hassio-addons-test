@@ -14,7 +14,7 @@
   "map": [
     "addon_config:rw"
   ],
-  "name": "2Fauth",
+  "name": "2FAuth",
   "ports": {
     "8000/tcp": 8000
   },
