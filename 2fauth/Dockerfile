@@ -27,14 +27,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-# Global LSIO modifications
-#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
-#ARG CONFIGLOCATION="/config/addons_config/2fauth"
-#RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
-
-USER root
-
 # Correct config location
+USER root
 RUN for file in $(grep -srl "/2fauth" /usr /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's|/2fauth|/config|g' "$file"; done
 
 ##################
@@ -72,6 +66,8 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 
 # Avoid interference with LOG_LEVEL used in the app
 RUN sed -i 's|{LOG_LEVEL:|{8:|g' /usr/lib/bashio/bashio.sh
+
+# Use custom entrypoint
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]
 
