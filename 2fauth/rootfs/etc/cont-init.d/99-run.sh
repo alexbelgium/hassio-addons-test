@@ -6,5 +6,4 @@ bashio::log.info "---"
 bashio::log.info "Starting app"
 bashio::log.info "---"
 
-chmod 777 /usr/local/bin/entrypoint.sh
-exec /usr/local/bin/entrypoint.sh
+bash /usr/local/bin/entrypoint.sh
