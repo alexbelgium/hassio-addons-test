@@ -15,6 +15,9 @@
     "addon_config:rw"
   ],
   "name": "2FAuth",
+  "options": {
+    "APP_KEY": "SomeRandomStringOf32CharsExactly"
+  },
   "ports": {
     "8000/tcp": 8000
   },
@@ -22,6 +25,7 @@
     "8000/tcp": "Web interface"
   },
   "schema": {
+    "APP_KEY": "str",
     "APP_URL": "str",
     "SITE_OWNER": "str?",
     "MAIL_DRIVER": "str?",
