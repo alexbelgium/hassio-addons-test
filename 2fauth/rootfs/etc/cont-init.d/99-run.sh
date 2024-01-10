@@ -2,4 +2,4 @@
 # shellcheck shell=bash
 set -e
 
-exec /usr/local/bin/entrypoint.sh
+sudo -u 1000:1000 -s /bin/sh -c "/usr/local/bin/entrypoint.sh"
