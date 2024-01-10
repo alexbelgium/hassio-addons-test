@@ -36,6 +36,6 @@
   "slug": "2fauth",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/2fauth",
-  "version": "1.0",
+  "version": "1.1",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8000]"
 }
