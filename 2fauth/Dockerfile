@@ -25,11 +25,12 @@ FROM ${BUILD_FROM}
 # Correct config location
 USER root
 
+# Configure entrypoint
 RUN adduser -u 1000 -S abc && addgroup -g 1000 -S abc && \
     echo "abc ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
-    sed -i "1a sudo -E '/./ha_entrypoint.sh' || true" /usr/local/bin/entrypoint.sh
-
-#RUN for file in $(grep -srl "/2fauth" /usr /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's|/2fauth|/config|g' "$file"; done
+    sed -i "1a sudo -E '/./ha_entrypoint.sh' || true" /usr/local/bin/entrypoint.sh && \
+    # Adapt config location
+    for file in $(grep -srl "/2fauth" /usr /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's|/2fauth|/config|g' "$file"; done
 
 ##################
 # 3 Install apps #
