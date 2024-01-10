@@ -31,6 +31,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 USER root
 RUN for file in $(grep -srl "/2fauth" /usr /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's|/2fauth|/config|g' "$file"; done && \
     sed -i "1a /./ha_entrypoint.sh" /usr/local/bin/entrypoint.sh
+ENV PUID=1000 \
+    GUID=1000
 
 ##################
 # 3 Install apps #
@@ -70,8 +72,6 @@ RUN sed -i 's|{LOG_LEVEL:|{8:|g' /usr/lib/bashio/bashio.sh
 ENV LOG_LEVEL=notice
 
 # Use custom entrypoint
-ENV PUID=1000 \
-    GUID=1000
 USER $PUID:$PGID
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]
