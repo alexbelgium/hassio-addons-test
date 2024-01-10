@@ -1,9 +1,5 @@
-#!/usr/bin/env bashio
+#!/bin/sh
 # shellcheck shell=bash
 set -e
 
-bashio::log.info "---"
-bashio::log.info "Starting app"
-bashio::log.info "---"
-
-sudo -u 1000:1000 /usr/local/bin/entrypoint.sh
+/./usr/local/bin/entrypoint.sh
