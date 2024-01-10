@@ -7,7 +7,7 @@ set -e
 if [[ "$(bashio::config "APP_KEY")" == *"SomeRandomStringOf32CharsExactly"* ]]; then
     bashio::log.warning "APP_KEY is still default, a new one will be generated with a backup stored in /config"
     # Generate 32 characters
-    APP_KEY="$(openssl rand -base64 12)"
+    APP_KEY="$(openssl rand -base64 32)"
     # Adapt addon options
     bashio::addon.option APP_KEY "$APP_KEY"
     # Backup APP_KEY
