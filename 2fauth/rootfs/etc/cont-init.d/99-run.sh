@@ -13,7 +13,7 @@ if [[ "$(bashio::config "APP_KEY")" == *"SomeRandomStringOf32CharsExactly"* ]]; 
     # Generate 32 characters
     APP_KEY="$(tr -dc 'a-zA-Z0-9' < /dev/urandom | fold -w 32 | head -n 1)"
     # Adapt addon options
-    bashio::addon.option "APP_KEY" "$APP_KEY"
+    bashio::addon.option APP_KEY "$APP_KEY"
     # Backup APP_KEY
     echo "Create backup file"
     file=/config/APP_KEY_"$(date +"%Y-%m-%d")"
