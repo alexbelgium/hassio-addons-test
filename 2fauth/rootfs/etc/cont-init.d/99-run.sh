@@ -3,6 +3,7 @@
 # shellcheck disable=SC2086
 set -e
 
+echo "Setting permissions"
 chmod -R 777 /config
 chown -R 1000:1000 /config
 
