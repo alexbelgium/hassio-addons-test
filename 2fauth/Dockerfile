@@ -22,57 +22,52 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
-# Set S6 wait time
-ENV S6_CMD_WAIT_FOR_SERVICES=1 \
-    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_SERVICES_GRACETIME=0
-
 # Correct config location
-USER root
-RUN for file in $(grep -srl "/2fauth" /usr /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's|/2fauth|/config|g' "$file"; done && \
-    # Create user for sudo
-    adduser -u 1000 -S abc && addgroup -g 1000 -S abc
+#USER root
+#RUN for file in $(grep -srl "/2fauth" /usr /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's|/2fauth|/config|g' "$file"; done && \
+#    # Create user for sudo
+#    adduser -u 1000 -S abc && addgroup -g 1000 -S abc
 
 ##################
 # 3 Install apps #
 ##################
 
 # Add rootfs
-COPY rootfs/ /
+#COPY rootfs/ /
 
 # Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh"
+#ARG MODULES="00-banner.sh 01-custom_script.sh"
 
 # Automatic modules download
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
-RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
+#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
+#RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="jq curl bash sudo"
+#ENV PACKAGES="jq curl bash sudo"
 
 # Automatic apps & bashio
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
-RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
+#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
+#RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
 
 ################
 # 4 Entrypoint #
 ################
 
 # Add entrypoint
-ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
+#ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
+#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 
 # Entrypoint modifications
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
-RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
+#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
+#RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
 # Avoid interference with LOG_LEVEL used in the app
-RUN sed -i 's|{LOG_LEVEL:|{8:|g' /usr/lib/bashio/bashio.sh
-ENV LOG_LEVEL=notice
+#RUN sed -i 's|{LOG_LEVEL:|{8:|g' /usr/lib/bashio/bashio.sh
+#ENV LOG_LEVEL=notice
 
 # Use custom entrypoint
-ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/ha_entrypoint.sh" ]
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/ha_entrypoint.sh" ]
 
 ############
 # 5 Labels #
