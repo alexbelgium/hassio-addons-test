@@ -2,4 +2,4 @@
 # shellcheck shell=bash
 set -e
 
-/./usr/local/bin/entrypoint.sh
+exec /usr/local/bin/entrypoint.sh
