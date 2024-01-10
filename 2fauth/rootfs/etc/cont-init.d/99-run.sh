@@ -5,4 +5,4 @@ set -e
 
 bashio::log.info "Starting app"
 
-sudo -u 1000:1000 -s /bin/sh -c "/usr/local/bin/entrypoint.sh"
+sudo -u abc -s /bin/sh -c "/usr/local/bin/entrypoint.sh"
