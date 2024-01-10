@@ -29,8 +29,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 # Correct config location
 USER root
-RUN for file in $(grep -srl "/2fauth" /usr /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's|/2fauth|/config|g' "$file"; done && \
-    sed -i "1a /./ha_entrypoint.sh" /usr/local/bin/entrypoint.sh
+RUN for file in $(grep -srl "/2fauth" /usr /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's|/2fauth|/config|g' "$file"; done
+#    sed -i "1a /./ha_entrypoint.sh" /usr/local/bin/entrypoint.sh
 ENV PUID=1000 \
     GUID=1000
 
