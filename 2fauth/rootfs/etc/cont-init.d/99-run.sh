@@ -4,7 +4,7 @@
 set -e
 
 # Check if APP_KEY is still default, if yes then generate a new one
-if [[ "$(bashio::config "APP_KEY")" == *"SomeRandomStringOf32CharsExactly"* ]]; then
+if [[ "$(bashio::config "APP_KEY")" == *"SomeRandomStringOf32CharsExactl1"* ]]; then
     bashio::log.warning "APP_KEY is still default, a new one will be generated with a backup stored in /config"
     # Generate 32 characters
     APP_KEY="$(openssl rand -base64 32)"
@@ -18,7 +18,7 @@ if [[ "$(bashio::config "APP_KEY")" == *"SomeRandomStringOf32CharsExactly"* ]]; 
         file2="$file_$counter"
         while [ -f "$file2" ]; do
             ((counter++))
-            file2="$file_$counter"            
+            file2="$file_$counter"
         done
     fi
     echo "$APP_KEY" > "$file"

@@ -11,13 +11,15 @@
     "TRUSTED_PROXIES": "*"
   },
   "init": false,
+  "ingress": true,
   "map": [
     "addon_config:rw"
   ],
   "name": "2FAuth",
   "options": {
-    "APP_KEY": "SomeRandomStringOf32CharsExactly"
+    "APP_KEY": "SomeRandomStringOf32CharsExactl1"
   },
+  "panel_icon": "mdi:lock-open",
   "ports": {
     "8000/tcp": 8000
   },
@@ -40,6 +42,6 @@
   "slug": "2fauth",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/2fauth",
-  "version": "1.4",
+  "version": "1.5",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8000]"
 }
