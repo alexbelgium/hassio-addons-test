@@ -34,7 +34,4 @@ echo "Setting permissions"
 chown -R 1000:1000 /config
 chmod -R 777 /config
 
-bashio::log.info "Starting nginx"
-nginx || true & true
-
 bashio::log.info "Starting app"
