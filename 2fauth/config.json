@@ -8,7 +8,8 @@
   "description": "web app to manage Two-Factor Authentication",
   "environment": {
     "DB_DATABASE": "/config/database.sqlite",
-    "TRUSTED_PROXIES": "*"
+    "TRUSTED_PROXIES": "*",
+    "APP_KEY": "SomeRandomStringOf32CharsExactl1"
   },
   "init": false,
   "ingress": true,
@@ -16,9 +17,6 @@
     "addon_config:rw"
   ],
   "name": "2FAuth",
-  "options": {
-    "APP_KEY": "SomeRandomStringOf32CharsExactl1"
-  },
   "panel_icon": "mdi:lock-open",
   "ports": {
     "8000/tcp": 8000
@@ -27,8 +25,8 @@
     "8000/tcp": "Web interface"
   },
   "schema": {
-    "APP_KEY": "str",
-    "APP_URL": "str",
+    "APP_KEY": "str?",
+    "APP_URL": "str?",
     "SITE_OWNER": "str?",
     "MAIL_DRIVER": "str?",
     "MAIL_HOST": "str?",
