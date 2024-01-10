@@ -6,6 +6,7 @@ set -e
 echo "Setting permissions"
 chmod -R 777 /config
 chown -R 1000:1000 /config
+cp /.env /srv
 
 # Check if APP_KEY is still default, if yes then generate a new one
 if [[ "$(bashio::config "APP_KEY")" == "SomeRandomStringOf32CharsExactly" ]]; then
