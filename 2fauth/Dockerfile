@@ -70,6 +70,9 @@ RUN sed -i 's|{LOG_LEVEL:|{8:|g' /usr/lib/bashio/bashio.sh
 ENV LOG_LEVEL=notice
 
 # Use custom entrypoint
+ENV PUID=1000 \
+    GUID=1000
+USER $PUID:$PGID
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]
 
