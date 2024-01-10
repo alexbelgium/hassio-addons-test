@@ -23,10 +23,13 @@ FROM ${BUILD_FROM}
 ##################
 
 # Correct config location
-#USER root
-#RUN for file in $(grep -srl "/2fauth" /usr /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's|/2fauth|/config|g' "$file"; done && \
-#    # Create user for sudo
-#    adduser -u 1000 -S abc && addgroup -g 1000 -S abc
+USER root
+
+RUN adduser -u 1000 -S abc && addgroup -g 1000 -S abc && \
+    echo "abc ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    sed -i "1a sudo -E '/./ha_entrypoint.sh' || true" /usr/local/bin/entrypoint.sh
+
+#RUN for file in $(grep -srl "/2fauth" /usr /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's|/2fauth|/config|g' "$file"; done
 
 ##################
 # 3 Install apps #
@@ -43,11 +46,11 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-#ENV PACKAGES="jq curl bash sudo"
+ENV PACKAGES="jq curl bash sudo"
 
 # Automatic apps & bashio
-#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
-#RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
+ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
+RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
 
 ################
 # 4 Entrypoint #
@@ -66,6 +69,7 @@ RUN sed -i 's|{LOG_LEVEL:|{8:|g' /usr/lib/bashio/bashio.sh
 ENV LOG_LEVEL=notice
 
 # Use custom entrypoint
+USER 1000:1000
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/ha_entrypoint.sh" ]
 
