@@ -19,7 +19,7 @@ if [[ "$(bashio::config "APP_KEY")" == *"SomeRandomStringOf32CharsExactly"* ]]; 
     if [ -f "$file" ]; then
         counter=1
         file2="$file_$counter"
-        while [ -f "$file2" ]; then
+        while [ -f "$file2" ]; do
             ((counter++))
             file2="$file_$counter"            
         done
