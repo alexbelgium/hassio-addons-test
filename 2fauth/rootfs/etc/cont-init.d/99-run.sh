@@ -15,6 +15,7 @@ if [[ "$(bashio::config "APP_KEY")" == *"SomeRandomStringOf32CharsExactly"* ]]; 
     # Adapt addon options
     bashio::addon.option "APP_KEY" "$APP_KEY"
     # Backup APP_KEY
+    echo "Create backup file"
     file=/config/APP_KEY_"$(date +"%Y-%m-%d")"
     if [ -f "$file" ]; then
         counter=1
