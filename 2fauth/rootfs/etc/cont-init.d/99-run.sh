@@ -30,4 +30,6 @@ if [[ "$(bashio::config "APP_KEY")" == *"SomeRandomStringOf32CharsExactly"* ]]; 
     bashio::addon.restart
 fi
 
+cp /.env /srv/.env
+
 bashio::log.info "Starting app"
