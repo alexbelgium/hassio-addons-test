@@ -28,7 +28,8 @@ sed -i "s|%%interface%%|${ingress_interface}|g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%subpath%%|${FB_BASEURL}/|g" /etc/nginx/servers/ingress.conf
 mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
-sed -i "/#RewriteBase/c RewriteBase /2fauth/" /var/www/2fauth/public/.htaccess
+sed -i "/#RewriteBase/c RewriteBase /2fauth/" /var/www/2fauth/public/.htaccess || true
+sed -i "/#RewriteBase/c RewriteBase /2fauth/" /src/public/.htaccess || true
 
 ###############
 # Set APP_KEY #
