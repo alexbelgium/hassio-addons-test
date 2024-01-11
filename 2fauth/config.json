@@ -9,10 +9,12 @@
   "environment": {
     "DB_DATABASE": "/config/database.sqlite",
     "TRUSTED_PROXIES": "*",
-    "APP_KEY": "SomeRandomStringOf32CharsExactl1"
+    "APP_KEY": "SomeRandomStringOf32CharsExactl1",
+    "APP_SUBDIRECTORY": "2fauth"
   },
   "init": false,
   "ingress": true,
+  "ingress_entry": "2fauth",
   "map": [
     "addon_config:rw"
   ],
