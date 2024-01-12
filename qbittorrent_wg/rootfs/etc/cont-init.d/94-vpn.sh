@@ -105,7 +105,7 @@ if bashio::config.true 'wireguard_enabled' || bashio::config.true 'openvpn_enabl
             line_number=0
             while read -r line; do
                 # Increment the line number
-                ((line_number++))
+                ((line_number=line_number+1))
 
                 # Check if lines starting with auth-user-pass have a valid argument
                 ###################################################################
@@ -117,7 +117,7 @@ if bashio::config.true 'wireguard_enabled' || bashio::config.true 'openvpn_enabl
                         # Insert to explain why a comment is made
                         sed -i "${line_number}i # The following line is commented out as does not contain a valid argument" "$file"
                         # Increment as new line added
-                        ((line_number++))
+                        ((line_number=line_number+1))
                         # Comment out the line
                         sed -i "${line_number}s/^/# /" "$file"
                         # Go to next line
