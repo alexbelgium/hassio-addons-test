@@ -74,7 +74,7 @@ RUN sed -i 's|{LOG_LEVEL:|{8:|g' /usr/lib/bashio/bashio.sh
 ENV LOG_LEVEL=notice
 
 # Use custom entrypoint
-#USER 1000:1000
+USER 1000:1000
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/ha_entrypoint.sh" ]
 
