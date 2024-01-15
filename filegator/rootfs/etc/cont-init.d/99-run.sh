@@ -6,6 +6,8 @@ set -e
 # Cooy data
 cp -rn /var/www/filegator/* /config/
 mkdir -p /config/private /config/repository
+chown -R www-data:www-data /config
+chmod -R 777 /config
 
 # Start app
 apache2-foreground docker-php-entrypoint
