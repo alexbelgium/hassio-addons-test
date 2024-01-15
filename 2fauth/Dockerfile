@@ -25,12 +25,16 @@ FROM ${BUILD_FROM}
 # Correct config location
 USER root
 
-# Configure entrypoint
+# Run ha_entrypoint
+ENV ha_entry_source="true"
 RUN adduser -u 1000 -S abc && addgroup -g 1000 -S abc && \
     echo "abc ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     sed -i "1a sudo -E 'source /ha_entrypoint.sh' || true" /usr/local/bin/entrypoint.sh && \
     sed -i "s=/\.=source =g" /ha_entrypoint.sh && \
     sed -i "s=env bash=env bashio=g" /usr/local/bin/entrypoint.sh && \
+    \
+    # Run nginx as root
+    sed -i "/sbin\/nginx/a user=root" /etc/supervisor/supervisord.conf && \
     \
     # Adapt config location
     for file in $(grep -srl "/2fauth" /usr /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's|/2fauth|/config|g' "$file"; done
@@ -74,7 +78,6 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 # Avoid interference with LOG_LEVEL used in the app
 RUN sed -i 's|{LOG_LEVEL:|{8:|g' /usr/lib/bashio/bashio.sh
 # Use source in ha_entrypoint
-ENV ha_entry_source="true"
 ENV LOG_LEVEL=notice
 
 # Use custom entrypoint
