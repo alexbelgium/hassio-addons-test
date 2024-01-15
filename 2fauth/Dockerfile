@@ -29,7 +29,7 @@ USER root
 ENV ha_entry_source="true"
 RUN adduser -u 1000 -S abc && addgroup -g 1000 -S abc && \
     echo "abc ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
-    sed -i "1a sudo -E bash -c 'source /ha_entrypoint.sh' || true" /usr/local/bin/entrypoint.sh && \
+    sed -i "1a sudo -E '/ha_entrypoint.sh' || true" /usr/local/bin/entrypoint.sh && \
     sed -i "s=env bash=env bashio=g" /usr/local/bin/entrypoint.sh && \
     \
     # Run nginx as root
