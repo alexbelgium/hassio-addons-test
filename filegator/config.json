@@ -7,7 +7,6 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "web app to manage Two-Factor Authentication",
   "environment": {
-    "APACHE_DOCUMENT_ROOT": "/config/dist/"
   },
   "init": false,
   "ingress": true,
