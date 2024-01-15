@@ -73,6 +73,8 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 
 # Avoid interference with LOG_LEVEL used in the app
 RUN sed -i 's|{LOG_LEVEL:|{8:|g' /usr/lib/bashio/bashio.sh
+# Use source in ha_entrypoint
+ENV ha_entry_source="true"
 ENV LOG_LEVEL=notice
 
 # Use custom entrypoint
