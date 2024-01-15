@@ -26,7 +26,7 @@ FROM ${BUILD_FROM}
 USER root
 
 # Run ha_entrypoint
-ENV ha_entry_source="true"
+#ENV ha_entry_source="true"
 
 ##################
 # 3 Install apps #
