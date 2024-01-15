@@ -27,19 +27,6 @@ USER root
 
 # Run ha_entrypoint
 ENV ha_entry_source="true"
-RUN adduser -u 1000 -S abc && addgroup -g 1000 -S abc && \
-    echo "abc ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
-    sed -i "1a sudo -E '/./ha_entrypoint.sh' || true" /usr/local/bin/entrypoint.sh && \
-    sed -i "s=/bin/sh=/usr/bin/bashio=g" /usr/local/bin/entrypoint.sh && \
-    \
-    # Run nginx as root
-    sed -i "/sbin\/nginx/a user=root" /etc/supervisor/supervisord.conf && \
-    \
-    # Adapt config location
-    for file in $(grep -srl "/2fauth" /usr /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's|/2fauth|/config|g' "$file"; done
-    # && \
-    # Configure ingress
-    #sed -i "/mime.types/a include /etc/nginx/servers/*.conf;" /etc/nginx/nginx.conf
 
 ##################
 # 3 Install apps #
@@ -74,15 +61,11 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
-# Avoid interference with LOG_LEVEL used in the app
-RUN sed -i 's|{LOG_LEVEL:|{8:|g' /usr/lib/bashio/bashio.sh
-# Use source in ha_entrypoint
-ENV LOG_LEVEL=notice
-
 # Use custom entrypoint
-USER 1000:1000
-#ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/ha_entrypoint.sh" ]
+WORKDIR /config
+USER www-data
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/ha_entrypoint.sh" ]
 
 ############
 # 5 Labels #
