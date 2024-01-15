@@ -9,5 +9,7 @@ mkdir -p /config/private /config/repository
 chown -R www-data:www-data /config
 chmod -R 777 /config
 
+bashio::log.info "Starting app. Default login : admin/admin123"
+
 # Start app
 apache2-foreground docker-php-entrypoint
