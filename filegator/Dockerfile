@@ -25,8 +25,9 @@ FROM ${BUILD_FROM}
 # Correct config location
 USER root
 
-# Run ha_entrypoint
-#ENV ha_entry_source="true"
+# Correct folders
+RUN sed -i "s|__DIR__\.'/repository'|'/config/repository'|g" /var/www/filegator/configuration.php && \
+    sed -i "s|__DIR__\.'/private'|'/config/private'|g" /var/www/filegator/configuration.php
 
 ##################
 # 3 Install apps #
