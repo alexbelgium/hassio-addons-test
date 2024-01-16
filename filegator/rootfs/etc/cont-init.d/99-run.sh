@@ -18,6 +18,7 @@ done
 # Correct configuration.php
 rm -r /var/www/filegator/configuration.php
 ln -s /config/configuration.php /var/www/filegator/configuration.php
+touch /var/log/apache2/error.log
 
 # Correct permissions
 chown -R www-data:www-data /var/log
@@ -26,4 +27,4 @@ chmod -R 755 /var/log
 bashio::log.info "Starting app. Default login : admin/admin123"
 
 # Start app
-sudo -u www-data -E /bin/bash -c "apache2-foreground" || true
+sudo -u www-data -E /bin/bash -c "apache2-foreground"
