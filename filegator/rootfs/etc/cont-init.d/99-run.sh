@@ -16,13 +16,9 @@ for folder in repository private; do
 done
 
 # Correct configuration.php
+cp -n /var/www/filegator/configuration.php /config/
 rm -r /var/www/filegator/configuration.php
 ln -s /config/configuration.php /var/www/filegator/configuration.php
-touch /var/log/apache2/error.log
-
-# Correct permissions
-chown -R www-data:www-data /var/log
-chmod -R 755 /var/log
 
 bashio::log.info "Starting app. Default login : admin/admin123"
 
