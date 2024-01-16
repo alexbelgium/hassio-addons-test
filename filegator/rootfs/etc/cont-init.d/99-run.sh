@@ -19,6 +19,10 @@ done
 rm -r /var/www/filegator/configuration.php
 ln -s /config/configuration.php /var/www/filegator/configuration.php
 
+# Correct permissions
+chown -R www-data:www-data /var/log
+chmod -R 755 /var/log
+
 bashio::log.info "Starting app. Default login : admin/admin123"
 
 # Start app
