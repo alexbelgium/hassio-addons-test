@@ -9,7 +9,7 @@ for folder in repository private; do
   chown -R www-data:www-data /config/"$folder"
   chmod -R 755 /config/"$folder"
   cp -rn /var/www/filegator/"$folder"/* /config/"$folder"/
-fi
+done
 
 # Correct configuration.php
 rm -r /var/www/filegator/configuration.php
