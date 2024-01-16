@@ -8,7 +8,9 @@ for folder in repository private; do
   mkdir -p /config/"$folder"
   chown -R www-data:www-data /config/"$folder"
   chmod -R 755 /config/"$folder"
-  cp -rn /var/www/filegator/"$folder"/* /config/"$folder"/
+  if [ -d /var/www/filegator/"$folder" ] && [ "$(ls -A /var/www/filegator/"$folder")" ]; then
+    cp -rn /var/www/filegator/"$folder"/* /config/"$folder"/
+  fi
 done
 
 # Correct configuration.php
