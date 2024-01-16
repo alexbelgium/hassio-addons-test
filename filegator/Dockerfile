@@ -25,6 +25,9 @@ FROM ${BUILD_FROM}
 # Correct config location
 USER root
 
+ENV APACHE_DOCUMENT_ROOT=/var/www/filegator/dist/
+ENV APACHE_PORT=8080
+
 # Correct folders
 RUN sed -i "s|__DIR__\.'/repository'|'/config/repository'|g" /var/www/filegator/configuration.php && \
     sed -i "s|__DIR__\.'/private'|'/config/private'|g" /var/www/filegator/configuration.php
