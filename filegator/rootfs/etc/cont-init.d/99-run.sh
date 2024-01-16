@@ -18,4 +18,4 @@ ln -s /config/configuration.php /var/www/filegator/configuration.php
 bashio::log.info "Starting app. Default login : admin/admin123"
 
 # Start app
-apache2-foreground
+sudo -u www-data -s /bin/bash -c "apache2-foreground" || true
