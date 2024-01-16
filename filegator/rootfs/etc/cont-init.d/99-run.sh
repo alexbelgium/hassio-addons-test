@@ -9,8 +9,8 @@ for folder in repository private; do
   chown -R www-data:www-data /config/"$folder"
   chmod -R 755 /config/"$folder"
   if [ -d /var/www/filegator/"$folder" ]; then
-    if [ -z "$(ls -A /var/www/filegator/"$folder")" ]; then
-      cp -rn /var/www/filegator/"$folder"/* /config/"$folder"/
+    if [ -z "$(ls -A /var/www/filegator/"$folder"/)" ]; then
+      cp -rn /var/www/filegator/"$folder"/* /config/"$folder"/ || true
     fi
   fi
 done
