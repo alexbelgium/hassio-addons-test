@@ -132,7 +132,7 @@ if bashio::config.true 'wireguard_enabled'; then
         # Join the filtered elements with commas and store in a variable
         allowed_ips=$(IFS=', '; echo "${filtered[*]}")
         # Store it in the conf file
-        sed -i "|^AllowedIPs|c AllowedIPs=$allowed_ips" /config/wireguard/"${openvpn_config}"
+        sed -i "/^AllowedIPs/c AllowedIPs=$allowed_ips" /config/wireguard/"${openvpn_config}"
 
     fi
 
