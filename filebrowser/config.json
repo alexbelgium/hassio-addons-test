@@ -109,5 +109,5 @@
   "slug": "filebrowser",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "latest-6"
+  "version": "2.27"
 }
