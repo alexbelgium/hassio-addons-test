@@ -254,15 +254,20 @@ if bashio::config.true 'wireguard_enabled' || bashio::config.true 'openvpn_enabl
         # Set gateway
         DEFAULT_IPV4_GATEWAY=$(ip -4 route list 0/0 | cut -d ' ' -f 3 | head -n 1)
 
-        # Default
-        ip rule add fwmark 8080 table webui
-        ip route add default via "$DEFAULT_IPV4_GATEWAY" table webui
-
-        # Look for local networks first
-        ip rule add fwmark 8080 table main suppress_prefixlength 1
+        # Route WebUI traffic over "$DEFAULT_IPV4_GATEWAY"
+        mkdir -p /etc/iproute2/
+        echo "8080 webui" >> /etc/iproute2/rt_tables
+        if [ -n "$DEFAULT_IPV4_GATEWAY" ]; then
+        	# Default
+        	ip rule add fwmark 8080 table webui 
+        	ip route add default via "$DEFAULT_IPV4_GATEWAY" table webui
+        	# Look for local networks first
+        	ip rule add fwmark 8080 table main suppress_prefixlength 1
+        fi
 
         # Ensure ingress is allowed in allowed_ips
-        allowed_ips="$(sed -n "/AllowedIPs/p" /config/openvpn/"${openvpn_config}")"
+        allowed_ips="$(sed -n "/AllowedIPs/p" /config/wireguard/"${openvpn_config}")"
+        allowed_ips="${allowed_ips//=*}"
         # Use comma as separator and read into an array
         IFS=',' read -ra ADDR <<< "$list"
         # Initialize an empty array to hold the filtered elements
