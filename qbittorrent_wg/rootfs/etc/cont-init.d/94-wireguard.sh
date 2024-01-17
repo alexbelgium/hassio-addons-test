@@ -76,8 +76,14 @@ if bashio::config.true 'wireguard_enabled'; then
         bashio::exit.nok "_enabled is set, however, your ${vpn} folder is empty ! Are you sure you added it in /addon_configs/$HOSTNAME/ using the Filebrowser addon ?"
     fi
 
-    # Send to script
+    ##################
+    # ADAPT RUN FILE #
+    ##################
+    
+    # Correct paths
     sed -i "s|/config/${vpn}/config${vpn_ending}|/config/${vpn}/${openvpn_config}|g" /etc/s6-overlay/s6-rc.d/svc-qbittorrent/run
+    # Correct interface
+    sed -i "s|tun0|${openvpn_config%.*}|g" /etc/s6-overlay/s6-rc.d/svc-qbittorrent/run
 
     #######################
     # WIREGUARD SPECIFICS #
