@@ -14,22 +14,24 @@ if bashio::config.true 'openvpn_enabled' && bashio::config.true 'wireguard_enabl
     bashio::addon.option 'wireguard_enabled' false
 fi
 
-# Set variables
-if bashio::config.true 'wireguard_enabled'; then
-    vpn="wireguard"
-    vpn_ending=".conf"
-    vpn_interface="wg0"
-fi
-
-# Permissions
-chmod 755 /config/openvpn/*
-chmod 755 /config/wireguard/*
-
 #################
 # CONFIGURE VPN #
 #################
 
 if bashio::config.true 'wireguard_enabled'; then
+
+    ##################
+    # INITIALISATION #
+    ##################
+
+    # Variables
+    vpn="wireguard"
+    vpn_ending=".conf"
+    vpn_interface="wg0"
+    
+    # Permissions
+    chmod 755 /config/openvpn/*
+    chmod 755 /config/wireguard/*
 
     ############
     # MESSAGES #
