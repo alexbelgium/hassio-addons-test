@@ -14,7 +14,6 @@
   },
   "init": false,
   "ingress": true,
-  "ingress_entry": "2fauth",
   "map": [
     "addon_config:rw"
   ],
