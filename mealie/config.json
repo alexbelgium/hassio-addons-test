@@ -105,7 +105,7 @@
     "keyfile": "str",
     "ssl": "bool"
   },
-  "slug": "mealie test",
+  "slug": "mealie_test",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "v1.0.0-3",
