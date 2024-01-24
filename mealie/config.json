@@ -72,13 +72,13 @@
     "WEB_GUNICORN": "true",
     "WORKERS_PER_CORE": "0.5"
   },
-  "ingress": true,  
+  "ingress": true,
   "map": [
     "config:rw",
     "share:rw",
     "ssl:rw"
   ],
-  "name": "Mealie",
+  "name": "Mealie test",
   "options": {
     "ALLOW_SIGNUP": true,
     "PGID": 1000,
@@ -105,7 +105,7 @@
     "keyfile": "str",
     "ssl": "bool"
   },
-  "slug": "mealie test",
+  "slug": "mealie",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "v1.0.0-3",
