@@ -84,7 +84,7 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "TZ": "bool",
+    "TZ": "str?",
     "PUID": "int?",
     "PGID": "int?",
     "CODEX_SKIP_INTEGRITY_CHECK": "int?",
