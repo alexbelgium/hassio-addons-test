@@ -54,7 +54,7 @@ else
     BASE_FOLDER=/
 fi
 
-bashio::log.info "Starting..."
+bashio::log.info "Starting with default password admin:admin..."
 
 # shellcheck disable=SC2086
 /./usr/local/bin/codex
