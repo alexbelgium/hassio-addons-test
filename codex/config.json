@@ -74,7 +74,7 @@
   },
   "panel_icon": "mdi:file-search",
   "ports": {
-    "9810/tcp": null
+    "9810/tcp": 9810
   },
   "ports_description": {
     "9810/tcp": "Web UI port"
@@ -93,5 +93,6 @@
   "slug": "codex",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.27"
+  "version": "2.27",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:9810]"
 }
