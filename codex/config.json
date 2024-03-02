@@ -72,9 +72,9 @@
   "name": "Codex",
   "options": {
   },
-  "panel_icon": "mdi:file-search",
+  "panel_icon": "mdi:book-open",
   "ports": {
-    "9810/tcp": 9810
+    "9810/tcp": null
   },
   "ports_description": {
     "9810/tcp": "Web UI port"
@@ -98,6 +98,5 @@
   "slug": "codex",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.27",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:9810]"
+  "version": "2.27"
 }

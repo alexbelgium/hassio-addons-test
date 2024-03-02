@@ -56,16 +56,11 @@ done
 # LAUNCH APP #
 ##############
 
-if bashio::config.has_value 'base_folder'; then
-    BASE_FOLDER=$(bashio::config 'base_folder')
-else
-    BASE_FOLDER=/
-fi
-
-bashio::log.info "Starting with default password admin:admin..."
+bashio::log.warning "Default password admin:admin..."
+bashio::log.info "Starting..."
 
 # shellcheck disable=SC2086
-/./usr/local/bin/codex
+/./usr/local/bin/codex & true
 
 bashio::net.wait_for 8080 localhost 900 || true
 bashio::log.info "Started !"
