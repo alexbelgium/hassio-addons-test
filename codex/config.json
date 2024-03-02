@@ -90,7 +90,7 @@
     "CODEX_SKIP_INTEGRITY_CHECK": "int?",
     "CODEX_RESET_ADMIN": "int?"
   },
-  "slug": "filebrowser",
+  "slug": "codex",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "2.27"
