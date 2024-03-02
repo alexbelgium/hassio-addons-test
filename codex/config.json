@@ -62,8 +62,7 @@
     "PUID": "0",
     "CODEX_CONFIG_DIR": "/config"
   },
-  "ingress": true,
-  "ingress_stream": true,
+  "image": "ghcr.io/alexbelgium/codex-{arch}",
   "map": [
     "addon_config:rw",
     "media:rw",
@@ -98,5 +97,6 @@
   "slug": "codex",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.27"
+  "version": "2.27",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:9810]"
 }
