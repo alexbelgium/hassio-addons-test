@@ -88,7 +88,12 @@
     "PUID": "int?",
     "PGID": "int?",
     "CODEX_SKIP_INTEGRITY_CHECK": "int?",
-    "CODEX_RESET_ADMIN": "int?"
+    "CODEX_RESET_ADMIN": "int?",
+    "cifsdomain": "str?",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
+    "localdisks": "str?",
+    "networkdisks": "str?"
   },
   "slug": "codex",
   "udev": true,
