@@ -48,7 +48,7 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 for file in /config/hypercorn.toml $(find /usr -name hypercorn.toml.default); do
     if [ -f "$file" ]; then
         sed -i "/root_path/d" "$file"
-        echo "root_path = \"${FB_BASEURL}\"" "$file"
+        echo "root_path = \"${FB_BASEURL}\"" >> "$file"
     fi
 done
 
