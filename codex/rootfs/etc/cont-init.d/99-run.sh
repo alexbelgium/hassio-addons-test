@@ -60,7 +60,7 @@ bashio::log.warning "Default password admin:admin..."
 bashio::log.info "Starting..."
 
 # shellcheck disable=SC2086
-/./usr/local/bin/codex & true
+/./usr/local/bin/codex
 
 bashio::net.wait_for 8080 localhost 900 || true
 bashio::log.info "Started !"
