@@ -44,6 +44,14 @@ sed -i "s|%%interface%%|${ingress_interface}|g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%subpath%%|${FB_BASEURL}/|g" /etc/nginx/servers/ingress.conf
 mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
+# Correct baseurl
+for file in /config/hypercorn.toml $(find /usr -name hypercorn.toml.default); do
+    if [ -f "$file" ]; then
+        sed -i "/root_path/d" "$file"
+        echo "root_path = \"${FB_BASEURL}\"" "$file"
+    fi
+done
+
 ##############
 # LAUNCH APP #
 ##############
