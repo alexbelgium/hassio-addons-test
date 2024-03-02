@@ -100,13 +100,3 @@ LABEL \
 #################
 # 6 Healthcheck #
 #################
-
-ENV HEALTH_PORT="9810" \
-    HEALTH_URL=""
-HEALTHCHECK \
-    --interval=5s \
-    --retries=5 \
-    --start-period=30s \
-    --timeout=25s \
-    CMD ping 127.0.0.1:9810 || exit 1
-
