@@ -58,11 +58,12 @@
     "/dev/nvme2"
   ],
   "environment": {
+    "CODEX_CONFIG_DIR": "/config",
     "PGID": "0",
-    "PUID": "0",
-    "CODEX_CONFIG_DIR": "/config"
+    "PUID": "0"
   },
-  "image": "ghcr.io/alexbelgium/codex-{arch}",
+  "ingress": true,
+  "ingress_stream": true,
   "map": [
     "addon_config:rw",
     "media:rw",
@@ -70,10 +71,12 @@
   ],
   "name": "Codex",
   "options": {
+    "PGID": "0",
+    "PUID": "0"
   },
   "panel_icon": "mdi:book-open",
   "ports": {
-    "9810/tcp": null
+    "9810/tcp": 9810
   },
   "ports_description": {
     "9810/tcp": "Web UI port"
@@ -83,11 +86,11 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "TZ": "str?",
-    "PUID": "int?",
-    "PGID": "int?",
-    "CODEX_SKIP_INTEGRITY_CHECK": "int?",
     "CODEX_RESET_ADMIN": "int?",
+    "CODEX_SKIP_INTEGRITY_CHECK": "int?",
+    "PGID": "int?",
+    "PUID": "int?",
+    "TZ": "str?",
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
@@ -97,6 +100,5 @@
   "slug": "codex",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.27",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:9810]"
+  "version": "1.0"
 }
