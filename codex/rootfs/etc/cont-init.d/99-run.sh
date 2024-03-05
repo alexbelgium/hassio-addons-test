@@ -62,6 +62,6 @@ bashio::log.info "Starting..."
 # shellcheck disable=SC2086
 /./usr/local/bin/codex & true
 
-bashio::net.wait_for 8910 localhost 900 || true
+bashio::net.wait_for 9810 localhost 900 || true
 bashio::log.info "Started !"
 exec nginx
