@@ -26,7 +26,7 @@ declare ingress_interface
 declare ingress_port
 #declare keyfile
 
-FB_BASEURL="$(bashio::addon.ingress_entry)/codex"
+FB_BASEURL="$(bashio::addon.ingress_entry)"
 export FB_BASEURL
 
 declare ADDON_PROTOCOL=http
