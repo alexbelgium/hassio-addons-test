@@ -19,10 +19,10 @@
   },
   "panel_icon": "mdi:bird",
   "ports": {
-    "8080/tcp": 8080
+    "80/tcp": 80
   },
   "ports_description": {
-    "8080/tcp": "web ui"
+    "80/tcp": "web ui"
   },
   "schema": {
     "ALSA_CARD": "int?",
