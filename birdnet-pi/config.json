@@ -59,6 +59,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "image": "ghcr.io/alexbelgium/birdnet-pi-{arch}",
   "ingress": true,
   "ingress_stream": true,
   "init": false,
@@ -68,10 +69,10 @@
     "share:rw",
     "ssl"
   ],
-  "name": "birdnet-pi2",
+  "name": "BirdNET-pi test",
   "options": {
     "BIRDSONGS_FOLDER": "/config/BirdSongs",
-    "BIRDS_ONLINE_INFO": "ebird.org",
+    "LIVESTREAM_BOOT_ENABLED": true,
     "TZ": "Europe/Paris",
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
@@ -92,24 +93,25 @@
   ],
   "schema": {
     "BIRDSONGS_FOLDER": "str?",
-    "BIRDS_ONLINE_INFO": "list(allaboutbirds.org|ebird.org)",
-    "SPECIES_CONVERTER": "bool?",
+    "PROCESSED_FOLDER_ENABLED": "bool?",
+    "SPECIES_CONVERTER_ENABLED": "bool?",
+    "LIVESTREAM_BOOT_ENABLED": "bool",
     "TZ": "str?",
+    "certfile": "str",
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
+    "keyfile": "str",
     "localdisks": "str?",
     "networkdisks": "str?",
     "pi_password": "password",
-    "certfile": "str",
-    "keyfile": "str",
     "ssl": "bool"
   },
-  "slug": "birdnet-pi2",
+  "slug": "birdnet-pi",
   "tmpfs": true,
   "udev": true,
-  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi2",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
   "usb": true,
-  "version": "0.13-37",
+  "version": "0.13-51",
   "video": true
 }
