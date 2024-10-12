@@ -1,9 +1,11 @@
-## &#9888; Open Request : [✨ [REQUEST] Mealie Ingress Support (opened 2023-11-05)](https://github.com/alexbelgium/hassio-addons/issues/1061) by [@minmaxat](https://github.com/minmaxat)
-## &#9888; Open Request : [✨ [REQUEST] Mealie (Omni) (opened 2024-01-14)](https://github.com/alexbelgium/hassio-addons/issues/1179) by [@LoganJFisher](https://github.com/LoganJFisher)
-## &#9888; Open Issue : [🐛 [MEALIE] Port mismatch? (opened 2024-01-22)](https://github.com/alexbelgium/hassio-addons/issues/1198) by [@Rykian](https://github.com/Rykian)
+## &#9888; Open Issue : [[Mealie] Unable to locate custom environment variables (opened 2024-08-31)](https://github.com/alexbelgium/hassio-addons/issues/1558) by [@user34756361233](https://github.com/user34756361233)
+## &#9888; Open Issue : [🐛 [Mealie] Mealie not recognising login details (opened 2024-09-20)](https://github.com/alexbelgium/hassio-addons/issues/1580) by [@Valve90210](https://github.com/Valve90210)
+## &#9888; Open Issue : [🐛 [Mealie] Error when starting braking after upgrading from 1.12.0-2 to 1.12.0-4 (opened 2024-09-24)](https://github.com/alexbelgium/hassio-addons/issues/1583) by [@jack5mikemotown](https://github.com/jack5mikemotown)
+## &#9888; Open Issue : [🐛 [Mealie] Not able to restore backup from standalone Mealie 12.2.0 (opened 2024-09-25)](https://github.com/alexbelgium/hassio-addons/issues/1585) by [@phellarv](https://github.com/phellarv)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
+[![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie%2Fconfig.json)
 ![Ingress](https://img.shields.io/badge/dynamic/json?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie%2Fconfig.json)
@@ -13,7 +15,8 @@
 [![GitHub Super-Linter](https://img.shields.io/github/actions/workflow/status/alexbelgium/hassio-addons/weekly-supelinter.yaml?label=Lint%20code%20base)](https://github.com/alexbelgium/hassio-addons/actions/workflows/weekly-supelinter.yaml)
 [![Builder](https://img.shields.io/github/actions/workflow/status/alexbelgium/hassio-addons/onpush_builder.yaml?label=Builder)](https://github.com/alexbelgium/hassio-addons/actions/workflows/onpush_builder.yaml)
 
-[donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
+[donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee%20(no%20paypal)-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
+[paypal-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee%20with%20Paypal-0070BA?logo=paypal&style=flat&logoColor=white
 
 Warning : armv7 only supported up to version 0.4.3! It won't be updated with later versions
 
@@ -52,7 +55,7 @@ Options can be configured through two ways :
 ```
 
 - Config.yaml
-  Additional options can be configured using the config.yaml file found in /config/addons_config/mealie/config.yaml
+  Additional options can be configured using the config.yaml file found in /homeassistant/addons_config/xxx-mealie/config.yaml
 
 The complete list of options can be seen here : https://nightly.mealie.io/documentation/getting-started/installation/backend-config/
 

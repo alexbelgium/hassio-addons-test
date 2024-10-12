@@ -31,17 +31,21 @@ for k in $(bashio::jq "/data/options.json" 'keys | .[]'); do
     export "$k"="$(bashio::config "$k")"
 done
 
-##############
-# Check PUID #
-##############
+####################
+# MIGRATE DATA DIR #
+####################
 
-bashio::log.info "Checking user type"
-if [ "$PUID" = 0 ] || [ "$PGID" = 0 ]; then
-    bashio::log.warning "Can't run as root, the user will be set to 1000:1000"
-    bashio::addon.option "PUID" "1000"
-    bashio::addon.option "PGID" "1000"
-    bashio::addon.restart
-fi
+#if [ -d /homeassistant/addons_config/mealie_data ] && [ ! -f /homeassistant/addons_config/mealie_data/migrated ]; then
+#    bashio::log.warning "Migrating data, current data will not be touched"
+#    cp -rnf /homeassistant/addons_config/mealie_data/* /config/ || true
+#    touch /homeassistant/addons_config/mealie_data/migrated
+#fi
+
+#if [ -f /homeassistant/addons_config/mealie/config.yaml ] && [ ! -f /homeassistant/addons_config/mealie/migrated ]; then
+#    bashio::log.warning "Migrating config.yaml, current data will not be touched"
+#    cp -nf /homeassistant/addons_config/mealie/config.yaml /config/ || true
+#    touch /homeassistant/addons_config/mealie/migrated
+#fi
 
 ###############
 # CONFIG YAML #
@@ -74,6 +78,7 @@ function parse_yaml {
 
 # Get list of parameters in a file
 parse_yaml "$CONFIGSOURCE" "" >/tmpfile
+
 while IFS= read -r line; do
     # Clean output
     line="${line//[\"\']/}"
@@ -107,22 +112,11 @@ fi
 # PERMISSIONS #
 ###############
 
-mkdir -p /config/addons_config/mealie_data
 chmod -R 777 /data
-chmod -R 777 /config/addons_config/mealie_data
+mkdir -p "$DATA_DIR"
+cd "$DATA_DIR" || true
+chown -R "$PUID:$PGID" .
 echo "Permissions adapted"
-
-################
-# MIGRATE DATA #
-################
-
-if [ ! -f /config/addons_config/mealie_data/mealie.db ] && [ -f /data/mealie.db ] ; then
-    mv /data/options.json /
-    cp -r /data/* /config/addons_config/mealie_data/
-    rm -r /data/*
-    mv /options.json /data
-    bashio::log.warning "Amd64 data migrated to /config/addons_config/mealie_data ; you can now use the new addons. For aarch64, you need to do a manual backup and restore"
-fi
 
 bashio::log.info "Starting nginx"
 nginx & true
