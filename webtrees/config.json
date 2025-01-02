@@ -86,7 +86,7 @@
   },
   "init": false,
   "map": [
-    "addon_configs:rw",
+    "addon_config:rw",
     "homeassistant_config:rw",
     "share:rw",
     "ssl"
