@@ -22,7 +22,7 @@ cp -rn /var2/www/webtrees/modules_v4/* /config/modules_v4/ &>/dev/null || true
 if bashio::fs.file_exists "$DATA_LOCATION_FILE"; then
     DATA_LOCATION_CURRENT="$(cat "$DATA_LOCATION_FILE")"
     DATA_LOCATION_CURRENT="${DATA_LOCATION_CURRENT%/}"
-elif [[ "$(ls -A /share/webtrees)" ]]; then
+elif [[ -d /share/webtrees ]] && [[ "$(ls -A /share/webtrees)" ]]; then
     DATA_LOCATION_CURRENT="/share/webtrees"
 else
     DATA_LOCATION_CURRENT="$DATA_LOCATION"
@@ -38,7 +38,7 @@ fi
 
 # Saving data location
 echo "... using data folder $DATA_LOCATION"
-echo -n "$DATA_LOCATION" > "$PASSWORD_FILE"
+echo -n "$DATA_LOCATION" > "$DATA_LOCATION_FILE"
 
 # Update permissions
 echo "... update permissions"
