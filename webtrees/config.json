@@ -76,7 +76,9 @@
     "LANG": "en-US",
     "PORT": "80",
     "PRETTY_URLS": "1",
-    "WEBTREES_HOME": "/data/webtrees",
+    "PUID": "0",
+    "PGID": "0",
+    "WEBTREES_HOME": "/var2/www/webtrees",
     "WT_EMAIL": "me@example.com",
     "WT_NAME": "Full Name",
     "WT_PASS": "mybadpassword",
@@ -84,7 +86,7 @@
   },
   "init": false,
   "map": [
-    "addons_config:rw",
+    "addon_configs:rw",
     "homeassistant_config:rw",
     "share:rw",
     "ssl"
