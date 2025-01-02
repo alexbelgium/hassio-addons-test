@@ -37,7 +37,7 @@ RUN \
     grep -rl "/var/www/webtrees" /etc | xargs sed -i 's|/var/www/webtrees|/var2/www/webtrees|g' \
     && sed -i 's|/var/www/webtrees|/var2/www/webtrees|g' /docker-entrypoint.py \
     && mkdir -p /var2/www/webtrees \
-    && mv /var/www/webtrees/* /var2/www/webtrees/
+    && cp -rf /var/* /var2/
 # Add end script
 # && sed -i '$ d' /docker-entrypoint.py
 
