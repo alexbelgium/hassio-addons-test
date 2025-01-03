@@ -27,6 +27,13 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+ENV APACHE_RUN_USER=www-data \
+    APACHE_RUN_GROUP=www-data \
+    APACHE_PID_FILE=/var/run/apache2/apache2$SUFFIX.pid \
+    APACHE_RUN_DIR=/var/run/apache2$SUFFIX \
+    APACHE_LOCK_DIR=/var/lock/apache2$SUFFIX \
+    APACHE_LOG_DIR=/var/log/apache2$SUFFIX \
+    LANG=C
 
 # Global variables
 ENV WEBTREES_HOME="/var2/www/webtrees"
