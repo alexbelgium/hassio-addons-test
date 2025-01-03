@@ -33,7 +33,9 @@ ENV APACHE_RUN_USER=www-data \
     APACHE_RUN_DIR=/var/run/apache2$SUFFIX \
     APACHE_LOCK_DIR=/var/lock/apache2$SUFFIX \
     APACHE_LOG_DIR=/var/log/apache2$SUFFIX \
-    LANG=C
+    LANG=C \
+    APACHE_CONFDIR=/etc/apache2 \
+    APACHE_ENVVARS=/etc/apache2/envvars
 
 # Global variables
 ENV WEBTREES_HOME="/var2/www/webtrees"
