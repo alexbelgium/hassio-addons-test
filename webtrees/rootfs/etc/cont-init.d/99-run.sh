@@ -185,6 +185,7 @@ bashio::log.info "Webui can be accessed at : $BASE_URL"
 bashio::log.info "If it is your first boot, the start-up wizard will open"
 
 # Execute main script
+source /etc/apache2/envvars
 echo "python3 /docker-entrypoint.py"
 cd /
 python3 /docker-entrypoint.py
