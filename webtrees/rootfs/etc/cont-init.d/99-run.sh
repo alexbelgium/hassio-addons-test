@@ -15,6 +15,7 @@ DATA_LOCATION_FILE="/data/oldwebtreeshome"
 mkdir -p "$DATA_LOCATION"
 mkdir -p /config/modules_v4
 cp -rn /var2/www/webtrees/data/* "$DATA_LOCATION"/ &>/dev/null || true
+cp -rn /var2/www/webtrees/data/.* "$DATA_LOCATION"/ &>/dev/null || true
 cp -rn /var2/www/webtrees/modules_v4/* /config/modules_v4/ &>/dev/null || true
 
 # Check if a migration is needed
@@ -38,6 +39,9 @@ fi
 # Saving data location
 echo "... using data folder $DATA_LOCATION"
 echo -n "$DATA_LOCATION" > "$DATA_LOCATION_FILE"
+
+# Update entrypoint
+sed -i "s|DATA_DIR = os.path.join(ROOT, \"data\")|DATA_DIR = \"$DATA_LOCATION\"|" /docker-entrypoint.py
 
 # Creating symlinks
 echo "... creating symlinks"
