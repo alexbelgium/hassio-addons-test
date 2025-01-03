@@ -42,7 +42,6 @@ echo -n "$DATA_LOCATION" > "$DATA_LOCATION_FILE"
 
 # Update permissions
 echo "... update permissions"
-chown -R www-data:www-data /var2/www/webtrees
 chown -R www-data:www-data "$DATA_LOCATION"
 chown -R www-data:www-data "/config"
 
