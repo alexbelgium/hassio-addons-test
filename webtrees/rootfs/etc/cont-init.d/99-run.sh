@@ -40,17 +40,19 @@ fi
 echo "... using data folder $DATA_LOCATION"
 echo -n "$DATA_LOCATION" > "$DATA_LOCATION_FILE"
 
-# Update permissions
+# Creating symlinks
+echo "... creating symlinks"
+rm -r /var2/www/webtrees/data
+ln -sf "$DATA_LOCATION" /var2/www/webtrees/data
+rm -r /var2/www/webtrees/modules_v4
+ln -sf "/config/modules_v4" /var2/www/webtrees/modules_v4
+
+# Update permissions on target directories
 echo "... update permissions"
 chown -R www-data:www-data "$DATA_LOCATION"
 chmod -R 755 "$DATA_LOCATION"
 chown -R www-data:www-data "/config"
 chmod -R 755 "/config"
-
-# Creating symlinks
-echo "... creating symlinks"
-ln -sf "$DATA_LOCATION" /var2/www/webtrees/data
-ln -sf "/config/modules_v4" /var2/www/webtrees/modules_v4
 
 ###################
 # Define database #
