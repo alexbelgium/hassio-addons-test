@@ -184,14 +184,19 @@ fi
 # END INFO #
 ############
 
-DB_NAME=$(echo "$DB_NAME" | tr -d '"')
-
 bashio::log.info "Data is stored in $DATA_LOCATION"
-bashio::log.info "Webui can be accessed at : $BASE_URL"
-bashio::log.info "If it is your first boot, the start-up wizard will open"
 
 # Execute main script
 source /etc/apache2/envvars
 echo "python3 /docker-entrypoint.py"
 cd /var2/www/webtrees
-python3 /docker-entrypoint.py
+if [ ! -f "${DATA_LOCATION}/config.ini.php" ]; then
+    bashio::log.info "First boot : configuration will be done then the addon will restart"
+    python3 /docker-entrypoint.py
+    bashio::log.warning "Restarting after automatic configuration"
+    bashio::addon.restart
+else
+    bashio::log.info "Webtrees started. You can access your webui at : $BASE_URL"
+    bashio::log.info "If it is your first boot, the start-up wizard will open"
+    python3 /docker-entrypoint.py
+fi
