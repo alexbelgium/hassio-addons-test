@@ -186,5 +186,5 @@ bashio::log.info "If it is your first boot, the start-up wizard will open"
 # Execute main script
 source /etc/apache2/envvars
 echo "python3 /docker-entrypoint.py"
-cd /
+cd /var2/www/webtrees
 python3 /docker-entrypoint.py
