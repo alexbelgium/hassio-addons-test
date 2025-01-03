@@ -43,7 +43,9 @@ echo -n "$DATA_LOCATION" > "$DATA_LOCATION_FILE"
 # Update permissions
 echo "... update permissions"
 chown -R www-data:www-data "$DATA_LOCATION"
+chmod -R 755 "$DATA_LOCATION"
 chown -R www-data:www-data "/config"
+chmod -R 755 "/config"
 
 # Creating symlinks
 echo "... creating symlinks"
