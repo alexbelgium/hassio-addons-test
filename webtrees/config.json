@@ -78,7 +78,11 @@
     "PRETTY_URLS": "1",
     "PUID": "1000",
     "PGID": "1000",
-    "WEBTREES_HOME": "/var2/www/webtrees"
+    "WEBTREES_HOME": "/var2/www/webtrees",
+    "WT_EMAIL": "me@example.com",
+    "WT_NAME": "Full Name",
+    "WT_PASS": "mybadpassword",
+    "WT_USER": "admin"
   },
   "init": false,
   "map": [
