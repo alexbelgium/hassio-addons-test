@@ -57,51 +57,6 @@ chmod -R 755 "$DATA_LOCATION"
 chown -R www-data:www-data "/config"
 chmod -R 755 "/config"
 
-###################
-# Define database #
-###################
-
-bashio::log.info "Defining database"
-export DB_TYPE=$(bashio::config 'DB_TYPE')
-case $(bashio::config 'DB_TYPE') in
-
-        # Use sqlite
-    sqlite)
-        bashio::log.info "Using a local sqlite database $DATA_LOCATION/$DB_NAME (Reminder : /config is mapped to /addon_configs/xxx-webtrees from filebrowsers)"
-        ;;
-
-    mariadb_addon)
-        bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Discovering values..."
-        if ! bashio::services.available 'mysql'; then
-            bashio::log.fatal \
-                "Local database access should be provided by the MariaDB addon"
-            bashio::exit.nok \
-                "Please ensure it is installed and started"
-        fi
-
-        # Use values
-        export DB_TYPE=mysql
-        export DB_HOST=$(bashio::services "mysql" "host") && bashio::log.blue "DB_HOST=$DB_HOST"
-        export DB_PORT=$(bashio::services "mysql" "port") && bashio::log.blue "DB_PORT=$DB_PORT"
-        export DB_NAME=webtrees && bashio::log.blue "DB_NAME=$DB_NAME"
-        export DB_USER=$(bashio::services "mysql" "username") && bashio::log.blue "DB_USER=$DB_USER"
-        export DB_PASS=$(bashio::services "mysql" "password") && bashio::log.blue "DB_PASS=$DB_PASS"
-
-        bashio::log.warning "Webtrees is using the Maria DB addon"
-        bashio::log.warning "Please ensure this is included in your backups"
-        bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
-
-        # Create database
-        # mysql --host="$(bashio::services 'mysql' 'host')" --port="$(bashio::services 'mysql' 'port')" --user="$(bashio::services "mysql" "username")" --password="$(bashio::services "mysql" "password")" -e"CREATE DATABASE IF NOT EXISTS webtrees;"
-        ;;
-
-    external)
-        bashio::log.info "Using an external database, please populate all required fields in the config.yaml according to documentation"
-        ;;
-
-esac
-
-
 ################
 # SSL CONFIG   #
 ################
