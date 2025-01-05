@@ -10,9 +10,16 @@ declare certfile
 declare keyfile
 
 # General values
-port=81
-sed -i "s|%%port%%|$port|g" /etc/nginx/servers/ssl.conf
-sed -i "s|%%interface%%|$(bashio::addon.ip_address)|g" /etc/nginx/servers/ssl.conf
+port=80
+sed -i "s|%%port%%|$port|g" /etc/nginx/servers/ingress.conf
+sed -i "s|%%interface%%|$(bashio::addon.ip_address)|g" /etc/nginx/servers/ingress.conf
+
+# Ingress
+echo "Adapting for ingress"
+ingress_port=$(bashio::addon.ingress_port)
+ingress_interface=$(bashio::addon.ip_address)
+sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
+sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 
 # Ssl values
 if bashio::config.true 'ssl'; then
@@ -27,10 +34,11 @@ if bashio::config.true 'ssl'; then
     [ ! -f /ssl/"$keyfile" ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$keyfile not found" && bashio::exit.nok
 
 
-    sed -i "s|default_server|ssl|g" /etc/nginx/servers/ssl.conf
-    sed -i "s|http;|http;|g" /etc/nginx/servers/ssl.conf
-    sed -i "s|80|443|g" /etc/nginx/servers/ssl.conf
-    sed -i "/proxy_params.conf/a ssl_certificate /ssl/$certfile;" /etc/nginx/servers/ssl.conf
-    sed -i "/proxy_params.conf/a ssl_certificate_key /ssl/$keyfile;" /etc/nginx/servers/ssl.conf
+    sed -i "s|default_server|ssl|g" /etc/nginx/servers/ingress.conf
+    sed -i "s|http;|http;|g" /etc/nginx/servers/ingress.conf
+    sed -i "s|80|443|g" /etc/nginx/servers/ingress.conf
+    port=443
+    sed -i "/proxy_params.conf/a ssl_certificate /ssl/$certfile;" /etc/nginx/servers/ingress.conf
+    sed -i "/proxy_params.conf/a ssl_certificate_key /ssl/$keyfile;" /etc/nginx/servers/ingress.conf
     bashio::log.info "Ssl enabled, please use https for connection. UI is at https://YOURIP:$(bashio::addon.port "$port")"
 fi

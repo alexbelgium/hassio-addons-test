@@ -81,6 +81,7 @@
     "WEBTREES_HOME": "/var2/www/webtrees"
   },
   "init": false,
+  "ingress": true,
   "map": [
     "addon_config:rw",
     "homeassistant_config:rw",
@@ -97,10 +98,12 @@
     "ssl": false
   },
   "ports": {
-    "81/tcp": 9999
+    "443/tcp": null,
+    "80/tcp": 9999
   },
   "ports_description": {
-    "81/tcp": "Web interface"
+    "443/tcp": "Https web interface",
+    "80/tcp": "Web interface"
   },
   "privileged": [
     "SYS_ADMIN",
