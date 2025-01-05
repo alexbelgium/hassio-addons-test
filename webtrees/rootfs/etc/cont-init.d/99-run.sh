@@ -141,6 +141,9 @@ fi
 
 bashio::log.info "Data is stored in $DATA_LOCATION"
 
+echo "... Starting nginx"
+nginx & true
+
 # Execute main script
 source /etc/apache2/envvars
 echo "python3 /docker-entrypoint.py"
@@ -148,8 +151,6 @@ cd /var2/www/webtrees
 if [ ! -f "${DATA_LOCATION}/config.ini.php" ]; then
     bashio::log.info "First boot : open the UI at $BASE_URL to access the start-up wizard"
     python3 /docker-entrypoint.py
-    bashio::log.warning "Restarting after automatic configuration"
-    bashio::addon.restart
 else
     bashio::log.info "Webtrees started. You can access your webui at : $BASE_URL"
     python3 /docker-entrypoint.py

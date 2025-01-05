@@ -97,12 +97,10 @@
     "ssl": false
   },
   "ports": {
-    "443/tcp": null,
-    "80/tcp": 9999
+    "81/tcp": 9999
   },
   "ports_description": {
-    "443/tcp": "Https web interface",
-    "80/tcp": "Web interface"
+    "81/tcp": "Web interface"
   },
   "privileged": [
     "SYS_ADMIN",
