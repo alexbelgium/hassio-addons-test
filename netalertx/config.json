@@ -72,6 +72,7 @@
   "host_network": true,
   "init": false,
   "ingress": true,
+  "ingress_port": 0,
   "map": [
     "addon_config:rw",
     "media:rw",
@@ -83,6 +84,7 @@
     "PGID": 0,
     "PUID": 0
   },
+  "panel_icon": "mdi:wifi-check",
   "ports": {
     "20211/tcp": 20211,
     "20212/tcp": 20212
