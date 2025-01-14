@@ -8,6 +8,7 @@ set -e
 
 declare ingress_interface
 declare ingress_port
+declare ingress_entry
 
 echo "Adapting for ingress"
 ingress_port=$(bashio::addon.ingress_port)
