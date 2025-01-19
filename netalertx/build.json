@@ -1,0 +1,10 @@
+{
+  "build_from": {
+    "aarch64": "jokobsk/netalertx:dev",
+    "amd64": "jokobsk/netalertx:dev",
+    "armv7": "jokobsk/netalertx:dev"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}
