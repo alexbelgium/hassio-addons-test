@@ -36,7 +36,7 @@ FROM hkotel/mealie:latest
 
 # Copy the rebuilt frontend files into the final image
 WORKDIR /mealie
-COPY --from=frontend-builder /frontend/dist ./mealie/frontend
+COPY --from=frontend-builder /frontend/dist /opt/mealie/lib/python*/site-packages/mealie/frontend
 
 ##################
 # 2 Modify Image #
