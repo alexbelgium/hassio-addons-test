@@ -1,8 +1,0 @@
-{
-  "last_update": "27-04-2022",
-  "repository": "alexbelgium/hassio-addons",
-  "slug": "baserow",
-  "source": "dockerhub",
-  "upstream_repo": "baserow/baserow",
-  "upstream_version": "test"
-}
