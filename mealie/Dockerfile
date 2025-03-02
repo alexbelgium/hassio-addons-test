@@ -27,7 +27,7 @@ ENV MEALIE_VERSION="v2.7.1"
 # hadolint ignore=DL3003
 WORKDIR /frontend
 RUN mkdir tempdir && cd tempdir && git clone --branch "$MEALIE_VERSION" https://github.com/mealie-recipes/mealie.git . && \
-    cp -rf frontend/* /frontend && rm -r tempdir && \
+    cp -rf frontend/* /frontend && cd /frontend && rm -r tempdir && \
     yarn install --prefer-offline --frozen-lockfile --non-interactive --production=false --network-timeout 1000000 && \
     yarn generate
 
