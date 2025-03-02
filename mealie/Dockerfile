@@ -36,7 +36,7 @@ FROM hkotel/mealie:latest
 
 # Copy the rebuilt frontend files into the final image
 WORKDIR /mealie
-COPY --from=frontend-builder /frontend/dist /opt/mealie/lib/python*/site-packages/mealie/frontend
+COPY --from=frontend-builder /frontend/dist /mealie/frontend
 
 ##################
 # 2 Modify Image #
@@ -49,7 +49,12 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 # Correct data path
 # hadolint ignore=DL4006
-RUN sed -i "s|change_user$|# change_user|g" /app/run.sh && sed -i 's|\${!file_var}|${!file_var:-}|g' /app/run.sh
+RUN \
+    # Copy frontend
+    cd /opt/mealie/lib/python*/site-packages/mealie && \
+    rm -r frontend && mv /mealie/frontend . && \
+    # avoid changing user
+    sed -i "s|change_user$|# change_user|g" /app/run.sh && sed -i 's|\${!file_var}|${!file_var:-}|g' /app/run.sh
 
 ##################
 # 3 Install apps #
