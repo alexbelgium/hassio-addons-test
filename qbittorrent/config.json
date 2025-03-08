@@ -83,7 +83,7 @@
     "share:rw",
     "ssl"
   ],
-  "name": "qBittorrent",
+  "name": "qBittorrent test version",
   "options": {
     "DNS_server": "8.8.8.8,1.1.1.1",
     "PGID": "0",
