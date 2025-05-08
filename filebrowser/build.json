@@ -1,0 +1,10 @@
+{
+  "build_from": {
+    "aarch64": "hurlenko/filebrowser:latest",
+    "amd64": "hurlenko/filebrowser:latest",
+    "armv7": "hurlenko/filebrowser:latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}
