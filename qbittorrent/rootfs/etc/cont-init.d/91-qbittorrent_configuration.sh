@@ -55,7 +55,6 @@ if bashio::config.has_value 'SavePath'; then
         -e "/\[BitTorrent\]/a Downloads\\\DefaultSavePath=$DOWNLOADS" \
         -e "/\[BitTorrent\]/a Session\\\DefaultSavePath=$DOWNLOADS" qBittorrent.conf
 
-
     # Info
     bashio::log.info "Downloads can be found in $DOWNLOADS"
 fi
@@ -190,8 +189,8 @@ if [ "$CUSTOMUI" = default ]; then
     sed -i '/AlternativeUIEnabled/d' qBittorrent.conf
     sed -i '/RootFolder/d' qBittorrent.conf
     # Update ingress webui
-    curl -f -s -S -O -J -L "$(curl -f -s -L https://api.github.com/repos/WDaan/VueTorrent/releases | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
-    unzip -o vuetorrent.zip -d / >/dev/null
+    curl -f -s -S -O -J -L "$(curl -f -s -L https://api.github.com/repos/WDaan/VueTorrent/releases | grep -o "http.*vuetorrent.zip" | head -1)" > /dev/null
+    unzip -o vuetorrent.zip -d / > /dev/null
     rm vuetorrent.zip
 fi
 
@@ -203,21 +202,21 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     ### Download WebUI
     case $CUSTOMUI in
         "vuetorrent")
-            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s -L https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
+            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s -L https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip" | head -1)" > /dev/null
             ;;
 
         "qbit-matUI")
-            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s -L https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip" | head -1)" >/dev/null
+            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s -L https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip" | head -1)" > /dev/null
             echo ""
             bashio::log.warning "qbit-matUI selected ! It will not work for ingress, which will stay with vuetorrent"
             echo ""
             ;;
 
         "qb-web")
-            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s -L https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip" | head -1)" >/dev/null
+            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s -L https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip" | head -1)" > /dev/null
             ;;
 
-    esac || { bashio::log.warning "$CUSTOMUI could not be downloaded, please raise an issue on the github repository. The default UI will be used" && exit 0 ; }
+    esac || { bashio::log.warning "$CUSTOMUI could not be downloaded, please raise an issue on the github repository. The default UI will be used" && exit 0; }
 
     ### Install WebUI
     mkdir -p /webui/"$CUSTOMUI"
@@ -236,6 +235,11 @@ fi
 ##########
 # CLOSE  #
 ##########
+
+if grep -q "yify.foo" "$CONFIG_LOCATION"/qBittorrent.conf; then
+    bashio::log.warning "yify.foo found in qBittorrent.conf, this is a safety issue. It is removed now, but you should check your configuration."
+    sed -i '/yify.foo/d' "$CONFIG_LOCATION"/qBittorrent.conf
+fi
 
 bashio::log.info "Default username/password : $USERNAME/homeassistant"
 bashio::log.info "Configuration can be found in $CONFIG_LOCATION"

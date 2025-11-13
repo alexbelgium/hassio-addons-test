@@ -18,7 +18,7 @@ if bashio::config.true 'openvpn_enabled'; then
     curl -s ipecho.net/plain > /currentip
 
     # Function to check for files path
-    function check_path () {
+    function check_path() {
 
         # Get variable
         file="$1"
@@ -28,13 +28,13 @@ if bashio::config.true 'openvpn_enabled'; then
             bashio::warning "$file not found"
             return 1
         fi
-        
+
         # Check each lines
         cp "$file" /tmpfile
         line_number=0
         while read -r line; do
             # Increment the line number
-            ((line_number=line_number+1))
+            ((line_number = line_number + 1))
 
             # Check if lines starting with auth-user-pass have a valid argument
             ###################################################################
@@ -46,17 +46,17 @@ if bashio::config.true 'openvpn_enabled'; then
                     # Insert to explain why a comment is made
                     sed -i "${line_number}i # The following line is commented out as does not contain a valid argument" "$file"
                     # Increment as new line added
-                    ((line_number=line_number+1))
+                    ((line_number = line_number + 1))
                     # Comment out the line
                     sed -i "${line_number}s/^/# /" "$file"
                     # Go to next line
                     continue
                 fi
             fi
-            
+
             # Check if the line contains a txt file
             #######################################
-            if [[ ! $line =~ ^"#" ]] && [[ ! $line =~ ^";" ]] && [[ "$line" == *" "*"."* ]] || [[ "$line" == "auth-user-pass"* ]]; then
+            if [[ ! $line =~ ^"#" ]] && [[ ! $line =~ ^";" ]] && [[ ! $line =~ ^"remote" ]] && [[ "$line" == *" "*"."* ]] || [[ "$line" == "auth-user-pass"* ]]; then
                 # Extract the txt file name from the line
                 file_name="$(echo "$line" | awk -F' ' '{print $2}')"
                 # if contains only numbers and dots it is likely an ip, don't check it
@@ -122,7 +122,7 @@ if bashio::config.true 'openvpn_enabled'; then
     elif ls /config/openvpn/*.ovpn > /dev/null 2>&1; then
         # Look for openvpn files
         # Wildcard search for openvpn config files and store results in array
-        mapfile -t VPN_CONFIGS < <( find /config/openvpn -maxdepth 1 -name "*.ovpn" -print )
+        mapfile -t VPN_CONFIGS < <(find /config/openvpn -maxdepth 1 -name "*.ovpn" -print)
         # Choose random config
         VPN_CONFIG="${VPN_CONFIGS[$RANDOM % ${#VPN_CONFIGS[@]}]}"
         # Get the VPN_CONFIG name without the path and extension
@@ -136,26 +136,26 @@ if bashio::config.true 'openvpn_enabled'; then
 
     # Send to openvpn script
     sed -i "s|/config/openvpn/config.ovpn|/config/openvpn/$openvpn_config|g" /etc/s6-overlay/s6-rc.d/svc-qbittorrent/run
-    
+
     # Check path
     check_path /config/openvpn/"${openvpn_config}"
 
     # Set credentials
     if bashio::config.has_value "openvpn_username"; then
         openvpn_username=$(bashio::config 'openvpn_username')
-        echo "${openvpn_username}" >/etc/openvpn/credentials
+        echo "${openvpn_username}" > /etc/openvpn/credentials
     else
         bashio::exit.nok "Openvpn is enabled, but openvpn_username option is empty! Exiting"
     fi
     if bashio::config.has_value "openvpn_password"; then
         openvpn_password=$(bashio::config 'openvpn_password')
-        echo "${openvpn_password}" >>/etc/openvpn/credentials
+        echo "${openvpn_password}" >> /etc/openvpn/credentials
     else
         bashio::exit.nok "Openvpn is enabled, but openvpn_password option is empty! Exiting"
     fi
 
     # Add credentials file
-    if grep -q ^auth-user-pass /config/openvpn/"$openvpn_config" ; then
+    if grep -q ^auth-user-pass /config/openvpn/"$openvpn_config"; then
         # Credentials specified are they custom ?
         file_name="$(sed -n "/^auth-user-pass/p" /config/openvpn/"$openvpn_config" | awk -F' ' '{print $2}')"
         file_name="${file_name:-null}"
@@ -249,9 +249,9 @@ if bashio::config.true 'openvpn_enabled'; then
     fi
 
     # Modify ovpn config
-    if ! grep -q route-nopull  /config/openvpn/"$openvpn_config"; then
+    if ! grep -q route-nopull /config/openvpn/"$openvpn_config"; then
         echo "... adding route-nopull to your config.ovpn"
-        sed -i "1a route-nopull"  /config/openvpn/"$openvpn_config"
+        sed -i "1a route-nopull" /config/openvpn/"$openvpn_config"
     fi
 
 else
@@ -260,10 +260,15 @@ else
     # REMOVE OPENVPN #
     ##################
 
-    # Ensure no redirection by removing the direction tag
-    if [ -f "$QBT_CONFIG_FILE" ]; then
+    # Ensure no redirection by removing the direction tag when no VPN is active
+    if [ -f "$QBT_CONFIG_FILE" ] && ! bashio::config.true 'wireguard_enabled'; then
         sed -i '/Interface/d' "$QBT_CONFIG_FILE"
     fi
-    bashio::log.info "Direct connection without VPN enabled"
+
+    if bashio::config.true 'wireguard_enabled'; then
+        bashio::log.info "WireGuard will manage VPN connectivity."
+    else
+        bashio::log.info "Direct connection without VPN enabled"
+    fi
 
 fi

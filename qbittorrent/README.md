@@ -1,12 +1,11 @@
-## &#9888; Open Request : [✨ [REQUEST] qBittorrent Gluetun (opened 2024-12-10)](https://github.com/alexbelgium/hassio-addons/issues/1661) by [@xtian47](https://github.com/xtian47)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
 
-![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fqbittorrent%2Fconfig.json)
-![Ingress](https://img.shields.io/badge/dynamic/json?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fqbittorrent%2Fconfig.json)
-![Arch](https://img.shields.io/badge/dynamic/json?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fqbittorrent%2Fconfig.json)
+![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fqbittorrent%2Fconfig.yaml)
+![Ingress](https://img.shields.io/badge/dynamic/yaml?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fqbittorrent%2Fconfig.yaml)
+![Arch](https://img.shields.io/badge/dynamic/yaml?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fqbittorrent%2Fconfig.yaml)
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9c6cf10bdbba45ecb202d7f579b5be0e)](https://www.codacy.com/gh/alexbelgium/hassio-addons/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexbelgium/hassio-addons&utm_campaign=Badge_Grade)
 [![GitHub Super-Linter](https://img.shields.io/github/actions/workflow/status/alexbelgium/hassio-addons/weekly-supelinter.yaml?label=Lint%20code%20base)](https://github.com/alexbelgium/hassio-addons/actions/workflows/weekly-supelinter.yaml)
@@ -34,7 +33,7 @@ This addons has several configurable options :
 - [alternative webUI](https://github.com/qbittorrent/qBittorrent/wiki/List-of-known-alternate-WebUIs)
 - usage of ssl
 - ingress
-- optional openvpn support
+- optional OpenVPN or WireGuard support
 - allow setting specific DNS servers
 
 ## Configuration
@@ -42,36 +41,86 @@ This addons has several configurable options :
 ---
 
 Webui can be found at <http://homeassistant:8080>, or in your sidebar using Ingress.
-The default username/password : described in the startup log.
-Configurations can be done through the app webUI, except for the following options
+The default username/password is described in the startup log.
 
-Network disk is mounted to /mnt/share name
+Network disk is mounted to `/mnt/<share_name>`. You need to map the exposed port in your router for best speed and connectivity.
 
-You need to map the exposed port in your router if you want the best speed and connectivity.
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `0` | Group ID for file permissions |
+| `PUID` | int | `0` | User ID for file permissions |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `Username` | str | `admin` | Admin username for web interface |
+| `SavePath` | str | `/share/qBittorrent` | Default download directory |
+| `ssl` | bool | `false` | Enable HTTPS for web interface |
+| `certfile` | str | `fullchain.pem` | SSL certificate file (in `/ssl/`) |
+| `keyfile` | str | `privkey.pem` | SSL private key file (in `/ssl/`) |
+| `whitelist` | str | `localhost,127.0.0.1,...` | IP subnets that don't need password |
+| `customUI` | list | `vuetorrent` | Alternative web UI (default/vuetorrent/qbit-matUI/qb-web/custom) |
+| `DNS_server` | str | `8.8.8.8,1.1.1.1` | Custom DNS servers |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | | SMB username for network shares |
+| `cifspassword` | str | | SMB password for network shares |
+| `cifsdomain` | str | | SMB domain for network shares |
+| `openvpn_enabled` | bool | `false` | Enable OpenVPN connection |
+| `openvpn_config` | str | | OpenVPN config file name (in `/config/openvpn/`) |
+| `openvpn_username` | str | | OpenVPN username |
+| `openvpn_password` | str | | OpenVPN password |
+| `wireguard_enabled` | bool | `false` | Enable WireGuard connection |
+| `wireguard_config` | str | | WireGuard config file name (in `/config/wireguard/`) |
+| `openvpn_alt_mode` | bool | `false` | Bind VPN at container level instead of qBittorrent (also used for WireGuard) |
+| `qbit_manage` | bool | `false` | Enable qBit Manage integration |
+| `run_duration` | str | | Run duration (e.g., `12h`, `5d`) |
+| `silent` | bool | `false` | Suppress debug messages |
+
+### Example Configuration
 
 ```yaml
-PGID: user
-GPID: user
-ssl: true/false
-certfile: fullchain.pem #ssl certificate, must be located in /ssl
-keyfile: privkey.pem #sslkeyfile, must be located in /ssl
-whitelist: "localhost,192.168.0.0/16" # Type `null` to disable. List ip subnets that won't need a password (optional)
-customUI: selection from list # alternative webUI can be set here. Latest version set at each addon start. Select 'custom' to fill it yourself in the webui
-DNS_servers: 8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to avoid spamming in case of local DNS ad-remover
-SavePath: "/share/qbittorrent" # Define the download directory
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password
-cifsdomain: "domain" # optional, allow setting the domain for the smb share
-openvpn_enabled: true/false # is openvpn required to start qbittorrent
-openvpn_config": For example "config.ovpn" # name of the file located in /config/openvpn. If empty, a random one will be used
-openvpn_username": USERNAME
-openvpn_password: YOURPASSWORD
-openvpn_alt_mode: bind at container level and not app level
-run_duration: 12h #for how long should the addon run. Must be formatted as number + time unit (ex : 5s, or 2m, or 12h, or 5d...)
-silent: true #suppresses debug messages
+PGID: 0
+PUID: 0
+TZ: "Europe/London"
+Username: "admin"
+SavePath: "/share/qBittorrent"
+ssl: true
+certfile: "fullchain.pem"
+keyfile: "privkey.pem"
+whitelist: "localhost,192.168.0.0/16"
+customUI: "vuetorrent"
+DNS_server: "8.8.8.8,1.1.1.1"
+localdisks: "sda1,sdb1"
+networkdisks: "//192.168.1.100/downloads"
+cifsusername: "username"
+cifspassword: "password"
+openvpn_enabled: false
 ```
+
+### WireGuard Configuration
+
+To use WireGuard instead of OpenVPN:
+
+1. Place your WireGuard `.conf` file(s) in `/addon_configs/<addon_host>/wireguard/` (exposed in Home Assistant as `/config/addon_configs/<slug>/wireguard`).
+1. Set `wireguard_enabled: true` in the add-on options.
+1. If you have multiple configuration files, set `wireguard_config` to the filename you want to use (for example `europe.conf`).
+1. (Optional) Enable `openvpn_alt_mode` to bind the entire container to WireGuard instead of only the qBittorrent process.
+
+The add-on automatically binds qBittorrent to the WireGuard interface (matching the configuration filename) and verifies that the tunnel replaces your public IP.
+
+### Mounting Drives
+
+This addon supports mounting both local drives and remote SMB shares:
+
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom scripts and environment variables through the `addon_config` mapping:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## Installation
 
@@ -122,6 +171,13 @@ pull-filter ignore "dhcp-option DNS6"
 pull-filter ignore "tun-ipv6"
 pull-filter ignore "ifconfig-ipv6"
 ```
+
+</details>
+
+<details>
+  <summary>### 100% cpu</summary>
+Delete your nova3 folder in /config and restart qbittorrent
+
 </details>
 
 <details>
@@ -133,28 +189,28 @@ pull-filter ignore "ifconfig-ipv6"
 
 ```json
 {
-    "folder/to/watch": {
-        "add_torrent_params": {
-            "category": "",
-            "content_layout": "Original",
-            "download_limit": -1,
-            "download_path": "[folder/for/INCOMPLETE_downloads]",
-            "operating_mode": "AutoManaged",
-            "ratio_limit": -2,
-            "save_path": "[folder/for/COMPLETED_downloads]",
-            "seeding_time_limit": -2,
-            "skip_checking": false,
-            "stopped": false,
-            "tags": [
-            ],
-            "upload_limit": -1,
-            "use_auto_tmm": false,
-            "use_download_path": true
-        },
-        "recursive": false
-    }
+  "folder/to/watch": {
+    "add_torrent_params": {
+      "category": "",
+      "content_layout": "Original",
+      "download_limit": -1,
+      "download_path": "[folder/for/INCOMPLETE_downloads]",
+      "operating_mode": "AutoManaged",
+      "ratio_limit": -2,
+      "save_path": "[folder/for/COMPLETED_downloads]",
+      "seeding_time_limit": -2,
+      "skip_checking": false,
+      "stopped": false,
+      "tags": [],
+      "upload_limit": -1,
+      "use_auto_tmm": false,
+      "use_download_path": true
+    },
+    "recursive": false
+  }
 }
 ```
+
 </details>
 
 <details>
@@ -174,12 +230,14 @@ Wait a couple minutes and restart addon, it could be a temporary unavailability 
 > [cont-init.d] 00-local_mounts.sh: exited 0.
 
 Try to mount by putting the partition label in the "localdisks" options instead of the hardware name
+
 </details>
 
 <details>
   <summary>### Loss of metadata fetching with openvpn after several days (@almico)</summary>
 
 Add `ping-restart 60` to your config.ovpn
+
 </details>
 
 <details>
@@ -187,6 +245,7 @@ Add `ping-restart 60` to your config.ovpn
 
 When my window size width is lower than 960 pixels my downloads are empty.
 Solution is to reset the Vuetorrent settings.
+
 </details>
 
 ## Support
@@ -196,3 +255,5 @@ Create an issue on github, or ask on the [home assistant thread](https://communi
 ---
 
 ![illustration](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/qbittorrent/illustration.png)
+
+
