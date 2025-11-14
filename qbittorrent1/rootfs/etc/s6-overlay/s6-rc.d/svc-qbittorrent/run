@@ -3,6 +3,8 @@
 
 WEBUI_PORT=${WEBUI_PORT:-8080}
 
+export PATH="/usr/local/sbin:/usr/local/bin:${PATH}"
+
 if bashio::config.true 'silent'; then
     sed -i 's|/proc/1/fd/1 hassio;|off;|g' /etc/nginx/nginx.conf
 fi
@@ -27,7 +29,7 @@ else
             bashio::log.error "wg-quick output: ${output}"
             bashio::log.error 'Troubleshooting steps:'
             bashio::log.error '  1. Confirm the WireGuard configuration file contains valid keys and endpoint information.'
-            bashio::log.error '  2. Ensure UDP port 51820 is forwarded from your router and not blocked by your ISP or firewall.'
+            bashio::log.error '  2. When inbound peers are expected, ensure UDP port 51820 is forwarded from your router and not blocked by your ISP or firewall.'
             bashio::log.error "  3. Verify that the configured endpoint is reachable from Home Assistant and credentials are correct."
             bashio::exit.nok 'WireGuard start failed. See the log above for details.'
         fi

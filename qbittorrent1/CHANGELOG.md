@@ -2,7 +2,7 @@
 
 ## 5.1.2-8 (19-08-2025)
 - FEAT: add first-class WireGuard support with runtime validation and troubleshooting logs
-- FEAT: ensure WireGuard port 51820 is exposed and validated via bashio
+- FIX: allow WireGuard connections on arbitrary remote ports by removing the mandatory 51820/udp mapping check
 
 ## 5.1.2-7 (17-08-2025)
 - Minor bugs fixed

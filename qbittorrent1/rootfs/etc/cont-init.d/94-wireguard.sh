@@ -22,11 +22,12 @@ if bashio::config.true 'openvpn_alt_mode'; then
     bashio::log.warning 'The openvpn_alt_mode option is ignored when WireGuard is enabled.'
 fi
 
-port="$(bashio::addon.port '51820/udp')"
-if ! bashio::var.has_value "${port}"; then
-    bashio::exit.nok 'WireGuard is enabled but UDP port 51820 is not mapped. Please expose 51820/udp in the add-on options.'
+port="$(bashio::addon.port '51820/udp' || true)"
+if bashio::var.has_value "${port}"; then
+    bashio::log.info "WireGuard host port ${port}/udp mapped to container port 51820."
+else
+    bashio::log.info 'WireGuard port 51820/udp is not exposed in the add-on options. Continuing with outbound-only connectivity.'
 fi
-bashio::log.info "WireGuard host port ${port}/udp mapped to container port 51820."
 
 if bashio::config.has_value 'wireguard_config'; then
     configured_name="$(bashio::config 'wireguard_config')"
