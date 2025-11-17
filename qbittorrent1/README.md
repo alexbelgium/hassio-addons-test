@@ -180,6 +180,7 @@ Delete your nova3 folder in /config and restart qbittorrent
 - If your deployment expects inbound peers, verify that the UDP port exposed in the add-on options maps 51820/udp and is forwarded by your router. Skip this step for outbound-only commercial VPN providers.
 - Confirm that the selected configuration file in `/config/wireguard` matches the `wireguard_config` option (or that only one `.conf` file is present).
 - Check the add-on logs for the detailed `wg-quick` error message printed by the startup routine.
+- Hosts missing the iptables `comment` kernel module are automatically retried without comment matches and, when available, using the legacy iptables backend. Inspect the log for messages about these fallbacks if you see iptables-restore errors.
 - IPv6 settings are removed at startup; ensure your tunnel supports IPv4-only operation.
 - The startup scripts suppress the `net.ipv4.conf.all.src_valid_mark` sysctl failure emitted by `wg-quick` on some hosts, so persistent errors in the logs typically point to configuration or connectivity issues.
 
