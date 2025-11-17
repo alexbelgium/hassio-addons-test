@@ -1,3 +1,5 @@
+## 5.1.2-12 (17-11-2025)
+- FIX: make the WireGuard resolvconf shim executable so WireGuard uses it instead of the upstream tool that fails with signature errors.
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## 5.1.2-8 (19-08-2025)
