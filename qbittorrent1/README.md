@@ -78,7 +78,7 @@ Network disk is mounted to `/mnt/<share_name>`. You need to map the exposed port
 
 ### WireGuard Setup
 
-WireGuard configuration files must be stored in `/config/wireguard`. If several `.conf` files are present, set `wireguard_config` to the file name you want to use (for example `wg0.conf`). Expose UDP port `51820` in the add-on options and forward it from your router only when your tunnel expects inbound peers (for example, site-to-site setups). Outbound-only commercial VPN providers usually do not require a mapped port. The add-on strips IPv6 addresses, AllowedIPs, and DNS entries from the runtime configuration to avoid host environments that lack IPv6 firewall or sysctl permissions, so ensure your WireGuard endpoint supports IPv4 connectivity.
+WireGuard configuration files must be stored in `/config/wireguard`. If several `.conf` files are present, set `wireguard_config` to the file name you want to use (for example `wg0.conf`). Expose UDP port `51820` in the add-on options and forward it from your router only when your tunnel expects inbound peers (for example, site-to-site setups). Outbound-only commercial VPN providers usually do not require a mapped port. The runtime configuration now preserves both IPv4 and IPv6 entries, so you can use dual-stack WireGuard peers when your endpoint supports them.
 
 ### Example Configuration
 
@@ -181,7 +181,7 @@ Delete your nova3 folder in /config and restart qbittorrent
 - Confirm that the selected configuration file in `/config/wireguard` matches the `wireguard_config` option (or that only one `.conf` file is present).
 - Check the add-on logs for the detailed `wg-quick` error message printed by the startup routine.
 - Hosts missing the iptables `comment` kernel module are automatically retried without comment matches and, when available, using the legacy iptables backend. Inspect the log for messages about these fallbacks if you see iptables-restore errors.
-- IPv6 settings are removed at startup; ensure your tunnel supports IPv4-only operation.
+- Dual-stack WireGuard peers are supported. If you see ip6tables-restore errors, confirm that your host provides IPv6 firewall support or adjust your configuration to match your environment.
 - The startup scripts suppress the `net.ipv4.conf.all.src_valid_mark` sysctl failure emitted by `wg-quick` on some hosts, so persistent errors in the logs typically point to configuration or connectivity issues.
 
 </details>
