@@ -1,3 +1,6 @@
+## 5.1.2-14 (19-11-2025)
+- FIX: detect missing IPv6 nat/comment modules and fall back to IPv4-only WireGuard configs to avoid ip6tables-restore failures.
+
 ## 5.1.2-13 (18-11-2025)
 - FIX: fall back to an IPv4-only WireGuard runtime config when the host is missing IPv6 firewall support to prevent ip6tables errors.
 - FIX: tighten WireGuard config file permissions to silence the "world accessible" warning from wg-quick.

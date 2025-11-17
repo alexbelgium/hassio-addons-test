@@ -126,7 +126,15 @@ wireguard_runtime_config="${wireguard_config}"
 
 chmod 600 "${wireguard_runtime_config}" 2>/dev/null || true
 
-if ! ip6tables -t raw -L PREROUTING -n >/dev/null 2>&1; then
+has_ipv6_firewall_support() {
+    ip6tables -t raw -L PREROUTING -n >/dev/null 2>&1 || return 1
+    ip6tables -t nat -L PREROUTING -n >/dev/null 2>&1 || return 1
+    ip6tables -m comment -h >/dev/null 2>&1 || return 1
+
+    return 0
+}
+
+if ! has_ipv6_firewall_support; then
     wireguard_runtime_config="${WIREGUARD_STATE_DIR}/${interface_name}.ipv4.conf"
     bashio::log.warning 'IPv6 firewall support unavailable on the host. Creating IPv4-only WireGuard config to avoid ip6tables errors.'
     sanitize_wireguard_config_ipv4_only "${wireguard_config}" "${wireguard_runtime_config}"
