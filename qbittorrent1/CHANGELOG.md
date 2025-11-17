@@ -1,3 +1,6 @@
+## 5.1.2-16 (19-11-2025)
+- FIX: add an iptables-restore shim that retries without comment matches and falls back to legacy backends when the host kernel lacks the comment module.
+
 ## 5.1.2-15 (19-11-2025)
 - FIX: strip IPv6 configuration from the WireGuard runtime file to avoid host environments without IPv6 firewall or sysctl support.
 - FIX: add a sysctl shim to suppress `net.ipv4.conf.all.src_valid_mark` permission failures from wg-quick.
