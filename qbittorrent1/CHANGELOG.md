@@ -1,3 +1,7 @@
+## 5.1.2-17 (20-11-2025)
+- FEAT: restore dual-stack WireGuard runtime configs so IPv6 peers work alongside IPv4.
+- FIX: add ip6tables-restore shim with comment-stripping and legacy fallbacks to match the IPv4 handling.
+
 ## 5.1.2-16 (19-11-2025)
 - FIX: add an iptables-restore shim that retries without comment matches and falls back to legacy backends when the host kernel lacks the comment module.
 
