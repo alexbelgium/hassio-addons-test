@@ -5,6 +5,7 @@ set -e
 WIREGUARD_STATE_DIR="/var/run/wireguard"
 QBT_CONFIG_FILE="/config/qBittorrent/qBittorrent.conf"
 declare wireguard_config=""
+declare wireguard_runtime_config=""
 declare configured_name
 
 mkdir -p "${WIREGUARD_STATE_DIR}"
@@ -28,6 +29,64 @@ if bashio::var.has_value "${port}"; then
 else
     bashio::log.info 'WireGuard port 51820/udp is not exposed in the add-on options. Continuing with outbound-only connectivity.'
 fi
+
+sanitize_wireguard_config_ipv4_only() {
+    local input_file="$1"
+    local output_file="$2"
+
+    rm -f "${output_file}"
+
+    while IFS= read -r line || [ -n "${line}" ]; do
+        case "${line}" in
+            Address*)
+                IFS=',' read -ra parts <<< "${line#*=}"
+                ipv4_parts=()
+                for part in "${parts[@]}"; do
+                    trimmed="$(echo "${part}" | xargs)"
+                    [[ -z "${trimmed}" || "${trimmed}" == *:* ]] && continue
+                    ipv4_parts+=("${trimmed}")
+                done
+                if [ "${#ipv4_parts[@]}" -gt 0 ]; then
+                    printf 'Address = %s\n' "$(IFS=,; echo "${ipv4_parts[*]}")" >> "${output_file}"
+                else
+                    bashio::log.debug 'Dropped Address line containing only IPv6 entries while creating IPv4-only WireGuard config.'
+                fi
+                ;;
+            AllowedIPs*)
+                IFS=',' read -ra parts <<< "${line#*=}"
+                ipv4_parts=()
+                for part in "${parts[@]}"; do
+                    trimmed="$(echo "${part}" | xargs)"
+                    [[ -z "${trimmed}" || "${trimmed}" == *:* ]] && continue
+                    ipv4_parts+=("${trimmed}")
+                done
+                if [ "${#ipv4_parts[@]}" -gt 0 ]; then
+                    printf 'AllowedIPs = %s\n' "$(IFS=,; echo "${ipv4_parts[*]}")" >> "${output_file}"
+                else
+                    bashio::log.debug 'Dropped AllowedIPs line containing only IPv6 entries while creating IPv4-only WireGuard config.'
+                fi
+                ;;
+            DNS*)
+                IFS=',' read -ra parts <<< "${line#*=}"
+                filtered_dns=()
+                for part in "${parts[@]}"; do
+                    trimmed="$(echo "${part}" | xargs)"
+                    [[ -z "${trimmed}" ]] && continue
+                    if [[ "${trimmed}" == *:* ]]; then
+                        continue
+                    fi
+                    filtered_dns+=("${trimmed}")
+                done
+                if [ "${#filtered_dns[@]}" -gt 0 ]; then
+                    printf 'DNS = %s\n' "$(IFS=,; echo "${filtered_dns[*]}")" >> "${output_file}"
+                fi
+                ;;
+            *)
+                printf '%s\n' "${line}" >> "${output_file}"
+                ;;
+        esac
+    done < "${input_file}"
+}
 
 if bashio::config.has_value 'wireguard_config'; then
     configured_name="$(bashio::config 'wireguard_config')"
@@ -63,7 +122,18 @@ if [[ -z "${interface_name}" ]]; then
     interface_name='wg0'
 fi
 
-echo "${wireguard_config}" > "${WIREGUARD_STATE_DIR}/config"
+wireguard_runtime_config="${wireguard_config}"
+
+chmod 600 "${wireguard_runtime_config}" 2>/dev/null || true
+
+if ! ip6tables -t raw -L PREROUTING -n >/dev/null 2>&1; then
+    wireguard_runtime_config="${WIREGUARD_STATE_DIR}/${interface_name}.ipv4.conf"
+    bashio::log.warning 'IPv6 firewall support unavailable on the host. Creating IPv4-only WireGuard config to avoid ip6tables errors.'
+    sanitize_wireguard_config_ipv4_only "${wireguard_config}" "${wireguard_runtime_config}"
+    chmod 600 "${wireguard_runtime_config}" 2>/dev/null || true
+fi
+
+echo "${wireguard_runtime_config}" > "${WIREGUARD_STATE_DIR}/config"
 echo "${interface_name}" > "${WIREGUARD_STATE_DIR}/interface"
 
 if bashio::fs.file_exists "${QBT_CONFIG_FILE}"; then

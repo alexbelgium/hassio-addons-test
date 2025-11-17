@@ -1,3 +1,7 @@
+## 5.1.2-13 (18-11-2025)
+- FIX: fall back to an IPv4-only WireGuard runtime config when the host is missing IPv6 firewall support to prevent ip6tables errors.
+- FIX: tighten WireGuard config file permissions to silence the "world accessible" warning from wg-quick.
+
 ## 5.1.2-12 (17-11-2025)
 - FIX: make the WireGuard resolvconf shim executable so WireGuard uses it instead of the upstream tool that fails with signature errors.
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
