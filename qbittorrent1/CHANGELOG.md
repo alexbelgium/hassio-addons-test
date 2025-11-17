@@ -1,3 +1,7 @@
+## 5.1.2-15 (19-11-2025)
+- FIX: strip IPv6 configuration from the WireGuard runtime file to avoid host environments without IPv6 firewall or sysctl support.
+- FIX: add a sysctl shim to suppress `net.ipv4.conf.all.src_valid_mark` permission failures from wg-quick.
+
 ## 5.1.2-14 (19-11-2025)
 - FIX: detect missing IPv6 nat/comment modules and fall back to IPv4-only WireGuard configs to avoid ip6tables-restore failures.
 
