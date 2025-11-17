@@ -122,7 +122,7 @@ if [[ -z "${interface_name}" ]]; then
     interface_name='wg0'
 fi
 
-wireguard_runtime_config="${WIREGUARD_STATE_DIR}/${interface_name}.ipv4.conf"
+wireguard_runtime_config="${WIREGUARD_STATE_DIR}/${interface_name}.conf"
 
 sanitize_wireguard_config_ipv4_only "${wireguard_config}" "${wireguard_runtime_config}"
 chmod 600 "${wireguard_runtime_config}" 2>/dev/null || true
