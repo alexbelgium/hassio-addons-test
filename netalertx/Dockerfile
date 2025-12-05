@@ -41,19 +41,19 @@ COPY rootfs/ /
 
 USER 0
 
-RUN chown 20212 /etc/cont-init.d/* && chmod +x /etc/cont-init.d/*
-
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
 #RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; fi && \
 #    if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
 
 # Modules
-#ARG MODULES="00-banner.sh 01-custom_script.sh"
+ARG MODULES="00-banner.sh"
 
 # Automatic modules download
-#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
-#RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
+ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
+RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
+
+RUN chown 20212 /etc/cont-init.d/* /usr/bin/bashio /usr/lib/bashio && chmod +x /etc/cont-init.d/*
 
 USER 20212
 
