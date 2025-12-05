@@ -53,7 +53,9 @@ ARG MODULES="00-banner.sh"
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
-RUN chown 20212 /etc/cont-init.d/* /usr/bin/bashio /usr/lib/bashio && chmod +x /etc/cont-init.d/*
+RUN chown 20212 /etc/cont-init.d/* && \
+    chown 20212 /usr/bin/bashio || true && \
+    chmod +x /etc/cont-init.d/*
 
 USER 20212
 
