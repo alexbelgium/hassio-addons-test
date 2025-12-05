@@ -55,7 +55,7 @@ RUN chown 20211 /etc/cont-init.d/* && chmod +x /etc/cont-init.d/*
 #ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
 #RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
-USER netalertx
+USER 20211
 
 # Manual apps
 #ENV PACKAGES=""
