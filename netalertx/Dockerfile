@@ -41,6 +41,7 @@ ENV READ_WRITE_FOLDERS="$READ_WRITE_FOLDERS $NETALERTX_DATA"
 
 # Add rootfs
 COPY rootfs/ /
+RUN chown 102:102 /etc/cont-init.d/*
 
 #USER 0
 
