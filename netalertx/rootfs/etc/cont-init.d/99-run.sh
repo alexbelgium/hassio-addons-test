@@ -5,7 +5,7 @@ set -euo pipefail
 bashio::log.info "Update structure"
 
 # New persistent location (writable for non-root)
-PERSIST_ROOT="/data/netalertx"
+PERSIST_ROOT="/data"
 
 # Legacy location used by older add-on versions
 LEGACY_ROOT="/config"
