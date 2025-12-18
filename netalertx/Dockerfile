@@ -44,6 +44,8 @@ COPY --from=builder /sbin/apk /sbin/apk
 COPY --from=builder /lib/apk /lib/apk
 COPY --from=builder /etc/apk /etc/apk
 
+RUN apk add jq curl yamllint ca-certificates
+
 # Modules
 ARG MODULES="00-banner.sh"
 
