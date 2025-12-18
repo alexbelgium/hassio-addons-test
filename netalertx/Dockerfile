@@ -98,7 +98,7 @@ ENV SKIP_STARTUP_CHECKS="true"
 RUN mkdir -p /etc/nginx/http.d /var/lib/nginx /var/log/nginx \
     && chown -R 20212:20212 /etc/nginx /var/lib/nginx /var/log/nginx /tmp/addon-scripts
 
-USER 20212
+USER netalertx
 
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
