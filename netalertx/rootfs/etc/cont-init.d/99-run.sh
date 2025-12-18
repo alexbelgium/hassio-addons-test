@@ -2,10 +2,12 @@
 # shellcheck shell=bash
 set -euo pipefail
 
+exit 0
+
 bashio::log.info "Update structure"
 
 # New persistent location (writable for non-root)
-PERSIST_ROOT="/data"
+PERSIST_ROOT="$NETALERTX_DATA"
 
 # Legacy location used by older add-on versions
 LEGACY_ROOT="/config"
