@@ -93,7 +93,7 @@ RUN chmod 777 ${ADDON_SCRIPTS_DIR}/bashio-standalone.sh \
 # Default to skipping upstream startup checks to allow custom scripts to run in hardened image
 ENV SKIP_STARTUP_CHECKS="true"
 
-USER netalertx
+USER 20212
 
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
