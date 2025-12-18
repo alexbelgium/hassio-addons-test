@@ -22,19 +22,15 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
-# Set S6 wait time
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0 \
     ADDON_SCRIPTS_DIR=/tmp/addon-scripts
 
-# Ensure add-on helper scripts remain accessible on hardened upstream images
 ENV PATH="${ADDON_SCRIPTS_DIR}:$PATH"
 
-# Global LSIO modifications
-#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
-#ARG CONFIGLOCATION="/config/addons_config/netalertx"
-#RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
+# (optional but nice) ensure it exists early
+RUN mkdir -p "${ADDON_SCRIPTS_DIR}"
 
 ##################
 # 3 Install apps #
@@ -76,15 +72,17 @@ RUN chmod 744 ${ADDON_SCRIPTS_DIR}/ha_autoapps.sh \
 ################
 
 # Add entrypoint
-ENV S6_STAGE2_HOOK=${ADDON_SCRIPTS_DIR}/ha_entrypoint.sh
+ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "${ADDON_SCRIPTS_DIR}/ha_entrypoint.sh"
 
 # Entrypoint modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh"
-RUN chmod 777 ${ADDON_SCRIPTS_DIR}/ha_entrypoint.sh ${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh \
-    && ${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh \
-    && chmod 005 ${ADDON_SCRIPTS_DIR}/ha_entrypoint.sh ${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh \
-    && chown 20212:20212 ${ADDON_SCRIPTS_DIR}/ha_entrypoint.sh ${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh
+
+RUN ln -sf "${ADDON_SCRIPTS_DIR}/ha_entrypoint.sh" /ha_entrypoint.sh \
+    && chmod 777 /ha_entrypoint.sh "${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh" \
+    && "${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh" \
+    && chmod 0555 /ha_entrypoint.sh "${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh" \
+    && chown 20212:20212 /ha_entrypoint.sh "${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh"
 
 # Standalone bashio command
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "${ADDON_SCRIPTS_DIR}/bashio-standalone.sh"
