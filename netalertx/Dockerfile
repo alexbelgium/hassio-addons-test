@@ -22,15 +22,15 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
-ENV S6_CMD_WAIT_FOR_SERVICES=1 \
-    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_SERVICES_GRACETIME=0 \
-    ADDON_SCRIPTS_DIR=/tmp/addon-scripts
+#ENV S6_CMD_WAIT_FOR_SERVICES=1 \
+#    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
+#    S6_SERVICES_GRACETIME=0 \
+#    ADDON_SCRIPTS_DIR=/tmp/addon-scripts
 
-ENV PATH="${ADDON_SCRIPTS_DIR}:$PATH"
+#ENV PATH="${ADDON_SCRIPTS_DIR}:$PATH"
 
 # (optional but nice) ensure it exists early
-RUN mkdir -p "${ADDON_SCRIPTS_DIR}"
+#RUN mkdir -p "${ADDON_SCRIPTS_DIR}"
 
 ##################
 # 3 Install apps #
@@ -39,7 +39,7 @@ RUN mkdir -p "${ADDON_SCRIPTS_DIR}"
 # Add rootfs
 COPY rootfs/ /
 
-USER 0
+#USER 0
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
@@ -47,58 +47,58 @@ USER 0
 #    if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
 
 # Modules
-ARG MODULES="00-banner.sh"
+#ARG MODULES="00-banner.sh"
 
 # Automatic modules download
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "${ADDON_SCRIPTS_DIR}/ha_automodules.sh"
-RUN mkdir -p ${ADDON_SCRIPTS_DIR} \
-    && chmod 744 ${ADDON_SCRIPTS_DIR}/ha_automodules.sh \
-    && ${ADDON_SCRIPTS_DIR}/ha_automodules.sh "$MODULES" \
-    && chmod 005 ${ADDON_SCRIPTS_DIR}/ha_automodules.sh \
-    && chown 20212:20212 ${ADDON_SCRIPTS_DIR}/ha_automodules.sh \
-    && rm -r /etc/cont-init.d/00-global_var.sh /etc/cont-init.d/01-config_yaml.sh /etc/cont-init.d/01-custom_script.sh
+#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "${ADDON_SCRIPTS_DIR}/ha_automodules.sh"
+#RUN mkdir -p ${ADDON_SCRIPTS_DIR} \
+#    && chmod 744 ${ADDON_SCRIPTS_DIR}/ha_automodules.sh \
+#    && ${ADDON_SCRIPTS_DIR}/ha_automodules.sh "$MODULES" \
+#    && chmod 005 ${ADDON_SCRIPTS_DIR}/ha_automodules.sh \
+#    && chown 20212:20212 ${ADDON_SCRIPTS_DIR}/ha_automodules.sh \
+#    && rm -r /etc/cont-init.d/00-global_var.sh /etc/cont-init.d/01-config_yaml.sh /etc/cont-init.d/01-custom_script.sh
 
 # Manual apps
-ENV PACKAGES=""
+#ENV PACKAGES=""
 
 # Automatic apps & bashio
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "${ADDON_SCRIPTS_DIR}/ha_autoapps.sh"
-RUN chmod 744 ${ADDON_SCRIPTS_DIR}/ha_autoapps.sh \
-    && ${ADDON_SCRIPTS_DIR}/ha_autoapps.sh "$PACKAGES" \
-    && chmod 005 ${ADDON_SCRIPTS_DIR}/ha_autoapps.sh \
-    && chown 20212:20212 ${ADDON_SCRIPTS_DIR}/ha_autoapps.sh
+#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "${ADDON_SCRIPTS_DIR}/ha_autoapps.sh"
+#RUN chmod 744 ${ADDON_SCRIPTS_DIR}/ha_autoapps.sh \
+#    && ${ADDON_SCRIPTS_DIR}/ha_autoapps.sh "$PACKAGES" \
+#    && chmod 005 ${ADDON_SCRIPTS_DIR}/ha_autoapps.sh \
+#    && chown 20212:20212 ${ADDON_SCRIPTS_DIR}/ha_autoapps.sh
 
 ################
 # 4 Entrypoint #
 ################
 
 # Add entrypoint
-ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "${ADDON_SCRIPTS_DIR}/ha_entrypoint.sh"
+#ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
+#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "${ADDON_SCRIPTS_DIR}/ha_entrypoint.sh"
 
 # Entrypoint modifications
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh"
+#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh"
 
-RUN ln -sf "${ADDON_SCRIPTS_DIR}/ha_entrypoint.sh" /ha_entrypoint.sh \
-    && chmod 777 /ha_entrypoint.sh "${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh" \
-    && "${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh" \
-    && chmod 0555 /ha_entrypoint.sh "${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh" \
-    && chown 20212:20212 /ha_entrypoint.sh "${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh"
+#RUN ln -sf "${ADDON_SCRIPTS_DIR}/ha_entrypoint.sh" /ha_entrypoint.sh \
+#    && chmod 777 /ha_entrypoint.sh "${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh" \
+#    && "${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh" \
+#    && chmod 0555 /ha_entrypoint.sh "${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh" \
+#    && chown 20212:20212 /ha_entrypoint.sh "${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh"
 
 # Standalone bashio command
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "${ADDON_SCRIPTS_DIR}/bashio-standalone.sh"
-RUN chmod 777 ${ADDON_SCRIPTS_DIR}/bashio-standalone.sh \
-    && chmod 005 ${ADDON_SCRIPTS_DIR}/bashio-standalone.sh \
-    && chown 20212:20212 ${ADDON_SCRIPTS_DIR}/bashio-standalone.sh
+#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "${ADDON_SCRIPTS_DIR}/bashio-standalone.sh"
+#RUN chmod 777 ${ADDON_SCRIPTS_DIR}/bashio-standalone.sh \
+#    && chmod 005 ${ADDON_SCRIPTS_DIR}/bashio-standalone.sh \
+#    && chown 20212:20212 ${ADDON_SCRIPTS_DIR}/bashio-standalone.sh
 
 # Default to skipping upstream startup checks to allow custom scripts to run in hardened image
-ENV SKIP_STARTUP_CHECKS="true"
+#ENV SKIP_STARTUP_CHECKS="true"
 
 # Fix permissions for user 20212 before switching
-RUN mkdir -p /etc/nginx/http.d /var/lib/nginx /var/log/nginx \
-    && chown -R 20212:20212 /etc/nginx /var/lib/nginx /var/log/nginx /tmp/addon-scripts
+#RUN mkdir -p /etc/nginx/http.d /var/lib/nginx /var/log/nginx \
+#    && chown -R 20212:20212 /etc/nginx /var/lib/nginx /var/log/nginx /tmp/addon-scripts
 
-USER netalertx
+#USER netalertx
 
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
