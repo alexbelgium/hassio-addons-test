@@ -14,39 +14,61 @@
 # 1 Build Image #
 #################
 
-FROM alpine:3.22 AS builder
-RUN apk add --no-cache sudo apk-tools
+FROM alpine:3.22.2 AS ha_tools
+RUN apk add --no-cache \
+      ca-certificates \
+      curl \
+      jq \
+      sudo \
+      gosu \
+      pax-utils
 
+# Collect binaries + their runtime deps into /out (so we can COPY them into the hardened image)
+RUN set -eux; \
+    mkdir -p /out/usr/bin /out/usr/lib /out/lib /out/etc/ssl/certs /out/etc; \
+    cp -a /usr/bin/jq /usr/bin/curl /usr/bin/sudo /usr/bin/gosu /out/usr/bin/; \
+    cp -a /etc/ssl/certs/ca-certificates.crt /out/etc/ssl/certs/; \
+    cp -a /etc/sudoers /out/etc/; \
+    if [ -d /etc/sudoers.d ]; then cp -a /etc/sudoers.d /out/etc/; fi; \
+    if [ -d /usr/lib/sudo ]; then cp -a /usr/lib/sudo /out/usr/lib/; fi; \
+    for bin in /usr/bin/jq /usr/bin/curl /usr/bin/sudo /usr/bin/gosu; do \
+      scanelf --needed --nobanner --format '%n' "$bin" \
+        | tr ',' '\n' \
+        | while read -r lib; do \
+            [ -z "$lib" ] && continue; \
+            p="$(find /lib /usr/lib -name "$lib" -type f -o -type l | head -n1 || true)"; \
+            [ -z "$p" ] && continue; \
+            mkdir -p "/out$(dirname "$p")"; \
+            cp -a "$p" "/out$(dirname "$p")/"; \
+            rp="$(readlink -f "$p" || true)"; \
+            if [ -n "$rp" ] && [ "$rp" != "$p" ]; then \
+              mkdir -p "/out$(dirname "$rp")"; \
+              cp -a "$rp" "/out$(dirname "$rp")/"; \
+            fi; \
+          done; \
+    done
+
+##################
+# 1) Final image #
+##################
 ARG BUILD_FROM
-ARG BUILD_VERSION
 FROM ghcr.io/jokob-sk/netalertx:latest
 
-##################
-# 2 Modify Image #
-##################
-
-# Set S6 wait time
+# S6 settings (keep yours)
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-##################
-# 3 Modify Image #
-##################
-
-# S6 settings
-ENV S6_CMD_WAIT_FOR_SERVICES=1 \
-    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_SERVICES_GRACETIME=0
-
-##################
-# 3 Install apps #
-##################
+USER 0
 
 # Add rootfs
 COPY rootfs/ /
 
-USER 0
+# Bring in tools (NO apk in final stage)
+COPY --from=ha_tools /out/ /
+
+# (optional) make sure cert bundle is found by everything
+ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
 ##################
 # 4 Prepare apk #
