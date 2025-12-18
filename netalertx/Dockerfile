@@ -19,7 +19,7 @@ RUN apk add --no-cache sudo apk-tools
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM ${BUILD_FROM}
+FROM ghcr.io/jokob-sk/netalertx:latest
 
 ##################
 # 2 Modify Image #
