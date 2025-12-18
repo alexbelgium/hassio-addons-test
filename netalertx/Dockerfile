@@ -14,6 +14,9 @@
 # 1 Build Image #
 #################
 
+FROM alpine:3.22 AS builder
+RUN apk add --no-cache sudo apk-tools
+
 ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
@@ -36,27 +39,10 @@ COPY rootfs/ /
 
 USER 0
 
-
-ARG TARGETARCH
-ARG TARGETOS
-
-# Install jq (static) for the correct architecture using curl
-RUN set -eux; \
-    # Map Docker's TARGETARCH to jq asset arch
-    case "$TARGETARCH" in \
-      amd64)   JQ_ASSET="jq-${TARGETOS}-amd64" ;; \
-      arm64)   JQ_ASSET="jq-${TARGETOS}-aarch64" ;; \
-      arm)     JQ_ASSET="jq-${TARGETOS}-armhf" ;; \
-      ppc64le) JQ_ASSET="jq-${TARGETOS}-ppc64le" ;; \
-      s390x)   JQ_ASSET="jq-${TARGETOS}-s390x" ;; \
-      riscv64) JQ_ASSET="jq-${TARGETOS}-riscv64" ;; \
-      *) echo "Unsupported TARGETARCH: $TARGETARCH" >&2; exit 1 ;; \
-    esac; \
-    JQ_URL="https://github.com/jqlang/jq/releases/latest/download/${JQ_ASSET}"; \
-    echo "Downloading $JQ_URL"; \
-    curl -fsSL -o /usr/local/bin/jq "$JQ_URL"; \
-    chmod +x /usr/local/bin/jq; \
-    /usr/local/bin/jq --version
+COPY --from=builder /usr/bin/sudo /usr/bin/sudo
+COPY --from=builder /sbin/apk /sbin/apk
+COPY --from=builder /lib/apk /lib/apk
+COPY --from=builder /etc/apk /etc/apk
 
 # Modules
 ARG MODULES="00-banner.sh"
@@ -66,7 +52,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES=""
+ENV PACKAGES="jq"
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
