@@ -55,7 +55,8 @@ RUN mkdir -p ${ADDON_SCRIPTS_DIR} \
     && chmod 744 ${ADDON_SCRIPTS_DIR}/ha_automodules.sh \
     && ${ADDON_SCRIPTS_DIR}/ha_automodules.sh "$MODULES" \
     && chmod 005 ${ADDON_SCRIPTS_DIR}/ha_automodules.sh \
-    && chown 20212:20212 ${ADDON_SCRIPTS_DIR}/ha_automodules.sh
+    && chown 20212:20212 ${ADDON_SCRIPTS_DIR}/ha_automodules.sh \
+    && rm -r /etc/cont-init.d/00-global_var.sh /etc/cont-init.d/01-config_yaml.sh /etc/cont-init.d/01-custom_script.sh
 
 # Manual apps
 ENV PACKAGES=""
