@@ -1,3 +1,7 @@
+## 25.10.2-1 (18-12-2025)
+
+- Fix add-on entrypoint modification path for hardened upstream image builds
+
 ## 25.10.1-4 (01-12-2025)
 - Minor bugs fixed
 ## 25.10.1-3 (29-11-2025)
