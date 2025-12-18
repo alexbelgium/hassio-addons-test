@@ -31,6 +31,15 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 ##################
+# 3 Modify Image #
+##################
+
+# S6 settings
+ENV S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
+    S6_SERVICES_GRACETIME=0
+
+##################
 # 3 Install apps #
 ##################
 
@@ -39,10 +48,26 @@ COPY rootfs/ /
 
 USER 0
 
-COPY --from=builder /usr/bin/sudo /usr/bin/sudo
+##################
+# 4 Prepare apk #
+##################
+
+# Copy apk infrastructure from builder
 COPY --from=builder /sbin/apk /sbin/apk
 COPY --from=builder /lib/apk /lib/apk
 COPY --from=builder /etc/apk /etc/apk
+COPY --from=builder /usr/share/apk /usr/share/apk
+COPY --from=builder /usr/lib/libcrypto.so.* /usr/lib/
+COPY --from=builder /usr/lib/libssl.so.* /usr/lib/
+COPY --from=builder /usr/lib/libz.so.* /usr/lib/
+
+# Ensure /sbin is in PATH
+ENV PATH="/sbin:${PATH}"
+
+##################
+# 5 Install sudo #
+##################
+COPY --from=builder /usr/bin/sudo /usr/bin/sudo
 
 RUN apk add jq curl yamllint ca-certificates
 
