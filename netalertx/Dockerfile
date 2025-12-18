@@ -94,6 +94,10 @@ RUN chmod 777 ${ADDON_SCRIPTS_DIR}/bashio-standalone.sh \
 # Default to skipping upstream startup checks to allow custom scripts to run in hardened image
 ENV SKIP_STARTUP_CHECKS="true"
 
+# Fix permissions for user 20212 before switching
+RUN mkdir -p /etc/nginx/http.d /var/lib/nginx /var/log/nginx \
+    && chown -R 20212:20212 /etc/nginx /var/lib/nginx /var/log/nginx /tmp/addon-scripts
+
 USER 20212
 
 #WORKDIR /
