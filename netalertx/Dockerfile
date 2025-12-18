@@ -25,7 +25,11 @@ FROM ${BUILD_FROM}
 # Set S6 wait time
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_SERVICES_GRACETIME=0
+    S6_SERVICES_GRACETIME=0 \
+    ADDON_SCRIPTS_DIR=/tmp/addon-scripts
+
+# Ensure add-on helper scripts remain accessible on hardened upstream images
+ENV PATH="${ADDON_SCRIPTS_DIR}:$PATH"
 
 # Global LSIO modifications
 #ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
@@ -50,15 +54,22 @@ USER 0
 ARG MODULES="00-banner.sh"
 
 # Automatic modules download
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
-RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
+ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "${ADDON_SCRIPTS_DIR}/ha_automodules.sh"
+RUN mkdir -p ${ADDON_SCRIPTS_DIR} \
+    && chmod 744 ${ADDON_SCRIPTS_DIR}/ha_automodules.sh \
+    && ${ADDON_SCRIPTS_DIR}/ha_automodules.sh "$MODULES" \
+    && chmod 005 ${ADDON_SCRIPTS_DIR}/ha_automodules.sh \
+    && chown 20212:20212 ${ADDON_SCRIPTS_DIR}/ha_automodules.sh
 
 # Manual apps
 ENV PACKAGES=""
 
 # Automatic apps & bashio
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
-RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
+ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "${ADDON_SCRIPTS_DIR}/ha_autoapps.sh"
+RUN chmod 744 ${ADDON_SCRIPTS_DIR}/ha_autoapps.sh \
+    && ${ADDON_SCRIPTS_DIR}/ha_autoapps.sh "$PACKAGES" \
+    && chmod 005 ${ADDON_SCRIPTS_DIR}/ha_autoapps.sh \
+    && chown 20212:20212 ${ADDON_SCRIPTS_DIR}/ha_autoapps.sh
 
 ################
 # 4 Entrypoint #
@@ -69,12 +80,22 @@ ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 
 # Entrypoint modifications
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
-RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
+ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh"
+RUN chmod 777 /ha_entrypoint.sh ${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh \
+    && ${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh \
+    && chmod 005 /ha_entrypoint.sh ${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh \
+    && chown 20212:20212 /ha_entrypoint.sh ${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh
 
 # Standalone bashio command
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/.bashio-standalone.sh"
-RUN chmod 777 /.bashio-standalone.sh
+ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "${ADDON_SCRIPTS_DIR}/bashio-standalone.sh"
+RUN chmod 777 ${ADDON_SCRIPTS_DIR}/bashio-standalone.sh \
+    && chmod 005 ${ADDON_SCRIPTS_DIR}/bashio-standalone.sh \
+    && chown 20212:20212 ${ADDON_SCRIPTS_DIR}/bashio-standalone.sh
+
+# Default to skipping upstream startup checks to allow custom scripts to run in hardened image
+ENV SKIP_STARTUP_CHECKS="true"
+
+USER netalertx
 
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
