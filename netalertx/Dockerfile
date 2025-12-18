@@ -65,8 +65,8 @@ RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_auto
 ################
 
 # Add entrypoint
-#ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
-#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
+ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
+ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 
 # Entrypoint modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
