@@ -2,8 +2,6 @@
 # shellcheck shell=bash
 set -euo pipefail
 
-exit 0
-
 bashio::log.info "Update structure"
 
 # New persistent location (writable for non-root)
