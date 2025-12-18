@@ -70,29 +70,6 @@ COPY --from=ha_tools /out/ /
 # (optional) make sure cert bundle is found by everything
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
-##################
-# 4 Prepare apk #
-##################
-
-# Copy apk infrastructure from builder
-COPY --from=builder /sbin/apk /sbin/apk
-COPY --from=builder /lib/apk /lib/apk
-COPY --from=builder /etc/apk /etc/apk
-COPY --from=builder /usr/share/apk /usr/share/apk
-COPY --from=builder /usr/lib/libcrypto.so.* /usr/lib/
-COPY --from=builder /usr/lib/libssl.so.* /usr/lib/
-COPY --from=builder /usr/lib/libz.so.* /usr/lib/
-
-# Ensure /sbin is in PATH
-ENV PATH="/sbin:${PATH}"
-
-##################
-# 5 Install sudo #
-##################
-COPY --from=builder /usr/bin/sudo /usr/bin/sudo
-
-RUN apk add jq curl yamllint ca-certificates
-
 # Modules
 ARG MODULES="00-banner.sh"
 
@@ -101,7 +78,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="jq"
+ENV PACKAGES=""
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
