@@ -27,11 +27,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-# Global LSIO modifications
-#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
-#ARG CONFIGLOCATION="/config/addons_config/netalertx"
-#RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
-
 ##################
 # 3 Install apps #
 ##################
@@ -41,10 +36,34 @@ COPY rootfs/ /
 
 USER 0
 
-# Uses /bin for compatibility purposes
-# hadolint ignore=DL4005
-RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; fi && \
-    if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
+
+ARG TARGETARCH
+ARG TARGETOS
+
+# Install jq (static) for the correct architecture using curl
+RUN set -eux; \
+    # Map Docker's TARGETARCH to jq asset arch
+    case "$TARGETARCH" in \
+      amd64)   JQ_ASSET="jq-${TARGETOS}-amd64" ;; \
+      arm64)   JQ_ASSET="jq-${TARGETOS}-aarch64" ;; \
+      arm)     JQ_ASSET="jq-${TARGETOS}-armhf" ;; \
+      ppc64le) JQ_ASSET="jq-${TARGETOS}-ppc64le" ;; \
+      s390x)   JQ_ASSET="jq-${TARGETOS}-s390x" ;; \
+      riscv64) JQ_ASSET="jq-${TARGETOS}-riscv64" ;; \
+      *) echo "Unsupported TARGETARCH: $TARGETARCH" >&2; exit 1 ;; \
+    esac; \
+    JQ_URL="https://github.com/jqlang/jq/releases/latest/download/${JQ_ASSET}"; \
+    echo "Downloading $JQ_URL"; \
+    curl -fsSL -o /usr/local/bin/jq "$JQ_URL"; \
+    chmod +x /usr/local/bin/jq; \
+    /usr/local/bin/jq --version
+
+RUN BASHIO_VERSION="0.14.3" && \
+    mkdir -p /tmp/bashio && \
+    curl -f -L -s -S "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /tmp/bashio && \
+    mv /tmp/bashio/lib /usr/lib/bashio && \
+    ln -s /usr/lib/bashio/bashio /usr/bin/bashio && \
+    rm -rf /tmp/bashio
 
 # Modules
 ARG MODULES="00-banner.sh"
@@ -52,13 +71,6 @@ ARG MODULES="00-banner.sh"
 # Automatic modules download
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
-
-# Manual apps
-ENV PACKAGES=""
-
-# Automatic apps & bashio
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
-RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
 
 ################
 # 4 Entrypoint #
