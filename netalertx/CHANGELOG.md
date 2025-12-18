@@ -90,6 +90,11 @@
 
 - test symlinks
 
+## 25.10.2
+
+- Place helper scripts in /tmp to work with hardened upstream image
+- Preserve bashio helper while respecting upstream read-only permissions
+
 ## 0.0.5
 
 - attempt at starting start.sh, back to prod image

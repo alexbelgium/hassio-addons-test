@@ -76,15 +76,15 @@ RUN chmod 744 ${ADDON_SCRIPTS_DIR}/ha_autoapps.sh \
 ################
 
 # Add entrypoint
-ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
+ENV S6_STAGE2_HOOK=${ADDON_SCRIPTS_DIR}/ha_entrypoint.sh
+ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "${ADDON_SCRIPTS_DIR}/ha_entrypoint.sh"
 
 # Entrypoint modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh"
-RUN chmod 777 /ha_entrypoint.sh ${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh \
+RUN chmod 777 ${ADDON_SCRIPTS_DIR}/ha_entrypoint.sh ${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh \
     && ${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh \
-    && chmod 005 /ha_entrypoint.sh ${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh \
-    && chown 20212:20212 /ha_entrypoint.sh ${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh
+    && chmod 005 ${ADDON_SCRIPTS_DIR}/ha_entrypoint.sh ${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh \
+    && chown 20212:20212 ${ADDON_SCRIPTS_DIR}/ha_entrypoint.sh ${ADDON_SCRIPTS_DIR}/ha_entrypoint_modif.sh
 
 # Standalone bashio command
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "${ADDON_SCRIPTS_DIR}/bashio-standalone.sh"
