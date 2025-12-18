@@ -5,10 +5,10 @@ set -eu
 bashio::log.info "Update structure"
 
 # Persist everything under add-on data (writable)
-PERSIST_ROOT="/data/netalertx"
+PERSIST_ROOT="/data"
 
 echo "Creating symlinks"
-mkdir -p "${PERSIST_ROOT}/config" "${PERSIST_ROOT}/db"
+mkdir -p "${PERSIST_ROOT}/config" "${PERSIST_ROOT}/db" || true
 
 for folder in config db; do
     echo "Creating for ${folder}"
