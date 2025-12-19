@@ -12,8 +12,8 @@ for folder in /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config "
     # Only try to create/chmod if the variable is not empty
     if [ -n "$folder" ]; then
         mkdir -p "$folder"
-        chown -R 20211 "$folder"
-        chmod 755 "$folder"
+        chown -R 20211:20211 "$folder"
+        chmod -R 755 "$folder"
     fi
 done
 
@@ -24,6 +24,8 @@ for item in db config; do
     rm -rf "/data/$item"
     # Create the link: ln -s [TARGET] [LINK_NAME]
     ln -sf "/config/$item" "/data/$item"
+    chown -R 20211:20211 "/data/$item"
+    chmod -R 755 "/data/$item"
 done
 
 #####################
