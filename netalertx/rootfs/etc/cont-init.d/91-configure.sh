@@ -28,7 +28,7 @@ if [ -f /config/db/app.db ]; then
 fi
 
 
-for folder in /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config; do
+for folder in /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config "$NETALERTX_DATA" "$NETALERTX_DATA/db" "$NETALERTX_DATA/config"; do
     mkdir -p "$folder"
     sudo chown -R 20211 "$folder"
     chmod 755 "$folder"
