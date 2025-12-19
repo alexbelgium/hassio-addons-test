@@ -10,6 +10,7 @@ environment:
   NETALERTX_DATA: /config
   NETALERTX_CONFIG: /config/config
   NETALERTX_DB: /config/db
+  TMP_DIR: /tmp/tmp
 hassio_api: true
 host_network: true
 ingress: true
