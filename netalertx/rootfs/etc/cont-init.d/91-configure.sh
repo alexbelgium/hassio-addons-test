@@ -18,7 +18,7 @@ for folder in /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config "
 done
 
 # 2. Fix /tmp and Standard Streams (CRITICAL)
-chmod 1777 /tmp
+chmod -R 1777 /tmp
 # This allows the non-root user to write to the container logs
 chmod 666 /dev/stdout /dev/stderr
 
