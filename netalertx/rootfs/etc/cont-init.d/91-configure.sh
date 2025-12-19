@@ -37,6 +37,7 @@ done
 # Fix php
 sed -i 's|>>"\?/tmp/log/app\.php_errors\.log"\? 2>/dev/stderr|>>"/tmp/log/app.php_errors.log"|g' /services/start-php-fpm.sh
 sed -i 's|TEMP_CONFIG_FILE=$(mktemp "${TMP_DIR}/netalertx\.conf\.XXXXXX")|TEMP_CONFIG_FILE=$(mktemp -p "${TMP_DIR:-/tmp}" netalertx.conf.XXXXXX)|' /services/start-php-fpm.sh
+sed -i "/default_type/a include /etc/nginx/http.d/ingress.conf;" /tmp/nginx/active-config/nginx.conf
 
 #####################
 # Configure network #
