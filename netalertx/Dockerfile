@@ -61,9 +61,16 @@ COPY rootfs/ /
 # Bring in jq + gosu (and their libs). NO apk in final stage.
 COPY --from=ha_tools /out/ /
 
-# (optional) make sure cert bundle is found by everything
-# NetAlertX base normally already provides certs; this just standardizes lookup.
-ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+RUN BASHIO_VERSION="0.14.3" && \
+    mkdir -p /tmp/bashio && \
+    curl -f -L -s -S "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /tmp/bashio && \
+    mv /tmp/bashio/lib /usr/lib/bashio && \
+    ln -s /usr/lib/bashio/bashio /usr/bin/bashio && \
+    rm -rf /tmp/bashio
+
+ARG TARGETARCH
+RUN curl -L -o /usr/local/bin/jq "https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-$TARGETARCH" && \
+    chmod +x /usr/local/bin/jq
 
 ###########
 # Modules #
