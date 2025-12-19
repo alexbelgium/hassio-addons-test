@@ -27,9 +27,10 @@ if [ -f /config/db/app.db ]; then
     chmod a+rwx /config/db/app.db
 fi
 
+
 for folder in /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config; do
     mkdir -p "$folder"
-    sudo chown -R "$PUID":"$PGID" "$folder"
+    sudo chown -R 20211 "$folder"
     chmod 755 "$folder"
 done
 
