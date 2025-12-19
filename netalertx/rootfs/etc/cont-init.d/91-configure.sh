@@ -17,7 +17,7 @@ for folder in config db; do
     if [ -d /app/"$folder" ] && [ "$(ls -A /app/"$folder")" ]; then
         cp -rn /app/"$folder"/* /config/"$folder"/
     fi
-    rm -r /app/"$folder"
+    rm -r /app/"$folder" || true
     ln -sf /config/"$folder" /app/"$folder"
 done
 
