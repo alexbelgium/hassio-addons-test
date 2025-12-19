@@ -20,13 +20,12 @@
 FROM alpine:3.22 AS ha_tools
 
 RUN apk add --no-cache \
-    jq \
     gosu \
     pax-utils
 
 RUN set -eux; \
     mkdir -p /out; \
-    for bin in /usr/bin/jq /usr/bin/gosu; do \
+    for bin in /usr/bin/gosu; do \
       mkdir -p "/out$(dirname "$bin")"; \
       cp -a "$bin" "/out$bin"; \
       # Copy runtime deps. Skip musl loader to avoid clobbering base image libc/loader.
