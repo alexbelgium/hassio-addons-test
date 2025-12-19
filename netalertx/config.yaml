@@ -8,6 +8,8 @@ environment:
   PUID: "102"
   TZ: Europe/Berlin
   NETALERTX_DATA: /config
+  NETALERTX_CONFIG: /config/config
+  NETALERTX_DB: /config/db
 hassio_api: true
 host_network: true
 ingress: true
