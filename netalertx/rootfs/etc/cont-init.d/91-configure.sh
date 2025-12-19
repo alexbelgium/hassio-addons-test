@@ -34,6 +34,9 @@ for item in db config; do
     chmod -R 755 "/data/$item"
 done
 
+# Fix php
+sed -i "s|2>/dev/stderr|2>&2|g" /services/start-php-fpm.sh
+
 #####################
 # Configure network #
 #####################
