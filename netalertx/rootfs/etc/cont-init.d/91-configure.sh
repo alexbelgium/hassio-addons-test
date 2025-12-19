@@ -6,28 +6,6 @@ set -e
 # Update structure #
 ####################
 
-bashio::log.info "Update structure"
-
-# In the addon script, make symlinks on the fly
-echo "Creating symlinks"
-for folder in config db; do
-    echo "Creating for $folder"
-    # Create symlinks
-    mkdir -p /config/"$folder"
-    if [ -d /app/"$folder" ] && [ "$(ls -A /app/"$folder")" ]; then
-        cp -rn /app/"$folder"/* /config/"$folder"/
-    fi
-    rm -r /app/"$folder" || true
-    ln -sf /config/"$folder" /app/"$folder"
-done
-
-sudo chown -R "$PUID":"$PGID" /config/db/
-sudo chown -R "$PUID":"$PGID" /config/config/
-if [ -f /config/db/app.db ]; then
-    chmod a+rwx /config/db/app.db
-fi
-
-
 # 1) Fix Permissions
 # No sudo needed if running as root in entrypoint
 for folder in /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config "$NETALERTX_DATA" "$NETALERTX_DB" "$NETALERTX_CONFIG"; do
@@ -54,6 +32,10 @@ done
 
 # Configuration file path
 config_file="/config/config/app.conf"
+
+if [ -f /config/db/app.db ]; then
+    chmod a+rwx /config/db/app.db
+fi
 
 # Function to execute the main logic
 execute_main_logic() {
@@ -101,6 +83,7 @@ execute_main_logic() {
     done
 
     bashio::log.info "Network scan completed."
+
 }
 
 # Function to wait for the config file
