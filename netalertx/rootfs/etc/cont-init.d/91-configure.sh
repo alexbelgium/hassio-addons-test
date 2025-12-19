@@ -28,10 +28,24 @@ if [ -f /config/db/app.db ]; then
 fi
 
 
+# 1) Fix Permissions
+# No sudo needed if running as root in entrypoint
 for folder in /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config "$NETALERTX_DATA" "$NETALERTX_DB" "$NETALERTX_CONFIG"; do
-    mkdir -p "$folder"
-    sudo chown -R 20211 "$folder"
-    chmod 755 "$folder"
+    # Only try to create/chmod if the variable is not empty
+    if [ -n "$folder" ]; then
+        mkdir -p "$folder"
+        chown -R 20211 "$folder"
+        chmod 755 "$folder"
+    fi
+done
+
+# 2) Create Symlinks correctly
+# This ensures /data/db points to /config/db, etc.
+for item in db config; do
+    # Remove existing file/folder if it exists to prevent 'File exists' errors
+    rm -rf "/data/$item"
+    # Create the link: ln -s [TARGET] [LINK_NAME]
+    ln -sf "/config/$item" "/data/$item"
 done
 
 #####################
