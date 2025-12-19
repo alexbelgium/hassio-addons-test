@@ -8,7 +8,7 @@ set -e
 
 # 1) Fix Permissions
 # No sudo needed if running as root in entrypoint
-for folder in /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config "$NETALERTX_DATA" "$NETALERTX_DB" "$NETALERTX_CONFIG"; do
+for folder in /tmp /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config "$NETALERTX_DATA" "$NETALERTX_DB" "$NETALERTX_CONFIG"; do
     # Only try to create/chmod if the variable is not empty
     if [ -n "$folder" ]; then
         mkdir -p "$folder"
@@ -27,6 +27,15 @@ for item in db config; do
     chown -R 20211:20211 "/data/$item"
     chmod -R 755 "/data/$item"
 done
+
+# Ensure log files exist and are owned by the app user
+for logfile in "/tmp/log/app.php_errors.log" "/tmp/log/cron.log" "/tmp/log/stdout.log" "/tmp/log/stderr.log"; do
+    touch "$logfile"
+    chown 20211:20211 "$logfile"
+done
+
+# Ensure /tmp is fully writable (needed for mktemp)
+chmod 1777 /tmp
 
 #####################
 # Configure network #
