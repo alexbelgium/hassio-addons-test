@@ -10,42 +10,36 @@
 #               /`
 #=== Home Assistant Addon ===#
 
-#################
-# 1 Build Image #
-#################
+############################
+# 0) Tools stage (apk OK)  #
+############################
+# We build a tiny payload in /out containing:
+# - jq + its shared libs (libjq, libonig, etc.)
+# - gosu + its shared libs
+# IMPORTANT: we do NOT bring sudo to avoid breaking NetAlertX hardened behavior.
+FROM alpine:3.22 AS ha_tools
 
-FROM alpine:3.22.2 AS ha_tools
 RUN apk add --no-cache \
-      ca-certificates \
-      curl \
-      jq \
-      sudo \
-      gosu \
-      pax-utils
+    jq \
+    gosu \
+    pax-utils
 
-# Collect binaries + their runtime deps into /out (so we can COPY them into the hardened image)
 RUN set -eux; \
-    mkdir -p /out/usr/bin /out/usr/lib /out/lib /out/etc/ssl/certs /out/etc; \
-    cp -a /usr/bin/jq /usr/bin/curl /usr/bin/sudo /usr/bin/gosu /out/usr/bin/; \
-    cp -a /etc/ssl/certs/ca-certificates.crt /out/etc/ssl/certs/; \
-    cp -a /etc/sudoers /out/etc/; \
-    if [ -d /etc/sudoers.d ]; then cp -a /etc/sudoers.d /out/etc/; fi; \
-    if [ -d /usr/lib/sudo ]; then cp -a /usr/lib/sudo /out/usr/lib/; fi; \
-    for bin in /usr/bin/jq /usr/bin/curl /usr/bin/sudo /usr/bin/gosu; do \
-      scanelf --needed --nobanner --format '%n' "$bin" \
-        | tr ',' '\n' \
-        | while read -r lib; do \
-            [ -z "$lib" ] && continue; \
-            p="$(find /lib /usr/lib -name "$lib" -type f -o -type l | head -n1 || true)"; \
-            [ -z "$p" ] && continue; \
-            mkdir -p "/out$(dirname "$p")"; \
-            cp -a "$p" "/out$(dirname "$p")/"; \
-            rp="$(readlink -f "$p" || true)"; \
-            if [ -n "$rp" ] && [ "$rp" != "$p" ]; then \
-              mkdir -p "/out$(dirname "$rp")"; \
-              cp -a "$rp" "/out$(dirname "$rp")/"; \
-            fi; \
-          done; \
+    mkdir -p /out; \
+    for bin in /usr/bin/jq /usr/bin/gosu; do \
+      mkdir -p "/out$(dirname "$bin")"; \
+      cp -a "$bin" "/out$bin"; \
+      # Copy runtime deps. Skip musl loader to avoid clobbering base image libc/loader.
+      lddtree -l "$bin" | while read -r dep; do \
+        case "$dep" in \
+          /lib/ld-musl-*.so.1) \
+            continue ;; \
+          /*) \
+            mkdir -p "/out$(dirname "$dep")"; \
+            cp -a "$dep" "/out$(dirname "$dep")/"; \
+            ;; \
+        esac; \
+      done; \
     done
 
 ##################
@@ -64,51 +58,57 @@ USER 0
 # Add rootfs
 COPY rootfs/ /
 
-# Bring in tools (NO apk in final stage)
+# Bring in jq + gosu (and their libs). NO apk in final stage.
 COPY --from=ha_tools /out/ /
 
 # (optional) make sure cert bundle is found by everything
+# NetAlertX base normally already provides certs; this just standardizes lookup.
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
-# Modules
+###########
+# Modules #
+###########
 ARG MODULES="00-banner.sh"
 
 # Automatic modules download
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
-RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
+RUN chmod 744 /ha_automodules.sh \
+    && /ha_automodules.sh "$MODULES" \
+    && rm /ha_automodules.sh
 
-# Manual apps
+#################
+# Manual apps   #
+#################
 ENV PACKAGES=""
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
-RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
+RUN chmod 744 /ha_autoapps.sh \
+    && /ha_autoapps.sh "$PACKAGES" \
+    && rm /ha_autoapps.sh
 
 ################
 # 4 Entrypoint #
 ################
-
-# Add entrypoint
 ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 
 # Entrypoint modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
-RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
-
-# Standalone bashio command
-#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/.bashio-standalone.sh"
-#RUN chmod 777 /.bashio-standalone.sh
+RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh \
+    && /ha_entrypoint_modif.sh \
+    && rm /ha_entrypoint_modif.sh
 
 #WORKDIR /
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]
+
+# Your preferred shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############
 # 5 Labels #
 ############
-
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION
@@ -135,12 +135,3 @@ LABEL \
     org.opencontainers.image.created=${BUILD_DATE} \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
-
-####################
-# 6 HealthcheckNOT #
-####################
-# # In the dockerfile Changing hard links if possible
-# RUN for folder in config db; do \
-#     echo "Adapting hard links" && \
-#     grep -rl "/app/$folder" / 2>/dev/null | xargs sed -i "s|/app/$folder|/config/$folder|g"; \
-# done
