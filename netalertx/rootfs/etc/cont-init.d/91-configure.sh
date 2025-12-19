@@ -6,35 +6,31 @@ set -e
 # Update structure #
 ####################
 
-# 1. Define the ID
 APP_UID=20211
 
-# 2. Fix the directories
+# 1. Fix the directories
 for folder in /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config "$NETALERTX_DATA" "$NETALERTX_DB" "$NETALERTX_CONFIG"; do
     if [ -n "$folder" ]; then
         mkdir -p "$folder"
-        # Force ownership to the netalertx user
         chown -R $APP_UID:$APP_UID "$folder"
         chmod 755 "$folder"
     fi
 done
 
-# 3. Special fix for /tmp (Crucial for mktemp)
-# This allows the netalertx user to create temporary files
+# 2. Fix /tmp and Standard Streams (CRITICAL)
 chmod 1777 /tmp
+# This allows the non-root user to write to the container logs
+chmod 666 /dev/stdout /dev/stderr
 
-# 4. Pre-create and chown log files so redirection doesn't fail
+# 3. Pre-create and chown log files
 touch /tmp/log/app.php_errors.log /tmp/log/cron.log /tmp/log/stdout.log /tmp/log/stderr.log
 chown $APP_UID:$APP_UID /tmp/log/*.log
 
-# 2) Create Symlinks correctly
-# This ensures /data/db points to /config/db, etc.
+# 4. Create Symlinks
 for item in db config; do
-    # Remove existing file/folder if it exists to prevent 'File exists' errors
     rm -rf "/data/$item"
-    # Create the link: ln -s [TARGET] [LINK_NAME]
     ln -sf "/config/$item" "/data/$item"
-    chown -R 20211:20211 "/data/$item"
+    chown -R $APP_UID:$APP_UID "/data/$item"
     chmod -R 755 "/data/$item"
 done
 
