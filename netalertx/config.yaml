@@ -7,6 +7,7 @@ environment:
   PORT: "20211"
   PUID: "102"
   TZ: Europe/Berlin
+  NETALERTX_DATA: /config
 hassio_api: true
 host_network: true
 ingress: true
