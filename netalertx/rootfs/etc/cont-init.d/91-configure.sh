@@ -9,7 +9,7 @@ set -e
 APP_UID=20211
 
 # 1. Fix the directories
-for folder in /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config "$NETALERTX_DATA" "$NETALERTX_DB" "$NETALERTX_CONFIG"; do
+for folder in /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config "$TMP_DIR" "$NETALERTX_DATA" "$NETALERTX_DB" "$NETALERTX_CONFIG"; do
     if [ -n "$folder" ]; then
         mkdir -p "$folder"
         chown -R $APP_UID:$APP_UID "$folder"
