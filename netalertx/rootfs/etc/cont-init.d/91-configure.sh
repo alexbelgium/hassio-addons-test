@@ -21,8 +21,8 @@ for folder in config db; do
     ln -sf /config/"$folder" /app/"$folder"
 done
 
-sudo chown -R nginx:www-data /config/db/
-sudo chown -R nginx:www-data /config/config/
+sudo chown -R "$PUID":"$PGID" /config/db/
+sudo chown -R "$PUID":"$PGID" /config/config/
 if [ -f /config/db/app.db ]; then
     chmod a+rwx /config/db/app.db
 fi
