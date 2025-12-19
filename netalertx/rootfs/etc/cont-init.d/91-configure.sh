@@ -6,16 +6,26 @@ set -e
 # Update structure #
 ####################
 
-# 1) Fix Permissions
-# No sudo needed if running as root in entrypoint
-for folder in /tmp /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config "$NETALERTX_DATA" "$NETALERTX_DB" "$NETALERTX_CONFIG"; do
-    # Only try to create/chmod if the variable is not empty
+# 1. Define the ID
+APP_UID=20211
+
+# 2. Fix the directories
+for folder in /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config "$NETALERTX_DATA" "$NETALERTX_DB" "$NETALERTX_CONFIG"; do
     if [ -n "$folder" ]; then
         mkdir -p "$folder"
-        chown -R 20211:20211 "$folder"
-        chmod -R 755 "$folder"
+        # Force ownership to the netalertx user
+        chown -R $APP_UID:$APP_UID "$folder"
+        chmod 755 "$folder"
     fi
 done
+
+# 3. Special fix for /tmp (Crucial for mktemp)
+# This allows the netalertx user to create temporary files
+chmod 1777 /tmp
+
+# 4. Pre-create and chown log files so redirection doesn't fail
+touch /tmp/log/app.php_errors.log /tmp/log/cron.log /tmp/log/stdout.log /tmp/log/stderr.log
+chown $APP_UID:$APP_UID /tmp/log/*.log
 
 # 2) Create Symlinks correctly
 # This ensures /data/db points to /config/db, etc.
@@ -27,15 +37,6 @@ for item in db config; do
     chown -R 20211:20211 "/data/$item"
     chmod -R 755 "/data/$item"
 done
-
-# Ensure log files exist and are owned by the app user
-for logfile in "/tmp/log/app.php_errors.log" "/tmp/log/cron.log" "/tmp/log/stdout.log" "/tmp/log/stderr.log"; do
-    touch "$logfile"
-    chown 20211:20211 "$logfile"
-done
-
-# Ensure /tmp is fully writable (needed for mktemp)
-chmod 1777 /tmp
 
 #####################
 # Configure network #
