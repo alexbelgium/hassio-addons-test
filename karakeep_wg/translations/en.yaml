@@ -1,0 +1,67 @@
+configuration:
+  PUID:
+    name: PUID
+    description: User ID to run the services.
+  PGID:
+    name: PGID
+    description: Group ID to run the services.
+  log_level:
+    name: Log level
+    description: Verbosity of the add-on logs.
+  karakeep_port:
+    name: Karakeep port
+    description: Port for the Karakeep web UI.
+  karakeep_nextauth_url:
+    name: NextAuth URL
+    description: Base URL used by Karakeep for auth callbacks (leave empty to auto-generate).
+  karakeep_meili_master_key:
+    name: Meilisearch master key
+    description: Master key for Meilisearch (leave empty to auto-generate).
+  karakeep_nextauth_secret:
+    name: NextAuth secret
+    description: Secret for signing sessions (leave empty to auto-generate).
+  browser_enable:
+    name: Enable browser
+    description: Enable the remote Chromium browser.
+  browser_headless:
+    name: Headless browser
+    description: Run Chromium in headless mode when interactive mode is disabled.
+  browser_remote_debug_port:
+    name: Browser remote debugging port
+    description: Port for the Chromium DevTools protocol.
+  browser_interactive_enable:
+    name: Interactive browser mode
+    description: Enable VNC/noVNC for manual cookie consent or login.
+  browser_novnc_port:
+    name: noVNC port
+    description: Web port for noVNC access when interactive mode is enabled.
+  browser_warmup_urls:
+    name: Browser warmup URLs
+    description: URLs to open on browser startup (navigation only).
+  wireguard_enable:
+    name: Enable WireGuard
+    description: Route outbound traffic through WireGuard.
+  wireguard_private_key:
+    name: WireGuard private key
+    description: Private key for the WireGuard interface.
+  wireguard_address:
+    name: WireGuard interface address
+    description: Address(es) for the WireGuard interface.
+  wireguard_dns:
+    name: WireGuard DNS
+    description: DNS servers to use when WireGuard is enabled.
+  wireguard_peers:
+    name: WireGuard peers
+    description: Peer definitions for the WireGuard tunnel.
+  wireguard_killswitch:
+    name: WireGuard kill switch
+    description: Block non-tunnel egress when WireGuard is enabled.
+  wireguard_lan_subnets:
+    name: LAN subnets
+    description: Subnets to allow when kill switch is enabled.
+  wireguard_mtu:
+    name: WireGuard MTU
+    description: Optional MTU for the tunnel.
+  diagnostics_enable:
+    name: Diagnostics
+    description: Log tunnel status and external IP details on startup.
