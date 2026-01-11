@@ -1,0 +1,52 @@
+#!/usr/bin/with-contenv bash
+set -euo pipefail
+
+# shellcheck source=/usr/lib/bashio/bashio.sh
+source /usr/lib/bashio/bashio.sh
+
+PUID=$(bashio::config 'PUID')
+PGID=$(bashio::config 'PGID')
+remote_port=$(bashio::config 'browser_remote_debug_port')
+novnc_port=$(bashio::config 'browser_novnc_port')
+
+if ! bashio::config.true 'browser_enable'; then
+  bashio::log.info "Browser disabled"
+  exec s6-sleep 2147483647
+fi
+
+profile_dir="/data/browser-profile"
+args=(
+  --no-sandbox
+  --disable-dev-shm-usage
+  --disable-gpu
+  --hide-scrollbars
+  --remote-debugging-address=0.0.0.0
+  --remote-debugging-port="${remote_port}"
+  --user-data-dir="${profile_dir}"
+)
+
+mapfile -t warmup_urls < <(bashio::config 'browser_warmup_urls' || true)
+if [[ ${#warmup_urls[@]} -gt 0 ]]; then
+  args+=("${warmup_urls[@]}")
+fi
+
+if bashio::config.true 'browser_interactive_enable'; then
+  bashio::log.info "Starting interactive Chromium session (noVNC on ${novnc_port})"
+  export DISPLAY=:99
+
+  Xvfb :99 -screen 0 1920x1080x24 &
+  x11vnc -display :99 -nopw -forever -shared -rfbport 5900 &
+  websockify --web /usr/share/novnc "${novnc_port}" localhost:5900 &
+
+  exec s6-setuidgid "${PUID}:${PGID}" chromium "${args[@]}"
+fi
+
+if bashio::config.true 'browser_headless'; then
+  args+=(--headless=new)
+else
+  bashio::log.error "browser_headless is false but browser_interactive_enable is disabled; enable interactive mode or headless mode"
+  bashio::exit.nok
+fi
+
+bashio::log.info "Starting headless Chromium remote debugging on ${remote_port}"
+exec s6-setuidgid "${PUID}:${PGID}" chromium "${args[@]}"

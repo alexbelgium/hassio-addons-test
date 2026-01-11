@@ -1,0 +1,37 @@
+#!/usr/bin/with-contenv bash
+set -euo pipefail
+
+# shellcheck source=/usr/lib/bashio/bashio.sh
+source /usr/lib/bashio/bashio.sh
+
+PUID=$(bashio::config 'PUID')
+PGID=$(bashio::config 'PGID')
+port=$(bashio::config 'karakeep_port')
+browser_port=$(bashio::config 'browser_remote_debug_port')
+
+if [[ -f /data/karakeep.env ]]; then
+  # shellcheck disable=SC1091
+  source /data/karakeep.env
+fi
+
+if [[ -f /data/karakeep.runtime ]]; then
+  # shellcheck disable=SC1091
+  source /data/karakeep.runtime
+fi
+
+export PORT="${port}"
+export HOSTNAME="0.0.0.0"
+export DATA_DIR="/data/karakeep"
+export MEILI_ADDR="http://127.0.0.1:7700"
+export NEXTAUTH_URL
+export NEXTAUTH_SECRET
+export MEILI_MASTER_KEY
+
+if bashio::config.true 'browser_enable'; then
+  export BROWSER_WEB_URL="http://127.0.0.1:${browser_port}"
+else
+  export BROWSER_WEB_URL=""
+fi
+
+cd /app/apps/web
+exec s6-setuidgid "${PUID}:${PGID}" node server.js
