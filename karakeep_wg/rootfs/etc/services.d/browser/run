@@ -43,6 +43,9 @@ fi
 
 if bashio::config.true 'browser_headless'; then
   args+=(--headless=new)
+else
+  bashio::log.error "browser_headless is false but browser_interactive_enable is disabled; enable interactive mode or headless mode"
+  bashio::exit.nok
 fi
 
 bashio::log.info "Starting headless Chromium remote debugging on ${remote_port}"
