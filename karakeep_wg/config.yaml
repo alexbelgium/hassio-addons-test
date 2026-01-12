@@ -1,5 +1,5 @@
 name: Karakeep WireGuard
-version: "0.1.0"
+version: "0.1.1"
 slug: karakeep_wg
 description: Run Karakeep with a persistent Chromium profile routed through WireGuard.
 url: https://github.com/alexbelgium/hassio-addons
