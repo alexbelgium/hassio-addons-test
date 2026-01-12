@@ -8,15 +8,21 @@ PUID=$(bashio::config 'PUID')
 PGID=$(bashio::config 'PGID')
 
 migration_script=""
+candidate_paths=(
+  /db_migrations/index.js
+  /app/db_migrations/index.js
+)
 
-if [[ -f /db_migrations/index.js ]]; then
-  migration_script="/db_migrations/index.js"
-elif [[ -f /app/db_migrations/index.js ]]; then
-  migration_script="/app/db_migrations/index.js"
-fi
+for candidate in "${candidate_paths[@]}"; do
+  if [[ -f "${candidate}" ]]; then
+    migration_script="${candidate}"
+    break
+  fi
+done
 
 if [[ -z "${migration_script}" ]]; then
-  bashio::log.warning "Karakeep migration script not found; skipping migrations"
+  bashio::log.warning \
+    "Karakeep migration script not found in /db_migrations or /app/db_migrations; skipping migrations"
   exit 0
 fi
 
