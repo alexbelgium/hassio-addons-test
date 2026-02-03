@@ -195,8 +195,9 @@ _wireguard_up() {
     done
 
     _cmd "ip link add ${config["Interface"]} type wireguard" || return 1
-    local allowed_ips=""
-    for local_ip in ${config["Address"]}; do
+    local allowed_ips=""  
+    IFS=',' read -ra ADDR_LIST <<< "${config["Address"]}"
+    for local_ip in "${ADDR_LIST[@]}"; do
         _is_ip_address "${local_ip}"
         local is_ip=$?
         if [ "${is_ip}" -eq 1 ]; then
