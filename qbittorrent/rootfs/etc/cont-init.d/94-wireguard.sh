@@ -42,10 +42,10 @@ if bashio::config.has_value 'wireguard_config'; then
         else
             bashio::exit.nok "Multiple WireGuard configuration files detected. Please set the 'wireguard_config' option."
         fi
-    elif bashio::fs.file_exists "/config/wireguard/${wireguard_config}"; then
-        wireguard_config="/config/wireguard/${wireguard_config}"
-    else
-        bashio::exit.nok "WireGuard configuration '/config/wireguard/${wireguard_config}' not found."
+        random_index=$(( RANDOM % ${#configs[@]} ))
+        wireguard_config="${configs[$random_index]}"
+        bashio::log.warning "Multiple WireGuard configs detected. Randomly selected: ${wireguard_config##*/}"
+        bashio::log.warning "It is recommended to explicitly set 'wireguard_config' to avoid randomness."
     fi
 fi
 
