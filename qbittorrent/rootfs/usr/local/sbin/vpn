@@ -278,7 +278,10 @@ wireguard() {
 
     if [ "${mode}" = "up" ]; then
         bashio::log.info "Starting WireGuard on interface ${config["Interface"]}..."
-        if _is_ip_address ${config["EndpointHost"]}; then
+        _is_ip_address "${config["EndpointHost"]}"
+        ip_type=$?
+        
+        if [ "$ip_type" -ne 0 ]; then
             local -a endpoint_ips=()
             mapfile -t endpoint_ips < <(_resolve_hostname "${config["EndpointHost"]}")
             
