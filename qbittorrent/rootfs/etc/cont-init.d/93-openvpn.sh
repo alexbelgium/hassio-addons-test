@@ -10,7 +10,7 @@ declare interface_name=""
 declare openvpn_username
 declare openvpn_password
 
-if bashio::fs.file_exists "${OPENVPN_STATE_DIR}"; then
+if bashio::fs.directory_exists "${OPENVPN_STATE_DIR}"; then
     bashio::log.warning "Previous OpenVPN state directory found, cleaning up."
     rm -Rf "${OPENVPN_STATE_DIR}"
 fi
@@ -47,7 +47,7 @@ if bashio::config.has_value 'openvpn_config'; then
     openvpn_config="${openvpn_config##*/}"
     if [[ -z "${openvpn_config}" ]]; then
         bashio::log.info 'openvpn_config option left empty. Attempting automatic selection.'
-         mapfile -t configs < <(find /config/openvpn -maxdepth 1 -type f -name '*.conf' -o -name '*.ovpn' -print)
+         mapfile -t configs < <(find /config/openvpn -maxdepth 1 \( -type f -name '*.conf' -o -name '*.ovpn' \) -print)
         if [ "${#configs[@]}" -eq 0 ]; then
             bashio::exit.nok 'OpenVPN is enabled but no .conf or .ovpn file was found in /config/openvpn.'
         elif [ "${#configs[@]}" -eq 1 ]; then
@@ -68,7 +68,7 @@ fi
 
 interface_name="$(sed -n "/^dev tun/p" "${openvpn_config}" | awk -F' ' '{print $2}')"
 if [[ -z "${interface_name}" ]]; then
-    bashio::exit.nok "OpenVPN configuration '/config/openvpn/${openvpn_config}' miss device directive."
+    bashio::exit.nok "OpenVPN configuration '${openvpn_config}' misses device directive."
 elif [[ ${interface_name} = "tun" ]]; then
     interface_name='tun0'
 elif [[ ${interface_name} = "tap" ]]; then
@@ -91,7 +91,7 @@ sed -i '/^route/d' "${openvpn_runtime_config}"
 sed -i '/^auth-user-pass /d' "${openvpn_runtime_config}"
 sed -i '/^cd /d' "${openvpn_runtime_config}"
 sed -i '/^chroot /d' "${openvpn_runtime_config}"
-sed -i '$q' "${openvpn_runtime_config}"
+sed -i '\$q' "${openvpn_runtime_config}"
 
 bashio::log.info 'Prepared OpenVPN runtime configuration for initial connection attempt.'
 

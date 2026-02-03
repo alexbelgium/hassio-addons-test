@@ -125,7 +125,7 @@ schema:
   keyfile: str
   localdisks: str?
   networkdisks: str?
-  openvpn_config: match(^[A-Za-z0-9._-]+\.(ovpn|conf)$)?
+  openvpn_config: match(^\w+\.(ovpn|conf)$)?
   openvpn_enabled: bool?
   openvpn_password: str?
   openvpn_username: str?
@@ -133,7 +133,7 @@ schema:
   run_duration: str?
   silent: bool?
   ssl: bool
-  wireguard_config: match(^[A-Za-z0-9._-]+\.conf$)?
+  wireguard_config: match(^\w+\.conf$)?
   wireguard_enabled: bool?
   whitelist: str?
 slug: qbittorrent
