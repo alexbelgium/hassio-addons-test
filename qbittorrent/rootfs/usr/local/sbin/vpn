@@ -128,7 +128,8 @@ _resolve_hostname() {
         ips="${ips} ${ipv4_candidates[@]}"
     fi
 
-    return $ips
+    echo "$ips"
+    return 0
 }
 
 _routing_add() {
@@ -277,7 +278,9 @@ wireguard() {
     if [ "${mode}" = "up" ]; then
         bashio::log.info "Starting WireGuard on interface ${config["Interface"]}..."
         if _is_ip_address ${config["EndpointHost"]}; then
-            local endpoint_ips=$(_resolve_hostname ${config["EndpointHost"]})
+            local -a endpoint_ips=()
+            mapfile -t endpoint_ips < <(_resolve_hostname "${config["EndpointHost"]}")
+            
             if [ ${#endpoint_ips[@]} -eq 0 ]; then
                 bashio::log.error "Failed to resolve WireGuard endpoint hostname: ${config["EndpointHost"]}"
                 bashio::exit.nok 'WireGuard start failed.'
