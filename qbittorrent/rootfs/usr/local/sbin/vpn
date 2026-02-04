@@ -353,7 +353,9 @@ _openvpn_up() {
         --auth-user-pass "${OPENVPN_STATE_DIR}/credentials.conf" \
         --auth-retry none \
         --up ${config["PostUpScript"]} \
+        --up_delay 5 \
         --down ${config["PostDownScript"]} \
+        --down-delay 5 \
         --up-restart \
         --route-nopull \
         --route-noexec" || return 1
@@ -392,8 +394,8 @@ openvpn() {
     config["Interface"]="${interface}"
     config["ConfigFile"]="${config_file}"
     config["Table"]="${config["Table"]:-1000}"
-    config["PostUpScript"]="/etc/openvpn/up.sh"
-    config["PostDownScript"]="/etc/openvpn/down.sh"
+    config["PostUpScript"]="${OPENVPN_STATE_DIR}/up.sh"
+    config["PostDownScript"]="${OPENVPN_STATE_DIR}/down.sh"
 
     if [ "${mode}" = "up" ]; then
         # register up and down scripts
