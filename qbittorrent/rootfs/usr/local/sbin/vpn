@@ -327,7 +327,7 @@ wireguard() {
         bashio::exit.nok 'WireGuard start failed.'
     fi
 
-    bashio::exit.nok 'WireGuard start failed.'
+   bashio::exit.nok 'WireGuard start failed.'
 }
 
 # --- OpenVPN Specific Logic ---
@@ -349,28 +349,14 @@ _openvpn_up() {
     # Start OpenVPN in the background
     _cmd "/usr/sbin/openvpn \
         --config "${config["ConfigFile"]}" \
-        --client \
-        --daemon \
-        --log /dev/null \
-        --script-security 2 \
+        --script-security 2 --daemon --log /dev/null \
         --auth-user-pass "${OPENVPN_STATE_DIR}/credentials.conf" \
         --auth-retry none \
         --up ${config["PostUpScript"]} \
         --down ${config["PostDownScript"]} \
-        --up-delay  \
         --up-restart \
         --route-nopull \
         --route-noexec" || return 1
-
-    #wait for slow OpenVPN interface to come up
-    for i in {1..10}; do
-        if ip link show "${config["Interface"]}" > /dev/null 2>&1 ; then
-            return 0
-        fi
-        sleep 2
-    done
-    bashio::log.error "OpenVPN interface ${config["Interface"]} failed to come up."
-    return 1
 }
 
 _openvpn_down() {
@@ -406,14 +392,13 @@ openvpn() {
     config["Interface"]="${interface}"
     config["ConfigFile"]="${config_file}"
     config["Table"]="${config["Table"]:-1000}"
-    config["PostUpScript"]="${OPENVPN_STATE_DIR}/up.sh"
-    config["PostDownScript"]="${OPENVPN_STATE_DIR}/down.sh"
+    config["PostUpScript"]="/etc/openvpn/up.sh"
+    config["PostDownScript"]="/etc/openvpn/down.sh"
 
     if [ "${mode}" = "up" ]; then
         # register up and down scripts
         bashio::log.info "Starting OpenVPN on interface ${config["Interface"]}..."
         if _openvpn_up; then
-            bashio::log.info "OpenVPN interface ${config["Interface"]} is up."
             bashio::exit.ok 'OpenVPN started.'
         fi
         bashio::log.error 'OpenVPN failed to establish connection.'
@@ -421,20 +406,16 @@ openvpn() {
     elif [ "${mode}" = "down" ]; then
         bashio::log.info "Stopping OpenVPN on interface ${config["Interface"]}..."
         _openvpn_down
-        bashio::log.info "OpenVPN on interface ${config["Interface"]} is down."
         bashio::exit.ok 'OpenVPN stopped.'
     elif [ "${mode}" = "postup" ]; then
         _routing_add
-        bashio::exit.ok 'OpenVPN routes added.'
     elif [ "${mode}" = "postdown" ]; then
         _routing_del
-        bashio::exit.ok 'OpenVPN routes deleted.'
     else
         bashio::log.error "Invalid OpenVPN mode specified. Use 'up', 'down', 'postup', or 'postdown'."
         bashio::exit.nok 'OpenVPN start failed.'
     fi
-
-    bashio::exit.nok 'OpenVPN start failed.'
+    bashio::log.info "Starting OpenVPN with configuration file: ${config_file}"
 }
 
 # --- Entry Point ---
