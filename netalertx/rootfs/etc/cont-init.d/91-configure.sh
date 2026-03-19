@@ -6,6 +6,10 @@ set -e
 # Update structure #
 ####################
 
+# Remove backend api url to use the base path
+sed -i "s|'/server'|''|g" /app/back/app.conf
+sed -i "s|(\$is_trusted != \"TRUSTED\")|(\$is_trusted = \"AAA\")|g" /services/config/nginx/netalertx.conf.template
+sed -i "s|gzip on|gzip off|g" /services/config/nginx/netalertx.conf.template
 
 # 1. Fix the directories
 for folder in /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config "${TMP_DIR:-/tmp}" "${NETALERTX_DATA:-/data}" "${NETALERTX_DB:-/data/db}" "${NETALERTX_CONFIG:-/data/config}"; do
