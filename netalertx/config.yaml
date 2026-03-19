@@ -5,6 +5,7 @@ description: "\U0001F5A7\U0001F50D Centralized network visibility and continuous
 hassio_api: true
 host_network: true
 ingress: true
+ingress_entry: devices.php
 ingress_port: 20211
 ingress_stream: true
 init: false
