@@ -3,6 +3,7 @@
 - At build time, `merge-prs.sh` syncs the fork's `main` with the `tphakala/birdnet-go` upstream and merges every open non-draft ("in review") pull request on the fly, so the resulting binary is upstream main + all work currently under review.
 - Home Assistant integration layers (nginx ingress, modules, init scripts, options handling) are identical to the standard birdnet-go add-on.
 - Published as a separate image (`ghcr.io/alexbelgium/birdnet-go-source-{arch}`) so it never overwrites the production add-on image.
+- Fix (`01-structure.sh`): create the absolute `BIRDSONGS_FOLDER` target (e.g. the default `/config/clips`) before migrating clips from a legacy `/data/clips`, so upgrades with existing recordings no longer abort startup under `set -e`.
 
 ## nightly-20260601-2 (03-06-2026)
 - Minor bugs fixed
