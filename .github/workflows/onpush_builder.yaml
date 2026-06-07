@@ -4,6 +4,13 @@ name: Builder
 
 on:
   workflow_call:
+  workflow_dispatch:
+  # Nightly rebuild so the from-source add-on re-syncs upstream and re-merges
+  # the currently-open PRs "on the fly". Scheduled runs build every add-on
+  # (no push diff) and only build+push (the sanitize/changelog/revert commit
+  # steps are gated to push-on-master and are skipped here).
+  schedule:
+    - cron: "0 3 * * *"
   push:
     branches:
       - master
