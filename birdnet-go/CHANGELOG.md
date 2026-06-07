@@ -1,3 +1,5 @@
+## source-20260607-2 (07-06-2026)
+- Minor bugs fixed
 ## source-20260607 (07-06-2026)
 - **Test variant** of the birdnet-go add-on that compiles BirdNET-Go from the `alexbelgium/birdnet-go` fork instead of pulling the prebuilt `ghcr.io/tphakala/birdnet-go` image.
 - At build time, `merge-prs.sh` syncs the fork's `main` with the `tphakala/birdnet-go` upstream and merges every open non-draft ("in review") pull request on the fly, so the resulting binary is upstream main + all work currently under review.
