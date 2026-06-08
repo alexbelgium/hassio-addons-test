@@ -68,7 +68,7 @@ SHEBANG_ERRORS=()
 probe_script_content='
 set -e
 
-if ! command -v bashio::addon.version >/dev/null 2>&1; then
+if ! command -v bashio::app.version >/dev/null 2>&1; then
   for f in \
     /usr/lib/bashio/bashio.sh \
     /usr/lib/bashio/lib.sh \
@@ -85,7 +85,7 @@ fi
 
 # Try regular bashio, fallback to standalone if unavailable or fails
 set +e
-_bv="$(bashio::addon.version 2>/dev/null)"
+_bv="$(bashio::app.version 2>/dev/null)"
 _rc=$?
 set -e
 
@@ -94,7 +94,7 @@ if [ "$_rc" -ne 0 ] || [ -z "$_bv" ] || [ "$_bv" = "null" ]; then
     if [ -f "$_sf" ]; then
       # shellcheck disable=SC1090
       . "$_sf"
-      _bv="$(bashio::addon.version 2>/dev/null || true)"
+      _bv="$(bashio::app.version 2>/dev/null || true)"
       break
     fi
   done
@@ -158,7 +158,7 @@ for candidate in "${candidate_shebangs[@]}"; do
 done
 
 if [ -z "$shebang" ]; then
-  echo "ERROR: No valid shebang found (unable to execute bashio::addon.version via candidates)." >&2
+  echo "ERROR: No valid shebang found (unable to execute bashio::app.version via candidates)." >&2
   echo "Tried:" >&2
   printf ' - %s\n' "${candidate_shebangs[@]}" >&2
   if [ "${#SHEBANG_ERRORS[@]}" -gt 0 ]; then
