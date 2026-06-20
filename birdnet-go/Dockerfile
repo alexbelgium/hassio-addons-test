@@ -50,6 +50,7 @@ RUN chmod +x /usr/local/bin/merge-prs.sh && \
 FROM --platform=$BUILDPLATFORM golang:1.26-trixie AS buildenv
 ARG BUILD_VERSION
 ENV BUILD_VERSION=${BUILD_VERSION:-unknown}
+ENV OPENVINO=true
 
 # Install Task and other dependencies
 RUN apt-get update -q && apt-get install -q -y \
