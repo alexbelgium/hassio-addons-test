@@ -82,8 +82,8 @@ RUN apt-get update -q && apt-get install -q -y \
     curl \
     git \
     sudo \
-    zip \
-    gcc-aarch64-linux-gnu && \
+    wget \
+    zip && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Node.js v24 from NodeSource
@@ -152,12 +152,15 @@ RUN --mount=type=cache,target=/go/pkg/mod,uid=10001,gid=10001 \
 
 FROM debian:trixie-slim AS birdnet-runtime
 
-# Copy TFLite model files (amd64 uses TFLite; OpenVINO reads them via its
-# TFLite frontend plugin bundled in the OpenVINO runtime below)
+# Copy model files. Both TFLite and ONNX classifiers are included:
+# - TFLite: default backend (no configuration needed)
+# - ONNX: required for OpenVINO inference — set birdnet.modelpath to
+#   /models/BirdNET_INT8_ARM.onnx and birdnet.openvinodevice to "cpu"
+#   (or "auto" with Intel iGPU) in the birdnet-go UI to activate OpenVINO.
 RUN mkdir -p /models
 COPY --from=build /home/dev-user/src/BirdNET-Go/internal/classifier/data/*.tflite /models/
-RUN chmod -R a+r /models/*.tflite 2>/dev/null || true && \
-    chmod a+x /models
+COPY --from=build /home/dev-user/src/BirdNET-Go/internal/classifier/data/*.onnx /models/
+RUN chmod -R a+r /models && chmod a+x /models
 
 # Install ALSA library, SOX for audio processing, and system utilities.
 # ocl-icd-libopencl1 provides the OpenCL ICD loader; combined with
