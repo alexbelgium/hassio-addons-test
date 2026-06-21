@@ -58,6 +58,13 @@ ARG OPENVINO_RELEASE=2026.2
 # (see Taskfile.yml OPENVINO_BUILD), ensuring header/runtime version parity.
 # We use the arm64 package for headers (arch-independent C declarations) but the
 # x86_64 package here for the actual runtime .so files.
+#
+# OpenVINO links against its own bundled oneTBB (libtbb.so.12, libtbbmalloc*),
+# which does NOT live in runtime/lib/intel64 but in runtime/3rdparty/tbb/lib.
+# It must be bundled too, otherwise dlopen("libopenvino_c.so") fails at runtime
+# with "libtbb.so.12: cannot open shared object file: No such file or directory"
+# and the OpenVINO backend silently falls back / GPU planning treats the device
+# as unavailable.
 RUN apk add --no-cache curl && \
     mkdir -p /openvino && \
     curl -fsSL \
@@ -66,6 +73,15 @@ RUN apk add --no-cache curl && \
     tar -xzf /tmp/openvino.tgz -C /tmp/ --strip-components=1 && \
     cd /tmp/runtime/lib/intel64 && \
     tar -cf - . | tar -xf - -C /openvino/ && \
+    # Bundle OpenVINO's own oneTBB runtime (preserving symlinks with cp -a).
+    # Search the whole 3rdparty tree so the copy survives minor layout changes
+    # between OpenVINO releases. Fail the build loudly if libtbb is missing,
+    # since the runtime is unusable without it.
+    find /tmp/runtime/3rdparty -name 'libtbb*.so*' -exec cp -a {} /openvino/ \; && \
+    if ! ls /openvino/libtbb.so.12* >/dev/null 2>&1; then \
+        echo "ERROR: libtbb.so.12 not found in OpenVINO package 3rdparty/tbb" >&2; \
+        exit 1; \
+    fi && \
     rm -rf /tmp/openvino.tgz /tmp/runtime /tmp/tools /tmp/python \
            /tmp/samples /tmp/install_dependencies 2>/dev/null || true
 
@@ -194,8 +210,9 @@ COPY --from=build /home/dev-user/lib/libtensorflowlite_c.so* /usr/lib/
 COPY --from=build /home/dev-user/lib/libonnxruntime*.so* /usr/lib/
 
 # Copy OpenVINO runtime libraries (libopenvino_c.so, CPU/GPU plugins,
-# TFLite frontend, plugins.xml, etc.) into a dedicated directory and
-# register it with ldconfig so dlopen("libopenvino_c.so") resolves.
+# TFLite frontend, plugins.xml, bundled oneTBB libtbb.so.12, etc.) into a
+# dedicated directory and register it with ldconfig so both
+# dlopen("libopenvino_c.so") and its libtbb.so.12 dependency resolve.
 # plugins.xml is co-located with libopenvino.so so device plugin
 # discovery works without additional environment variables.
 COPY --from=openvino-libs /openvino/ /usr/lib/openvino/
