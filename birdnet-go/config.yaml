@@ -1,6 +1,10 @@
 arch:
   - amd64
 audio: true
+backup_exclude:
+  - logs/**
+  - "*.db-wal"
+  - "*.db-shm"
 description: Realtime BirdNET soundscape analyzer, compiled from the alexbelgium/birdnet-go fork with all open PRs merged, with OpenVINO enabled for Intel CPU/iGPU acceleration (amd64-only test build)
 devices:
   - /dev/dri
@@ -125,5 +129,6 @@ slug: birdnet-go
 udev: true
 url: https://github.com/alexbelgium/hassio-addons-test/tree/master/birdnet-go
 usb: true
-version: "source-20260621-1"
+version: "source-20260621-2"
 video: true
+watchdog: tcp://[HOST]:[PORT:8080]

@@ -1,3 +1,8 @@
+## source-20260621-2 (21-06-2026)
+- MQTT auto-config now also enables BirdNET-Go's native Home Assistant MQTT auto-discovery: detection sensors appear in Home Assistant automatically with no manual YAML (existing UI/config.yaml edits are preserved)
+- MQTT auto-config seeds `realtime.mqtt.retain: true` so sensor states survive Home Assistant restarts
+- Added supervisor watchdog (tcp://[HOST]:[PORT:8080]) so the add-on is automatically restarted if BirdNET-Go stops responding
+- Added backup_exclude for rotated logs and SQLite WAL/SHM journals, making Home Assistant backups smaller and avoiding inconsistent-database snapshots
 ## source-20260621-1 (21-06-2026)
 - Fix OpenVINO load failure: bundle oneTBB (libtbb.so.12) from OpenVINO 3rdparty libs so libopenvino_c.so resolves at runtime
 ## source-20260620-13 (21-06-2026)
