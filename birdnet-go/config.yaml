@@ -3,8 +3,6 @@ arch:
 audio: true
 backup_exclude:
   - logs/**
-  - "*.db-wal"
-  - "*.db-shm"
 description: Realtime BirdNET soundscape analyzer, compiled from the alexbelgium/birdnet-go fork with all open PRs merged, with OpenVINO enabled for Intel CPU/iGPU acceleration (amd64-only test build)
 devices:
   - /dev/dri

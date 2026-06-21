@@ -52,10 +52,13 @@ bashio::log.green "---"
 # not shell expansions, so the single quotes are intentional.
 #
 # Connection fields (enabled/broker/username/password) are force-set on every
-# start so they track the HA MQTT addon's rotating credentials. Topic, retain
-# and the homeassistant.* discovery knobs use "//=" so they are only seeded
-# when missing — any value the user later changes in the BirdNET-Go UI or
-# config.yaml survives restarts. homeassistant.enabled is force-set to true
+# start so they track the HA MQTT addon's rotating credentials. Topic and the
+# homeassistant.* discovery knobs use "//=" so they are only seeded when
+# missing. retain is seeded via an explicit has() check rather than "//=",
+# because jq treats a user-set "retain: false" as falsy and "//=" would wrongly
+# flip it back to true; has() seeds the default only when the key is truly
+# absent. Any value the user later changes in the BirdNET-Go UI or config.yaml
+# therefore survives restarts. homeassistant.enabled is force-set to true
 # because turning on discovery is the whole point of the auto-config option.
 # shellcheck disable=SC2016
 yq -i -y \
@@ -67,7 +70,7 @@ yq -i -y \
      | .realtime.mqtt.username = $user
      | .realtime.mqtt.password = $pass
      | .realtime.mqtt.topic //= "birdnet"
-     | .realtime.mqtt.retain //= true
+     | (if (.realtime.mqtt | has("retain")) then . else .realtime.mqtt.retain = true end)
      | .realtime.mqtt.homeassistant.enabled = true
      | .realtime.mqtt.homeassistant.discovery_prefix //= "homeassistant"
      | .realtime.mqtt.homeassistant.device_name //= "BirdNET-Go"' \
