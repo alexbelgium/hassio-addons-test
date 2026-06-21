@@ -1,3 +1,5 @@
+## source-20260621-1 (21-06-2026)
+- Fix OpenVINO load failure: bundle oneTBB (libtbb.so.12) from OpenVINO 3rdparty libs so libopenvino_c.so resolves at runtime
 ## source-20260620-13 (21-06-2026)
 - Minor bugs fixed
 ## source-20260620-12 (21-06-2026)
