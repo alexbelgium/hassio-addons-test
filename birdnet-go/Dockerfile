@@ -1,30 +1,32 @@
 # syntax=docker/dockerfile:1
 #============================#
 #  ALEXBELGIUM'S DOCKERFILE  #
-#  BirdNET-Go (from source)  #
+# BirdNET-Go (OpenVINO/AMD64)#
 #============================#
 #           _.------.
-#       _.-`    ('>.-`"""-.
-# '.--'`       _'`   _ .--.)
-#    -'         '-.-';`   `
-#    ' -      _.'  ``'--.
-#        '---`    .-'""`
-#               /`
+#       _.-`    ('>.-`"""-.  
+# '.--'`       _'`   _ .--.) 
+#    -'         '-.-';`   `  
+#    ' -      _.'  ``'--.    
+#        '---`    .-'""``    
+#               /`           
 #=== Home Assistant Addon ===#
 #
-# This is the same Home Assistant add-on as the standard alexbelgium/birdnet-go
-# add-on, EXCEPT that the BirdNET-Go binary is compiled from the
-# alexbelgium/birdnet-go fork instead of pulling the prebuilt
-# ghcr.io/tphakala/birdnet-go image.
+# AMD64-only, OpenVINO-enabled build of the BirdNET-Go add-on.
+# The binary is compiled from the alexbelgium/birdnet-go fork with the
+# OpenVINO inference backend enabled (openvino build tag). The OpenVINO
+# 2026.2 runtime libraries are bundled in the image, enabling:
+#   - Faster CPU inference on modern Intel CPUs (AVX-512/AMX)
+#   - Intel iGPU inference when /dev/dri is passed from the host
 #
-# Before compiling, "merge-prs.sh" clones the fork, fast-forwards its main onto
-# the tphakala/birdnet-go upstream (so main is fully synced with upstream) and
-# merges every OPEN, NON-DRAFT ("in review") pull request on the fly. The Home
-# Assistant integration layers (sections 2-6 below) are then applied on top and
-# are byte-for-byte identical to the upstream-image variant.
+# Before compiling, "merge-prs.sh" clones the fork, fast-forwards its main
+# onto the tphakala/birdnet-go upstream and merges every OPEN, NON-DRAFT
+# pull request on the fly. Home Assistant integration layers (2-6) are then
+# applied on top and are byte-for-byte identical to the upstream variant.
 #
-# Build stages 0-1 mirror tphakala/birdnet-go's Docker/Dockerfile; if upstream
-# changes its build (Go/Node/onnxruntime versions, task names) sync them here.
+# Build stages 0-1 mirror tphakala/birdnet-go's Docker/Dockerfile; if
+# upstream changes its build (Go/Node/onnxruntime versions, task names)
+# sync them here.
 
 ##########################################################
 # 0  Prepare merged BirdNET-Go source tree (fork + PRs)  #
@@ -42,6 +44,30 @@ RUN chmod +x /usr/local/bin/merge-prs.sh && \
     echo "Build date marker: ${BUILD_DATE}" && \
     BIRDNET_FORK="${BIRDNET_FORK}" BIRDNET_UPSTREAM="${BIRDNET_UPSTREAM}" \
     /usr/local/bin/merge-prs.sh /birdnet-src
+
+##########################################################
+# 0b Download OpenVINO runtime libraries for amd64       #
+##########################################################
+
+FROM alpine:3 AS openvino-libs
+ARG OPENVINO_BUILD=2026.2.0.21903.52ddc073857
+ARG OPENVINO_RELEASE=2026.2
+
+# Download the x86_64 OpenVINO runtime package and extract runtime/lib/intel64.
+# The same build id is used for the C API headers downloaded during compilation
+# (see Taskfile.yml OPENVINO_BUILD), ensuring header/runtime version parity.
+# We use the arm64 package for headers (arch-independent C declarations) but the
+# x86_64 package here for the actual runtime .so files.
+RUN apk add --no-cache curl && \
+    mkdir -p /openvino && \
+    curl -fsSL \
+        "https://storage.openvinotoolkit.org/repositories/openvino/packages/${OPENVINO_RELEASE}/linux/openvino_toolkit_ubuntu22_${OPENVINO_BUILD}_x86_64.tgz" \
+        -o /tmp/openvino.tgz && \
+    tar -xzf /tmp/openvino.tgz -C /tmp/ --strip-components=1 && \
+    cd /tmp/runtime/lib/intel64 && \
+    tar -cf - . | tar -xf - -C /openvino/ && \
+    rm -rf /tmp/openvino.tgz /tmp/runtime /tmp/tools /tmp/python \
+           /tmp/samples /tmp/install_dependencies 2>/dev/null || true
 
 #########################################################################
 # 1a Build environment (mirrors tphakala/birdnet-go Docker/Dockerfile)  #
@@ -98,30 +124,27 @@ RUN task frontend-build
 FROM --platform=$BUILDPLATFORM buildenv AS build
 ARG BUILD_VERSION
 ENV BUILD_VERSION=${BUILD_VERSION:-unknown}
-ARG TARGETPLATFORM
 ARG ONNXRUNTIME_VERSION=1.25.1
 
-# Download ONNX Runtime for the target platform
-RUN ONNX_ARCH=$(case "${TARGETPLATFORM}" in \
-        "linux/amd64") echo "x64" ;; \
-        "linux/arm64") echo "aarch64" ;; \
-        *) echo "Error: unsupported platform ${TARGETPLATFORM}" >&2; exit 1 ;; \
-    esac) && \
-    echo "Downloading ONNX Runtime ${ONNXRUNTIME_VERSION} for ${ONNX_ARCH}" && \
-    curl -fsSL "https://github.com/microsoft/onnxruntime/releases/download/v${ONNXRUNTIME_VERSION}/onnxruntime-linux-${ONNX_ARCH}-${ONNXRUNTIME_VERSION}.tgz" \
+# Download ONNX Runtime for amd64 (x64)
+RUN echo "Downloading ONNX Runtime ${ONNXRUNTIME_VERSION} for x64" && \
+    curl -fsSL "https://github.com/microsoft/onnxruntime/releases/download/v${ONNXRUNTIME_VERSION}/onnxruntime-linux-x64-${ONNXRUNTIME_VERSION}.tgz" \
         -o /tmp/onnxruntime.tgz && \
     mkdir -p /tmp/onnxruntime && \
     tar -xzf /tmp/onnxruntime.tgz -C /tmp/onnxruntime --strip-components=1 && \
     cp /tmp/onnxruntime/lib/libonnxruntime*.so* /home/dev-user/lib/ && \
     rm -rf /tmp/onnxruntime /tmp/onnxruntime.tgz
 
-# Build assets and compile BirdNET-Go (non-embedded, TFLite + ONNX)
+# Build BirdNET-Go for amd64 with OpenVINO enabled.
+# OPENVINO=true compiles in the openvino build tag, enabling the OpenVINO
+# inference backend (dlopen'd at runtime; falls back to ONNX Runtime when
+# libopenvino_c.so is absent). The noembed_linux_amd64 task defaults to
+# OPENVINO=true anyway; we make it explicit here for clarity.
 RUN --mount=type=cache,target=/go/pkg/mod,uid=10001,gid=10001 \
     --mount=type=cache,target=/home/dev-user/.cache/go-build,uid=10001,gid=10001 \
     task check-tensorflow && \
-    TARGET=$(echo ${TARGETPLATFORM} | tr '/' '_') && \
-    echo "Building non-embedded version with BUILD_VERSION=${BUILD_VERSION}" && \
-    BUILD_VERSION="${BUILD_VERSION}" DOCKER_LIB_DIR=/home/dev-user/lib task noembed_${TARGET}
+    echo "Building amd64 with OpenVINO enabled, BUILD_VERSION=${BUILD_VERSION}" && \
+    BUILD_VERSION="${BUILD_VERSION}" DOCKER_LIB_DIR=/home/dev-user/lib task noembed_linux_amd64 OPENVINO=true
 
 #####################################################
 # 1c BirdNET-Go runtime base (mirrors upstream)     #
@@ -129,13 +152,16 @@ RUN --mount=type=cache,target=/go/pkg/mod,uid=10001,gid=10001 \
 
 FROM debian:trixie-slim AS birdnet-runtime
 
-# Copy model files to /models directory as separate cacheable layer
+# Copy TFLite model files (amd64 uses TFLite; OpenVINO reads them via its
+# TFLite frontend plugin bundled in the OpenVINO runtime below)
 RUN mkdir -p /models
 COPY --from=build /home/dev-user/src/BirdNET-Go/internal/classifier/data/*.tflite /models/
-RUN chmod -R a+r /models/*.tflite 2>/dev/null || true
-RUN chmod a+x /models
+RUN chmod -R a+r /models/*.tflite 2>/dev/null || true && \
+    chmod a+x /models
 
-# Install ALSA library and SOX for audio processing and system utilities
+# Install ALSA library, SOX for audio processing, and system utilities.
+# ocl-icd-libopencl1 provides the OpenCL ICD loader; combined with
+# /dev/dri passthrough from the host it enables Intel iGPU inference.
 RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
     adduser \
     ca-certificates \
@@ -158,23 +184,22 @@ RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
     lsof \
     bash-completion \
     gosu \
+    ocl-icd-libopencl1 \
     && rm -rf /var/lib/apt/lists/*
 
-# Set TFLITE_LIB_DIR (native builds resolve to /usr/lib for both arches)
-ARG TARGETPLATFORM
-ARG TFLITE_LIB_DIR=/usr/lib
-RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
-        echo "Building for arm64, using TFLITE_LIB_DIR=${TFLITE_LIB_DIR}"; \
-    else \
-        echo "Building for amd64, using TFLITE_LIB_DIR=${TFLITE_LIB_DIR}"; \
-    fi
-
 # Copy TensorFlow Lite library from build stage
-COPY --from=build /home/dev-user/lib/libtensorflowlite_c.so* ${TFLITE_LIB_DIR}/
+COPY --from=build /home/dev-user/lib/libtensorflowlite_c.so* /usr/lib/
 
 # Copy ONNX Runtime libraries from build stage
 COPY --from=build /home/dev-user/lib/libonnxruntime*.so* /usr/lib/
-RUN ldconfig
+
+# Copy OpenVINO runtime libraries (libopenvino_c.so, CPU/GPU plugins,
+# TFLite frontend, plugins.xml, etc.) into a dedicated directory and
+# register it with ldconfig so dlopen("libopenvino_c.so") resolves.
+# plugins.xml is co-located with libopenvino.so so device plugin
+# discovery works without additional environment variables.
+COPY --from=openvino-libs /openvino/ /usr/lib/openvino/
+RUN echo "/usr/lib/openvino" > /etc/ld.so.conf.d/openvino.conf && ldconfig
 
 # Include reset_auth tool from build stage
 COPY --from=build /home/dev-user/src/BirdNET-Go/reset_auth.sh /usr/bin/
@@ -186,7 +211,7 @@ RUN chmod +x /usr/bin/entrypoint.sh
 COPY --from=build /home/dev-user/src/BirdNET-Go/Docker/startup-wrapper.sh /usr/bin/
 RUN chmod +x /usr/bin/startup-wrapper.sh
 
-# Create config and data directories with permissions for rootless compatibility
+# Create config and data directories with proper permissions for rootless compatibility
 RUN mkdir -p /config /data/clips /data/models && \
     chmod 777 /config /data /data/clips /data/models
 
@@ -195,9 +220,9 @@ COPY --from=build /home/dev-user/src/BirdNET-Go/bin /usr/bin/
 
 #============================================================================#
 # From here on, the Home Assistant integration layers are identical to the   #
-# standard alexbelgium/birdnet-go add-on (which builds FROM the prebuilt      #
-# upstream image). The only difference above is that the base is compiled     #
-# from the fork + open PRs rather than pulled from ghcr.io/tphakala.          #
+# standard alexbelgium/birdnet-go add-on (which builds FROM the prebuilt    #
+# upstream image). The only difference above is that the base is compiled    #
+# from the fork + open PRs with OpenVINO enabled.                           #
 #============================================================================#
 
 ##################

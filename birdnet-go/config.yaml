@@ -1,8 +1,7 @@
 arch:
-  - aarch64
   - amd64
 audio: true
-description: Realtime BirdNET soundscape analyzer, compiled from the alexbelgium/birdnet-go fork with all open PRs merged (test build)
+description: Realtime BirdNET soundscape analyzer, compiled from the alexbelgium/birdnet-go fork with all open PRs merged, with OpenVINO enabled for Intel CPU/iGPU acceleration (amd64-only test build)
 devices:
   - /dev/dri
   - /dev/snd
@@ -73,7 +72,7 @@ devices:
 environment:
   BIRDNET_GID: "0"
   BIRDNET_UID: "0"
-image: ghcr.io/alexbelgium/birdnet-go-source-{arch}
+image: ghcr.io/alexbelgium/birdnet-go-openvino-{arch}
 ingress: true
 ingress_entry: "ui/dashboard"
 ingress_stream: true
@@ -82,7 +81,7 @@ map:
   - addon_config:rw
   - media:rw
   - share:rw
-name: Birdnet-go (from source)
+name: Birdnet-go (OpenVINO/AMD64)
 options:
   env_vars: []
   BIRDSONGS_FOLDER: /config/clips
