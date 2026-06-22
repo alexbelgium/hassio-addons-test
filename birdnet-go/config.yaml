@@ -129,3 +129,4 @@ url: https://github.com/alexbelgium/hassio-addons-test/tree/master/birdnet-go
 usb: true
 version: "source-20260621-5"
 video: true
+watchdog: tcp://[HOST]:[PORT:8080]
