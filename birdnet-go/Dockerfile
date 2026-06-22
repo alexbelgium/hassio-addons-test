@@ -240,8 +240,10 @@ RUN groupadd -g 109 render || true && \
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        clinfo \
-        intel-media-va-driver
+        intel-opencl-icd \
+        intel-level-zero-gpu \
+        intel-media-va-driver-non-free \
+        clinfo
 
 #============================================================================#
 # From here on, the Home Assistant integration layers are identical to the   #
