@@ -235,6 +235,13 @@ RUN mkdir -p /config /data/clips /data/models && \
 # Install the freshly built BirdNET-Go binary
 COPY --from=build /home/dev-user/src/BirdNET-Go/bin /usr/bin/
 
+RUN groupadd -g 109 render || true && \
+    usermod -aG render root
+
+RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
+    intel-opencl-icd \
+    && rm -rf /var/lib/apt/lists/*
+
 #============================================================================#
 # From here on, the Home Assistant integration layers are identical to the   #
 # standard alexbelgium/birdnet-go add-on (which builds FROM the prebuilt    #
