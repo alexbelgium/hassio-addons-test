@@ -238,19 +238,12 @@ COPY --from=build /home/dev-user/src/BirdNET-Go/bin /usr/bin/
 RUN groupadd -g 109 render || true && \
     usermod -aG render root
 
-RUN echo "**** install intel opencl runtime ****" && \
-    apt-get install --no-install-recommends -y \
-      intel-media-va-driver-non-free && \
-    mkdir -p /tmp/intel && \
-    wget -nv -P /tmp/intel \
-      "https://github.com/intel/intel-graphics-compiler/releases/download/igc-1.0.17537.24/intel-igc-core_1.0.17537.24_amd64.deb" \
-      "https://github.com/intel/intel-graphics-compiler/releases/download/igc-1.0.17537.24/intel-igc-opencl_1.0.17537.24_amd64.deb" \
-      "https://github.com/intel/compute-runtime/releases/download/24.35.30872.36/intel-opencl-icd-legacy1_24.35.30872.36_amd64.deb" \
-      "https://github.com/intel/intel-graphics-compiler/releases/download/v2.32.7/intel-igc-core-2_2.32.7+21184_amd64.deb" \
-      "https://github.com/intel/intel-graphics-compiler/releases/download/v2.32.7/intel-igc-opencl-2_2.32.7+21184_amd64.deb" \
-      "https://github.com/intel/compute-runtime/releases/download/26.14.37833.4/intel-opencl-icd_26.14.37833.4-0_amd64.deb" \
-      "https://github.com/intel/compute-runtime/releases/download/26.14.37833.4/libigdgmm12_22.9.0_amd64.deb" && \
-    dpkg -i /tmp/intel/*.deb;
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        intel-opencl-icd \
+        intel-level-zero-gpu \
+        intel-media-va-driver-non-free \
+        clinfo
 
 #============================================================================#
 # From here on, the Home Assistant integration layers are identical to the   #
