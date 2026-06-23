@@ -235,15 +235,22 @@ RUN mkdir -p /config /data/clips /data/models && \
 # Install the freshly built BirdNET-Go binary
 COPY --from=build /home/dev-user/src/BirdNET-Go/bin /usr/bin/
 
+# Enable openvino
+ARG NEO_VERSION=26.22.38646.4
+ARG IGC_VERSION=2.36.3+21719
 RUN groupadd -g 109 render || true && \
-    usermod -aG render root
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        intel-opencl-icd \
-        intel-level-zero-gpu \
-        intel-media-va-driver-non-free \
-        clinfo
+    usermod -aG render root && \
+    \
+    apt-get update -q && apt-get install -q -y --no-install-recommends wget ocl-icd-libopencl1 libdrm2 libdrm-intel1 && \
+    mkdir -p /tmp/neo && cd /tmp/neo && \
+    wget -q https://github.com/intel/intel-graphics-compiler/releases/download/v2.36.3/intel-igc-core-2_${IGC_VERSION}_amd64.deb \
+    https://github.com/intel/intel-graphics-compiler/releases/download/v2.36.3/intel-igc-opencl-2_${IGC_VERSION}_amd64.deb \
+    https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-opencl-icd_${NEO_VERSION}-0_amd64.deb \
+    https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/libigdgmm12_22.10.0_amd64.deb \
+    https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/libze-intel-gpu1_${NEO_VERSION}-0_amd64.deb && \
+    dpkg -i *.deb && \
+    rm -rf /tmp/neo && \
+    rm -rf /var/lib/apt/lists/*
 
 #============================================================================#
 # From here on, the Home Assistant integration layers are identical to the   #
