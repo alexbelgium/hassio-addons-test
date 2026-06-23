@@ -35,18 +35,23 @@ if ! bashio::config.true 'mariadb_auto_config'; then
     bashio::log.yellow "Home Assistant MariaDB addon detected but mariadb_auto_config is disabled; ensuring BirdNET-Go uses SQLite."
     bashio::log.yellow "Set 'mariadb_auto_config: true' in the addon options to wire MariaDB into BirdNET-Go automatically. Connection details:"
     bashio::log.blue "Database user    : ${MYSQL_USER}"
-    bashio::log.blue "Database password: ${MYSQL_PASS}"
+    bashio::log.blue "Database password: [redacted]"
     bashio::log.blue "Database name    : ${MYSQL_DATABASE}"
     bashio::log.blue "Host-name        : ${MYSQL_HOST}"
     bashio::log.blue "Port             : ${MYSQL_PORT}"
     bashio::log.green "---"
     if [ -f "$CONFIG_LOCATION" ]; then
-        # Revert any previously written mysql block so the app uses SQLite.
+        # Only revert if config.yaml points at the HA MariaDB host we would have
+        # written — a mysql block pointing at a different host was set manually.
         # shellcheck disable=SC2016
-        yq -i -y \
-            '.output.mysql.enabled = false
-             | .output.sqlite.enabled = true' \
-            "$CONFIG_LOCATION"
+        CURRENT_MYSQL_HOST="$(yq -r '.output.mysql.host // empty' "$CONFIG_LOCATION" 2>/dev/null || true)"
+        if yq -e '.output.mysql.enabled == true' "$CONFIG_LOCATION" >/dev/null 2>&1 \
+            && [ "${CURRENT_MYSQL_HOST}" = "${MYSQL_HOST}" ]; then
+            yq -i -y \
+                '.output.mysql.enabled = false
+                 | .output.sqlite.enabled = true' \
+                "$CONFIG_LOCATION"
+        fi
     fi
     exit 0
 fi
