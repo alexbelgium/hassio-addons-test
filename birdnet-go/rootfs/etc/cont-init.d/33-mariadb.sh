@@ -68,15 +68,25 @@ bashio::log.blue "User:     ${MYSQL_USER}"
 bashio::log.blue "Database: ${MYSQL_DATABASE}"
 bashio::log.green "---"
 
+# Resolve MariaDB hostname to IPv4: on HAOS >=17.3 the Supervisor network
+# gained IPv6, but the MariaDB addon only grants its user from the IPv4
+# subnet. Fall back to the raw hostname if resolution fails.
+MYSQL_HOST_RESOLVED="$(getent ahostsv4 "${MYSQL_HOST}" 2>/dev/null | awk '{print $1; exit}')"
+MYSQL_HOST_RESOLVED="${MYSQL_HOST_RESOLVED:-${MYSQL_HOST}}"
+if [ "${MYSQL_HOST_RESOLVED}" != "${MYSQL_HOST}" ]; then
+    bashio::log.blue "Resolved ${MYSQL_HOST} -> ${MYSQL_HOST_RESOLVED} (forcing IPv4)"
+fi
+
 # Create the database — birdnet-go connects to an existing schema and does NOT
-# create it automatically, so we must do it here. MYSQL_PWD avoids exposing
-# the password via the process command line.
+# create it automatically. MYSQL_PWD avoids exposing the password via the
+# process command line.
 if ! MYSQL_PWD="${MYSQL_PASS}" mysql \
-    --host="${MYSQL_HOST}" \
+    --skip-ssl \
+    --host="${MYSQL_HOST_RESOLVED}" \
     --port="${MYSQL_PORT}" \
     --user="${MYSQL_USER}" \
     --connect-timeout=10 \
-    -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;" 2>/dev/null; then
+    -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"; then
     bashio::log.error "Failed to create MariaDB database '${MYSQL_DATABASE}' — verify the MariaDB addon is running and the user has CREATE DATABASE privileges"
     exit 1
 fi
